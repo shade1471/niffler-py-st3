@@ -1,28 +1,37 @@
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+
 
 class BasePage:
 
     def __init__(self, driver):
         self.wd = driver
-        self.base_url = "http://frontend.niffler.dc/"
+        self.base_url = 'http://frontend.niffler.dc/'
+        self.sign_up_url = 'http://auth.niffler.dc:9000/register'
 
     def go_to_niffler(self):
-        return self.wd.get(self.base_url)
+        self.wd.get(self.base_url)
 
-    def find_element(self, locator, time=10):
-        return WebDriverWait(self.wd, time).until(EC.presence_of_element_located(locator),
-                                                  message=f"Can't find element by locator {locator}")
+    def go_sign_up(self):
+        self.wd.get(self.sign_up_url)
 
-    def find_elements(self, locator, time=10):
-        return WebDriverWait(self.wd, time).until(EC.presence_of_all_elements_located(locator),
-                                                  message=f"Can't find elements by locator {locator}")
+    def find_element(self, locator: tuple[str, str], timeout=15) -> WebElement:
+        return WebDriverWait(self.wd, timeout).until(EC.presence_of_element_located(locator),
+                                                     message=f"Can't find element by locator {locator}")
 
-    def wait_visibility_of_element(self, *locator, timeout=10):
-        """
-        Ожидание видимости элемента
-        :param locator: кортеж (By.CSS_SELECTOR, 'selector_here')
-        :param timeout: Задаваемый timeout ожидания
-        """
-        el = self.wd.find_element(*locator)
-        WebDriverWait(self.wd, timeout).until(EC.visibility_of(el))
+    def find_elements(self, locator: tuple[str, str], timeout=15) -> list[WebElement]:
+        return WebDriverWait(self.wd, timeout).until(EC.presence_of_all_elements_located(locator),
+                                                     message=f"Can't find elements by locator {locator}")
+
+    def is_element_have_property(self, locator: tuple[str, str], property_name: str, value: str | int) -> bool:
+        element = self.find_element(locator)
+        return self.wd.execute_script(f"return arguments[0].{property_name};", element) == value
+
+    def wait_element_staleness_of(self, locator: tuple[str, str], timeout=10):
+        element = self.find_element(locator)
+        WebDriverWait(self.wd, timeout).until(EC.staleness_of(element))
+
+    def wait_while_len_elements_not_equal(self, locator: tuple[str, str], value: int, timeout=10):
+        """Ожидание пока длина списка элементов не станет отличаться от заданного значения"""
+        WebDriverWait(self.wd, timeout).until(lambda d: len(d.find_elements(*locator)) != value)
