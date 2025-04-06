@@ -19,8 +19,8 @@ class TestPositiveScenario:
         yield niffler
         wd.quit()
 
-    def test_login_by_exist_user(self, browser, prepare_admin_user: tuple[str, str]):
-        user_name, password = prepare_admin_user
+    def test_login_by_exist_user(self, browser, app_user):
+        user_name, password = app_user
         browser.go_to_niffler()
         assert browser.find_element(LoginPage.HEADER).text == 'Log in'
 

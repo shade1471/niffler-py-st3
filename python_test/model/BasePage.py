@@ -1,14 +1,19 @@
+import os
+
+import dotenv
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+
+dotenv.load_dotenv()
 
 
 class BasePage:
 
     def __init__(self, driver):
         self.wd = driver
-        self.base_url = 'http://frontend.niffler.dc/'
-        self.sign_up_url = 'http://auth.niffler.dc:9000/register'
+        self.base_url = os.getenv("FRONTEND_URL")
+        self.sign_up_url = os.getenv("SIGN_UP_URL")
 
     def go_to_niffler(self):
         self.wd.get(self.base_url)
@@ -35,3 +40,6 @@ class BasePage:
     def wait_while_len_elements_not_equal(self, locator: tuple[str, str], value: int, timeout=10):
         """Ожидание пока длина списка элементов не станет отличаться от заданного значения"""
         WebDriverWait(self.wd, timeout).until(lambda d: len(d.find_elements(*locator)) != value)
+
+    def wait_element_to_be_clickable(self, locator: tuple[str, str], timeout=10):
+        return WebDriverWait(self.wd, timeout).until(EC.element_to_be_clickable(locator))
