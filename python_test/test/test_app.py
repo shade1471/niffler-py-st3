@@ -121,6 +121,7 @@ class TestSearch:
         ('EUR', 1),
         ('USD', 2),
         ('KZT', 3),
+        ('RUB', 3),
     ])
     def test_search_by_currency(self, browser, data, currency: str, expected_length: int):
         browser.go_to_niffler()
