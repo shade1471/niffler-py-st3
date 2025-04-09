@@ -22,6 +22,9 @@ class SpendingPage(BasePage):
     ALERT = (By.CSS_SELECTOR, '.MuiAlert-message')
     ADD_BUTTON = (By.ID, 'save')
 
+    def is_page_load(self):
+        return self.find_element(self.AMOUNT_FIELD).is_displayed()
+
     def fill_amount(self, value: int):
         el = self.find_element(self.AMOUNT_FIELD)
         el.clear()
@@ -63,7 +66,13 @@ class SpendingPage(BasePage):
         self.click_save()
 
     def get_amount_field_helper_text(self) -> str:
-        return self.find_element(self.AMOUNT_HELPER_TEXT).text
+        el = self.wait_element_becomes_visible(self.AMOUNT_HELPER_TEXT)
+        return el.text
 
     def get_category_field_helper_text(self) -> str:
-        return self.find_element(self.CATEGORY_HELPER_TEXT).text
+        el = self.wait_element_becomes_visible(self.CATEGORY_HELPER_TEXT)
+        return el.text
+
+    def get_alert_text(self) -> str:
+        el = self.wait_element_becomes_visible(self.ALERT)
+        return el.text

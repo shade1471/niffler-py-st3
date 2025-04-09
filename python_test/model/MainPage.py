@@ -1,11 +1,9 @@
-from datetime import datetime
 from typing import Literal
 
 from selenium.webdriver import Keys
 from selenium.webdriver.common.by import By
 
 from python_test.model.BasePage import BasePage
-from python_test.model.SpendingPage import SpendingPage
 
 
 class MainPage(BasePage):
@@ -33,7 +31,7 @@ class MainPage(BasePage):
     ALERT = (By.CSS_SELECTOR, '[role="alert"]')
 
     def is_page_load(self):
-        return self.find_element(self.PROFILE_BUTTON).is_displayed()
+        return self.wait_element_becomes_visible(self.PROFILE_BUTTON)
 
     def go_to_niffler(self):
         self.wd.get(self.base_url)
@@ -41,18 +39,6 @@ class MainPage(BasePage):
 
     def click_add_spending(self):
         self.find_element(self.NEW_SPENDING_BUTTON).click()
-
-    def add_new_spending(self, amount: int, category: str, date: datetime = None, desc: str = None):
-        self.click_add_spending()
-
-        spending_page = SpendingPage(self.wd)
-        spending_page.fill_amount(amount)
-        spending_page.fill_category(category)
-        if date:
-            spending_page.fill_date(date)
-        if desc:
-            spending_page.fill_description(desc)
-        spending_page.click_save()
 
     def fill_search_field(self, value: str):
         el = self.find_element(self.SEARCH_INPUT)
@@ -88,3 +74,11 @@ class MainPage(BasePage):
         self.find_element((By.CSS_SELECTOR, f'input[aria-labelledby="enhanced-table-checkbox-{id_spending}"]')).click()
         self.find_element(self.DELETE_BUTTON).click()
         self.wait_element_to_be_clickable(self.SUBMIT_DELETE_BUTTON).click()
+
+    def wait_while_counts_spending_not_equal(self, value: int, timeout=10):
+        self.wait_while_len_elements_not_equal(self.LIST_SPENDINGS, value, timeout)
+
+    def get_alert_text(self) -> str:
+        alert = self.find_element(self.ALERT)
+        assert alert.is_displayed()
+        return alert.text

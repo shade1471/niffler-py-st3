@@ -40,3 +40,8 @@ class BasePage:
 
     def wait_element_to_be_clickable(self, locator: tuple[str, str], timeout=10):
         return WebDriverWait(self.wd, timeout).until(EC.element_to_be_clickable(locator))
+
+    def wait_element_becomes_visible(self, locator: tuple[str, str], timeout=10):
+        element = self.find_element(locator)
+        return WebDriverWait(self.wd, timeout).until(EC.visibility_of(element),
+                                                     message=f"Element not visibility by locator {locator}")
