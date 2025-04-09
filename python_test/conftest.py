@@ -8,7 +8,7 @@ from data_helper.api_helper import UserApiHelper, SpendsHttpClient
 from model.niffler import Niffler
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session")
 def envs():
     load_dotenv()
 
@@ -28,10 +28,10 @@ def gateway_url(envs):
     return os.getenv("GATEWAY_URL")
 
 
-@pytest.fixture(scope="session")
-def app_user(envs):
+@pytest.fixture(scope='session')
+def app_user(envs, sign_up_url):
     user_name, password = os.getenv("TEST_USERNAME"), os.getenv("TEST_PASSWORD")
-    UserApiHelper(os.getenv('SIGN_UP_URL')).create_user(user_name=user_name, user_password=password)
+    UserApiHelper(sign_up_url).create_user(user_name=user_name, user_password=password)
     return user_name, password
 
 
@@ -41,9 +41,10 @@ def auth(frontend_url: str, sign_up_url: str, app_user: tuple[str, str]):
     wd.maximize_window()
     niffler = Niffler(wd)
     user_name, password = app_user
-    niffler.go_to_niffler()
+    niffler.login_page.go_to_niffler()
     niffler.login_page.login_by_exist_user(user_name, password)
-    local_storage = niffler.wd.execute_script('return window.localStorage;')
+    assert niffler.main_page.is_page_load(), 'Главная страница не прогрузилась'
+    local_storage = niffler.login_page.wd.execute_script('return window.localStorage;')
     token = local_storage['access_token']
     yield niffler, token, {'user': user_name, 'password': password}
 

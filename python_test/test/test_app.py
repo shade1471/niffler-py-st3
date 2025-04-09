@@ -1,10 +1,13 @@
+import logging
 from datetime import datetime, timedelta
 
 import pytest
+from selenium import webdriver
 
 from python_test.data_helper.api_helper import SpendsHttpClient
 from python_test.model.MainPage import MainPage
 from python_test.model.SpendingPage import SpendingPage
+from python_test.model.niffler import Niffler
 
 
 @pytest.fixture(scope="module")
@@ -23,25 +26,25 @@ class TestSpending:
         yield
         spends_client.remove_all_spending()
 
-    def test_add_spending_gui(self, browser, data):
-        browser.go_to_niffler()
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
+    def test_add_spending_gui(self, browser):
+        browser.main_page.go_to_niffler()
+        count_before = browser.main_page.get_count_spending_on_main_page()
         browser.main_page.add_new_spending(50000, 'study')
-        assert len(browser.find_elements(MainPage.LIST_SPENDINGS)) == count_before + 1
+        assert browser.main_page.get_count_spending_on_main_page() == count_before + 1
 
     def test_required_spending_fields(self, browser):
-        browser.go_to_niffler()
+        browser.main_page.go_to_niffler()
         browser.main_page.click_add_spending()
         browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.AMOUNT_HELPER_TEXT).text == 'Amount has to be not less then 0.01'
-        assert browser.find_element(SpendingPage.CATEGORY_HELPER_TEXT).text == 'Please choose category'
+        assert browser.spending_page.get_amount_field_helper_text() == 'Amount has to be not less then 0.01'
+        assert browser.spending_page.get_category_field_helper_text() == 'Please choose category'
 
     def test_add_spending_without_required_amount_field(self, browser):
-        browser.go_to_niffler()
+        browser.main_page.go_to_niffler()
         browser.main_page.click_add_spending()
         browser.spending_page.fill_amount(1000)
         browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.CATEGORY_HELPER_TEXT).text == 'Please choose category'
+        assert browser.spending_page.get_category_field_helper_text() == 'Please choose category'
 
     def test_add_spending_without_required_category_field(self, browser):
         browser.go_to_niffler()
@@ -89,33 +92,53 @@ class TestSearch:
         yield
         spends_client.remove_all_spending()
 
+    @pytest.fixture(scope="class")
+    def browser(self):
+        create_user(user_name=NEW_USER, user_password=PASSWORD)
+        logging.info(f'Создана учетная запись {NEW_USER}/{PASSWORD}')
+        wd = webdriver.Chrome()
+        wd.maximize_window()
+        niffler = Niffler(wd)
+        niffler.login_page.go_to_niffler()
+        niffler.login_page.login_by_exist_user(NEW_USER, PASSWORD)
+        assert niffler.main_page.is_page_load()
+        local_storage = niffler.main_page.wd.execute_script('return window.localStorage;')
+        token = local_storage['access_token']
+        prepare_test_data(token)
+        yield niffler
+        UserApiHelper(token).remove_all_spending()
+        wd.quit()
+
     @pytest.mark.parametrize('category, expected_length', [
         ('category', 6),
         ('category1', 1),
         ('category2', 2),
         ('category3', 3),
     ])
+    def test_search_by_category(self, browser, category: str, expected_length: int):
+        browser.main_page.go_to_niffler()
+
     def test_search_by_category(self, browser, data, category: str, expected_length: int):
         browser.go_to_niffler()
         assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed()
 
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
+        count_before = browser.main_page.get_count_spending_on_main_page()
         browser.main_page.search_spending(category=category, period='all')
-        browser.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
-        assert browser.is_element_have_property(MainPage.TABLE_SPENDINGS, 'childElementCount', value=expected_length)
+        browser.main_page.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
+        assert browser.main_page.get_count_spending_on_main_page() == expected_length
 
     @pytest.mark.parametrize('date_period, expected_length', [
         ('last_month', 7),
         ('today', 6),
     ])
-    def test_search_by_date(self, browser, data, date_period: str, expected_length: int):
-        browser.go_to_niffler()
+    def test_search_by_date(self, browser, date_period: str, expected_length: int):
+        browser.main_page.go_to_niffler()
         assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed()
 
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
+        count_before = browser.main_page.get_count_spending_on_main_page()
         browser.main_page.search_spending(category='', period=date_period)
-        browser.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
-        assert browser.is_element_have_property(MainPage.TABLE_SPENDINGS, 'childElementCount', value=expected_length)
+        browser.main_page.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
+        assert browser.main_page.get_count_spending_on_main_page() == expected_length
 
     @pytest.mark.parametrize('currency, expected_length', [
         ('EUR', 1),

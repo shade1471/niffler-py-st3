@@ -3,7 +3,6 @@ from faker import Faker
 from selenium import webdriver
 
 from python_test.model.LoginPage import LoginPage
-from python_test.model.MainPage import MainPage
 from python_test.model.SignUpPage import SignUpPage
 from python_test.model.niffler import Niffler
 
@@ -21,14 +20,13 @@ class TestPositiveScenario:
 
     def test_login_by_exist_user(self, browser, app_user):
         user_name, password = app_user
-        browser.go_to_niffler()
-        assert browser.find_element(LoginPage.HEADER).text == 'Log in'
+        browser.login_page.go_to_niffler()
 
         browser.login_page.login_by_exist_user(user_name, password)
-        assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed(), 'Страница не загрузилась'
+        assert browser.main_page.is_page_load(), 'Главная страница не прогрузилась'
 
     def test_sign_up_gui(self, browser):
-        browser.go_sign_up()
+        browser.sign_up_page.go_sign_up()
 
         password = fake.password(length=6)
         browser.sign_up_page.fill_user_name(fake.first_name())
@@ -36,8 +34,7 @@ class TestPositiveScenario:
         browser.sign_up_page.fill_password_submit(password)
         browser.sign_up_page.click_sign_up()
 
-        assert browser.find_element(SignUpPage.SUCCESS_NOTIFY).text == "Congratulations! You've registered!"
-        assert browser.find_element(SignUpPage.SIGN_IN_BUTTON).is_displayed()
+        assert browser.sign_up_page.get_success_sign_up_notify() == "Congratulations! You've registered!"
 
 
 class TestNegativeScenario:
@@ -50,13 +47,12 @@ class TestNegativeScenario:
         wd.quit()
 
     def test_login_by_not_exist_user(self, browser):
-        browser.go_to_niffler()
-        assert browser.find_element(LoginPage.HEADER).text == 'Log in'
+        browser.login_page.go_to_niffler()
 
         browser.login_page.fill_user_name(fake.name())
         browser.login_page.fill_password(fake.password(length=5))
         browser.login_page.click_log_in()
-        assert browser.find_element(LoginPage.FORM_ERROR_NOTIFY).text == 'Неверные учетные данные пользователя'
+        assert browser.login_page.get_text_form_error() == 'Неверные учетные данные пользователя'
 
     @pytest.mark.parametrize('field_name', ['user', 'password'])
     def test_required_field(self, browser, field_name: str):
@@ -64,21 +60,20 @@ class TestNegativeScenario:
                               'password': browser.login_page.fill_password}
         element = {'user': LoginPage.USER_NAME_FIELD,
                    'password': LoginPage.PASSWORD_FIELD}
-        browser.go_to_niffler()
-        assert browser.find_element(LoginPage.HEADER).text == 'Log in'
+        browser.login_page.go_to_niffler()
 
-        el = browser.find_element(element[field_name])
+        el = browser.login_page.find_element(element[field_name])
         assert el.get_attribute('required')
 
         send_text_in_field[field_name]('test')
         browser.login_page.click_log_in()
         element_with_message = next((el for el in element.keys() if el != field_name), None)
-        assert browser.is_element_have_property(element[element_with_message], 'validationMessage',
-                                                'Заполните это поле.')
+        assert browser.login_page.is_element_have_property(element[element_with_message], 'validationMessage',
+                                                           'Заполните это поле.')
 
     @pytest.mark.parametrize('length', (2, 13))
     def test_password_field_boundary_values(self, browser, length: int):
-        browser.go_sign_up()
+        browser.sign_up_page.go_sign_up()
         random_text = fake.lexify(text='?' * length).lower()
 
         browser.sign_up_page.fill_user_name(fake.first_name())
@@ -86,14 +81,14 @@ class TestNegativeScenario:
         browser.sign_up_page.fill_password_submit(random_text)
         browser.sign_up_page.click_sign_up()
 
-        fields_lst = [browser.find_element(e)
+        fields_lst = [browser.sign_up_page.find_element(e)
                       for e in (SignUpPage.PASSWORD_ERROR_NOTIFY, SignUpPage.PASSWORD_SUBMIT_ERROR_NOTIFY)]
         error_text = 'Allowed password length should be from 3 to 12 characters'
         assert all(el.text == error_text for el in fields_lst), 'Не у каждого поля есть текст предупреждение'
 
     @pytest.mark.parametrize('length', (2, 51))
     def test_user_field_boundary_values(self, browser, length: int):
-        browser.go_sign_up()
+        browser.sign_up_page.go_sign_up()
         random_text = fake.lexify(text='?' * length).lower()
 
         browser.sign_up_page.fill_user_name(random_text)
@@ -102,4 +97,4 @@ class TestNegativeScenario:
         browser.sign_up_page.click_sign_up()
 
         error_text = 'Allowed username length should be from 3 to 50 characters'
-        assert browser.find_element(SignUpPage.USER_ERROR_NOTIFY).text == error_text
+        assert browser.sign_up_page.get_error_text_by_user_field() == error_text
