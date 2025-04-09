@@ -1,3 +1,4 @@
+from model.ProfilePage import ProfilePageHelper
 from python_test.model.BasePage import BasePage
 from python_test.model.LoginPage import LoginPageHelper
 from python_test.model.MainPage import MainPageHelper
@@ -13,3 +14,4 @@ class Niffler(BasePage):
         self.main_page = MainPageHelper(self.wd)
         self.sign_up_page = SignUpPageHelper(self.wd)
         self.spending_page = SpendingPageHelper(self.wd)
+        self.profile_page = ProfilePageHelper(self.wd)

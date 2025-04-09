@@ -80,3 +80,6 @@ class MainPageHelper(BasePage):
         self.find_element((By.CSS_SELECTOR, f'input[aria-labelledby="enhanced-table-checkbox-{id_spending}"]')).click()
         self.find_element(MainPage.DELETE_BUTTON).click()
         self.wait_element_to_be_clickable(MainPage.SUBMIT_DELETE_BUTTON).click()
+
+    def open_user_profile(self):
+        self.find_element(MainPage.PROFILE_BUTTON).click()

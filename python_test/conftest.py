@@ -5,38 +5,33 @@ from dotenv import load_dotenv
 from selenium import webdriver
 
 from data_helper.api_helper import UserApiHelper, SpendsHttpClient
+from databases.spend_db import SpendDb
+from model.config import Envs
 from model.niffler import Niffler
 
 
 @pytest.fixture(scope="session", autouse=True)
-def envs():
+def envs() -> Envs:
     load_dotenv()
-
-
-@pytest.fixture(scope="session")
-def frontend_url(envs):
-    return os.getenv("FRONTEND_URL")
-
-
-@pytest.fixture(scope="session")
-def sign_up_url(envs):
-    return os.getenv("SIGN_UP_URL")
-
-
-@pytest.fixture(scope="session")
-def gateway_url(envs):
-    return os.getenv("GATEWAY_URL")
+    return Envs(
+        frontend_url=os.getenv("FRONTEND_URL"),
+        gateway_url=os.getenv("GATEWAY_URL"),
+        sign_up_url=os.getenv('SIGN_UP_URL'),
+        spend_db_url=os.getenv("SPEND_DB_URL"),
+        test_username=os.getenv("TEST_USERNAME"),
+        test_password=os.getenv("TEST_PASSWORD")
+    )
 
 
 @pytest.fixture(scope="session")
 def app_user(envs):
     user_name, password = os.getenv("TEST_USERNAME"), os.getenv("TEST_PASSWORD")
-    UserApiHelper(os.getenv('SIGN_UP_URL')).create_user(user_name=user_name, user_password=password)
+    UserApiHelper(envs.sign_up_url).create_user(user_name=user_name, user_password=password)
     return user_name, password
 
 
 @pytest.fixture(scope='module')
-def auth(frontend_url: str, sign_up_url: str, app_user: tuple[str, str]):
+def auth(app_user: tuple[str, str]):
     wd = webdriver.Chrome()
     wd.maximize_window()
     niffler = Niffler(wd)
@@ -49,6 +44,11 @@ def auth(frontend_url: str, sign_up_url: str, app_user: tuple[str, str]):
 
 
 @pytest.fixture(scope='module')
-def spends_client(gateway_url: str, auth):
+def spends_client(envs: Envs, auth):
     _, token, user = auth
-    return SpendsHttpClient(gateway_url, token, user["user"])
+    return SpendsHttpClient(envs.gateway_url, token, user["user"])
+
+
+@pytest.fixture(scope="session")
+def spend_db(envs) -> SpendDb:
+    return SpendDb(envs.spend_db_url)

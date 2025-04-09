@@ -6,6 +6,8 @@ from urllib.parse import urljoin
 
 import requests
 
+from model.db.spend import Category
+
 
 class UserApiHelper:
     session: requests.Session
@@ -66,6 +68,7 @@ class SpendsHttpClient:
         }
 
         _resp = self.session.post(f'{self.base_url_spends}/add', json=spend_dict)
+        self.raise_for_status(_resp)
         body = _resp.json()
         return body['id']
 
@@ -73,19 +76,20 @@ class SpendsHttpClient:
         ids = []
         for currency in ['RUB', 'KZT', 'USD', 'EUR']:
             _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
-            assert _resp.status_code == HTTPStatus.OK
+            self.raise_for_status(_resp)
             body = _resp.json()
             ids += [spend['id'] for spend in body]
         return ids
 
-    def get_ids_by_currency(self, currency: Literal['RUB', 'KZT', 'USD', 'EUR'] = 'RUB'):
+    def get_spending_ids_by_currency(self, currency: Literal['RUB', 'KZT', 'USD', 'EUR'] = 'RUB'):
         _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
-        assert _resp.status_code == HTTPStatus.OK
+        self.raise_for_status(_resp)
         body = _resp.json()
         return [spend['id'] for spend in body]
 
     def delete_spending_by_id(self, spending_id: int):
         _resp = self.session.delete(f'{self.base_url_spends}/remove?ids={spending_id}')
+        self.raise_for_status(_resp)
         return _resp.status_code
 
     def remove_all_spending(self):
@@ -93,7 +97,22 @@ class SpendsHttpClient:
         for spending_id in spending_ids_lst:
             self.delete_spending_by_id(spending_id)
 
-    def add_category(self, category_name: str) -> int:
-        category_dict = {'name': category_name, 'username': self.user_name}
+    def add_category(self, category_name: str, archived: bool = False) -> Category:
+        category_dict = {'name': category_name, 'username': self.user_name, 'archived': archived}
         _resp = self.session.post(f'{self.base_url_categories}/add', json=category_dict)
-        return _resp.status_code
+        self.raise_for_status(_resp)
+        return Category.model_validate(_resp.json())
+
+    def get_ids_all_categories(self, exclude_archived: bool = False):
+        _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
+        self.raise_for_status(_resp)
+        return [spend['id'] for spend in _resp.json()]
+
+    @staticmethod
+    def raise_for_status(response: requests.Response):
+        try:
+            response.raise_for_status()
+        except requests.HTTPError as e:
+            if response.status_code >= 400:
+                e.add_note(response.text)
+                raise

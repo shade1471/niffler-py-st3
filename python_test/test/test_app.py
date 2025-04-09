@@ -1,10 +1,14 @@
 from datetime import datetime, timedelta
 
 import pytest
+from faker import Faker
 
+from model.ProfilePage import ProfilePage
 from python_test.data_helper.api_helper import SpendsHttpClient
 from python_test.model.MainPage import MainPage
 from python_test.model.SpendingPage import SpendingPage
+
+fake = Faker()
 
 
 @pytest.fixture(scope="module")
@@ -70,6 +74,59 @@ class TestSpending:
         assert alert.is_displayed()
         assert alert.text == 'Spendings succesfully deleted'
         assert len(browser.find_elements(MainPage.LIST_SPENDINGS)) == count_before - 1
+
+
+class TestCategory:
+
+    @pytest.fixture()
+    def data_limit(self, spends_client, spend_db):
+        categories_ids = spends_client.get_ids_all_categories()
+        for category_id in categories_ids:
+            spend_db.delete_category(category_id)
+        new_categories = []
+        for i in range(1, 9):
+            category_id = spends_client.add_category(f'limit{i}').id
+            new_categories.append(category_id)
+        yield
+        for category_id in new_categories:
+            spend_db.delete_category(category_id)
+
+    @pytest.fixture()
+    def data(self, spends_client, spend_db):
+        categories_ids = spends_client.get_ids_all_categories()
+        for category_id in categories_ids:
+            spend_db.delete_category(category_id)
+        category_id = spends_client.add_category('duplicate', archived=True).id
+        yield
+        spend_db.delete_category(category_id)
+
+    @pytest.fixture()
+    def data1(self, spends_client, spend_db):
+        categories_ids = spends_client.get_ids_all_categories()
+        for category_id in categories_ids:
+            spend_db.delete_category(category_id)
+        category_id = spends_client.add_category('duplicate').id
+        yield
+        spend_db.delete_category(category_id)
+
+    def test_max_size_categories_for_user(self, browser, data_limit):
+        browser.open_profile_page()
+        category_field = browser.main_page.find_element(ProfilePage.CATEGORY_FIELD)
+        error_el = browser.main_page.find_element(ProfilePage.CATEGORY_FIELD_ERROR)
+        assert category_field.get_attribute('disabled')
+        assert error_el.get_attribute('aria-label') == "You've reached maximum available count of active categories"
+
+    def test_no_possible_add_dupclicate_archived_category(self, browser, spends_client, spend_db, data):
+        browser.open_profile_page()
+        browser.profile_page.add_category('duplicate')
+        alert = browser.profile_page.find_element(ProfilePage.ALERT_MESSAGE)
+        assert alert.text == 'Error while adding category duplicate: Cannot save duplicates'
+
+    def test_no_possible_add_dupclicate_category(self, browser, spends_client, spend_db, data1):
+        browser.open_profile_page()
+        browser.profile_page.add_category('duplicate')
+        alert = browser.profile_page.find_element(ProfilePage.ALERT_MESSAGE)
+        assert alert.text == 'Error while adding category duplicate: Cannot save duplicates'
 
 
 class TestSearch:

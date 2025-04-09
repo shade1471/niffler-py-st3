@@ -1,4 +1,5 @@
 import os
+from urllib.parse import urljoin
 
 import dotenv
 from selenium.webdriver.remote.webelement import WebElement
@@ -20,6 +21,9 @@ class BasePage:
 
     def go_sign_up(self):
         self.wd.get(self.sign_up_url)
+
+    def open_profile_page(self):
+        self.wd.get(urljoin(self.base_url, '/profile'))
 
     def find_element(self, locator: tuple[str, str], timeout=15) -> WebElement:
         return WebDriverWait(self.wd, timeout).until(EC.presence_of_element_located(locator),
