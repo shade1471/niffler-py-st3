@@ -70,7 +70,7 @@ class MainPage(BasePage):
     def get_count_spending_on_main_page(self) -> int:
         return self.get_element_property(self.TABLE_SPENDINGS, 'childElementCount')
 
-    def delete_spending_by_id(self, id_spending):
+    def delete_spending_by_id(self, id_spending: str):
         self.find_element((By.CSS_SELECTOR, f'input[aria-labelledby="enhanced-table-checkbox-{id_spending}"]')).click()
         self.find_element(self.DELETE_BUTTON).click()
         self.wait_element_to_be_clickable(self.SUBMIT_DELETE_BUTTON).click()
