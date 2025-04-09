@@ -92,7 +92,7 @@ class SpendsHttpClient:
         self.raise_for_status(_resp)
         return _resp.status_code
 
-    def remove_all_spending(self):
+    def delete_all_spending(self):
         spending_ids_lst = self.get_ids_all_spending()
         for spending_id in spending_ids_lst:
             self.delete_spending_by_id(spending_id)
@@ -107,6 +107,11 @@ class SpendsHttpClient:
         _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
         self.raise_for_status(_resp)
         return [spend['id'] for spend in _resp.json()]
+
+    # def delete_all_categories(self):
+    #     ids_categories = self.get_ids_all_categories()
+    #     for id_category in ids_categories:
+    #         delete_category(id_category)
 
     @staticmethod
     def raise_for_status(response: requests.Response):

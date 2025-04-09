@@ -1,17 +1,15 @@
-from model.ProfilePage import ProfilePageHelper
-from python_test.model.BasePage import BasePage
-from python_test.model.LoginPage import LoginPageHelper
-from python_test.model.MainPage import MainPageHelper
-from python_test.model.SignUpPage import SignUpPageHelper
-from python_test.model.SpendingPage import SpendingPageHelper
+from model.ProfilePage import ProfilePage
+from python_test.model.LoginPage import LoginPage
+from python_test.model.MainPage import MainPage
+from python_test.model.SignUpPage import SignUpPage
+from python_test.model.SpendingPage import SpendingPage
 
 
-class Niffler(BasePage):
+class Niffler:
 
     def __init__(self, wd):
-        super().__init__(wd)
-        self.login_page = LoginPageHelper(self.wd)
-        self.main_page = MainPageHelper(self.wd)
-        self.sign_up_page = SignUpPageHelper(self.wd)
-        self.spending_page = SpendingPageHelper(self.wd)
-        self.profile_page = ProfilePageHelper(self.wd)
+        self.login_page = LoginPage(wd)
+        self.main_page = MainPage(wd)
+        self.sign_up_page = SignUpPage(wd)
+        self.spending_page = SpendingPage(wd)
+        self.profile_page = ProfilePage(wd)

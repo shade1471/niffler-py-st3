@@ -19,7 +19,6 @@ class Spend(SQLModel, table=True):
     amount: float
     description: str
     category_id: str = Field(foreign_key="category.id")
-    # category: Category = Relationship(back_populates="spends")
 
 
 class SpendAdd(BaseModel):

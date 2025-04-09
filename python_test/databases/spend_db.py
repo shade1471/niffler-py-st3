@@ -7,7 +7,6 @@ from model.db.spend import Category
 
 
 class SpendDb:
-
     engine: Engine
 
     def __init__(self, db_url: str):
@@ -23,3 +22,7 @@ class SpendDb:
             category = session.get(Category, category_id)
             session.delete(category)
             session.commit()
+
+    def delete_categories_by_ids(self, categories_ids: list):
+        for category_id in categories_ids:
+            self.delete_category(category_id)

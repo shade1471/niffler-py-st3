@@ -1,29 +1,20 @@
 import os
 from urllib.parse import urljoin
 
-import dotenv
+from dotenv import load_dotenv
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-dotenv.load_dotenv()
+load_dotenv()
 
 
 class BasePage:
 
     def __init__(self, driver):
         self.wd = driver
-        self.base_url = os.getenv("FRONTEND_URL")
-        self.sign_up_url = os.getenv("SIGN_UP_URL")
-
-    def go_to_niffler(self):
-        self.wd.get(self.base_url)
-
-    def go_sign_up(self):
-        self.wd.get(self.sign_up_url)
-
-    def open_profile_page(self):
-        self.wd.get(urljoin(self.base_url, '/profile'))
+        self.base_url = os.getenv('FRONTEND_URL')
+        self.sign_up_url = os.getenv('SIGN_UP_URL')
 
     def find_element(self, locator: tuple[str, str], timeout=15) -> WebElement:
         return WebDriverWait(self.wd, timeout).until(EC.presence_of_element_located(locator),
@@ -33,9 +24,12 @@ class BasePage:
         return WebDriverWait(self.wd, timeout).until(EC.presence_of_all_elements_located(locator),
                                                      message=f"Can't find elements by locator {locator}")
 
-    def is_element_have_property(self, locator: tuple[str, str], property_name: str, value: str | int) -> bool:
+    def get_element_property(self, locator: tuple[str, str], property_name: str) -> str | int:
         element = self.find_element(locator)
-        return self.wd.execute_script(f"return arguments[0].{property_name};", element) == value
+        return self.wd.execute_script(f"return arguments[0].{property_name};", element)
+
+    def is_element_have_property(self, locator: tuple[str, str], property_name: str, value: str | int) -> bool:
+        return self.get_element_property(locator, property_name) == value
 
     def wait_element_staleness_of(self, locator: tuple[str, str], timeout=10):
         element = self.find_element(locator)
@@ -47,3 +41,8 @@ class BasePage:
 
     def wait_element_to_be_clickable(self, locator: tuple[str, str], timeout=10):
         return WebDriverWait(self.wd, timeout).until(EC.element_to_be_clickable(locator))
+
+    def wait_element_becomes_visible(self, locator: tuple[str, str], timeout=10):
+        element = self.find_element(locator)
+        return WebDriverWait(self.wd, timeout).until(EC.visibility_of(element),
+                                                     message=f"Element not visibility by locator {locator}")

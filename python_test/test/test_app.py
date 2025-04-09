@@ -1,139 +1,87 @@
 from datetime import datetime, timedelta
 
 import pytest
-from faker import Faker
 
+from conftest import spends_client
+from databases.spend_db import SpendDb
+from marks import TestData
 from model.ProfilePage import ProfilePage
+from model.niffler import Niffler
 from python_test.data_helper.api_helper import SpendsHttpClient
-from python_test.model.MainPage import MainPage
-from python_test.model.SpendingPage import SpendingPage
-
-fake = Faker()
-
-
-@pytest.fixture(scope="module")
-def browser(auth):
-    niffler, _, _ = auth
-    yield niffler
-    niffler.wd.quit()
 
 
 class TestSpending:
 
     @pytest.fixture(scope='class')
     def data(self, spends_client: SpendsHttpClient):
-        spends_client.remove_all_spending()
+        spends_client.delete_all_spending()
         spends_client.add_spend('study', 500)
         yield
-        spends_client.remove_all_spending()
+        spends_client.delete_all_spending()
 
-    def test_add_spending_gui(self, browser, data):
-        browser.go_to_niffler()
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
-        browser.main_page.add_new_spending(50000, 'study')
-        assert len(browser.find_elements(MainPage.LIST_SPENDINGS)) == count_before + 1
+    def test_add_spending_gui(self, niffler: Niffler, data):
+        niffler.main_page.go_to_niffler()
+        count_before = niffler.main_page.get_count_spending_on_main_page()
+        niffler.main_page.click_add_spending()
+        assert niffler.spending_page.is_page_load()
 
-    def test_required_spending_fields(self, browser):
-        browser.go_to_niffler()
-        browser.main_page.click_add_spending()
-        browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.AMOUNT_HELPER_TEXT).text == 'Amount has to be not less then 0.01'
-        assert browser.find_element(SpendingPage.CATEGORY_HELPER_TEXT).text == 'Please choose category'
+        niffler.spending_page.add_new_spending(50000, 'study')
+        assert niffler.main_page.get_count_spending_on_main_page() == count_before + 1
 
-    def test_add_spending_without_required_amount_field(self, browser):
-        browser.go_to_niffler()
-        browser.main_page.click_add_spending()
-        browser.spending_page.fill_amount(1000)
-        browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.CATEGORY_HELPER_TEXT).text == 'Please choose category'
+    def test_required_spending_fields(self, niffler: Niffler):
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        assert niffler.spending_page.is_page_load()
 
-    def test_add_spending_without_required_category_field(self, browser):
-        browser.go_to_niffler()
-        browser.main_page.click_add_spending()
-        browser.spending_page.fill_category('study')
-        browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.AMOUNT_HELPER_TEXT).text == 'Amount has to be not less then 0.01'
+        niffler.spending_page.click_save()
+        assert niffler.spending_page.get_amount_field_helper_text() == 'Amount has to be not less then 0.01'
+        assert niffler.spending_page.get_category_field_helper_text() == 'Please choose category'
+
+    def test_add_spending_without_required_category_field(self, niffler: Niffler):
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        assert niffler.spending_page.is_page_load()
+
+        niffler.spending_page.fill_amount(1000)
+        niffler.spending_page.click_save()
+        assert niffler.spending_page.get_category_field_helper_text() == 'Please choose category'
+
+    def test_add_spending_without_required_amount_field(self, niffler: Niffler):
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        assert niffler.spending_page.is_page_load()
+
+        niffler.spending_page.fill_category('study')
+        niffler.spending_page.click_save()
+        assert niffler.spending_page.get_amount_field_helper_text() == 'Amount has to be not less then 0.01'
 
     @pytest.mark.parametrize('currency', ('RUB', 'USD', 'EUR', 'KZT'))
-    def test_amount_boundary_value_for_different_currency(self, browser, currency):
-        browser.go_to_niffler()
-        browser.main_page.click_add_spending()
-        browser.spending_page.fill_amount(0.009)
-        browser.spending_page.select_currency(currency)
-        browser.spending_page.fill_category('study')
-        browser.spending_page.click_save()
-        assert browser.find_element(SpendingPage.ALERT).text == 'Amount should be greater than 0.01'
+    def test_amount_boundary_value_for_different_currency(self, niffler: Niffler, currency: str):
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        assert niffler.spending_page.is_page_load()
 
-    def test_delete_spending_gui(self, browser, data, spends_client: SpendsHttpClient):
+        niffler.spending_page.fill_amount(0.009)
+        niffler.spending_page.select_currency(currency)
+        niffler.spending_page.fill_category('study')
+        niffler.spending_page.click_save()
+        assert niffler.spending_page.get_alert_text() == 'Amount should be greater than 0.01'
+
+    def test_delete_spending_gui(self, niffler: Niffler, data, spends_client: SpendsHttpClient):
         spend_id = spends_client.add_spend('study', 500)
-        browser.go_to_niffler()
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
-        browser.main_page.delete_spending_by_id(spend_id)
+        niffler.main_page.go_to_niffler()
+        count_before = niffler.main_page.get_count_spending_on_main_page()
+        niffler.main_page.delete_spending_by_id(spend_id)
 
-        alert = browser.find_element(MainPage.ALERT)
-        assert alert.is_displayed()
-        assert alert.text == 'Spendings succesfully deleted'
-        assert len(browser.find_elements(MainPage.LIST_SPENDINGS)) == count_before - 1
-
-
-class TestCategory:
-
-    @pytest.fixture()
-    def data_limit(self, spends_client, spend_db):
-        categories_ids = spends_client.get_ids_all_categories()
-        for category_id in categories_ids:
-            spend_db.delete_category(category_id)
-        new_categories = []
-        for i in range(1, 9):
-            category_id = spends_client.add_category(f'limit{i}').id
-            new_categories.append(category_id)
-        yield
-        for category_id in new_categories:
-            spend_db.delete_category(category_id)
-
-    @pytest.fixture()
-    def data(self, spends_client, spend_db):
-        categories_ids = spends_client.get_ids_all_categories()
-        for category_id in categories_ids:
-            spend_db.delete_category(category_id)
-        category_id = spends_client.add_category('duplicate', archived=True).id
-        yield
-        spend_db.delete_category(category_id)
-
-    @pytest.fixture()
-    def data1(self, spends_client, spend_db):
-        categories_ids = spends_client.get_ids_all_categories()
-        for category_id in categories_ids:
-            spend_db.delete_category(category_id)
-        category_id = spends_client.add_category('duplicate').id
-        yield
-        spend_db.delete_category(category_id)
-
-    def test_max_size_categories_for_user(self, browser, data_limit):
-        browser.open_profile_page()
-        category_field = browser.main_page.find_element(ProfilePage.CATEGORY_FIELD)
-        error_el = browser.main_page.find_element(ProfilePage.CATEGORY_FIELD_ERROR)
-        assert category_field.get_attribute('disabled')
-        assert error_el.get_attribute('aria-label') == "You've reached maximum available count of active categories"
-
-    def test_no_possible_add_dupclicate_archived_category(self, browser, spends_client, spend_db, data):
-        browser.open_profile_page()
-        browser.profile_page.add_category('duplicate')
-        alert = browser.profile_page.find_element(ProfilePage.ALERT_MESSAGE)
-        assert alert.text == 'Error while adding category duplicate: Cannot save duplicates'
-
-    def test_no_possible_add_dupclicate_category(self, browser, spends_client, spend_db, data1):
-        browser.open_profile_page()
-        browser.profile_page.add_category('duplicate')
-        alert = browser.profile_page.find_element(ProfilePage.ALERT_MESSAGE)
-        assert alert.text == 'Error while adding category duplicate: Cannot save duplicates'
+        assert niffler.main_page.get_alert_text() == 'Spendings succesfully deleted'
+        assert niffler.main_page.get_count_spending_on_main_page() == count_before - 1
 
 
 class TestSearch:
 
     @pytest.fixture(scope='class')
     def data(self, spends_client: SpendsHttpClient):
-        spends_client.remove_all_spending()
+        spends_client.delete_all_spending()
         spends_client.add_spend('category1', 10000, currency='KZT')
         spends_client.add_spend('category2', 1000, currency='EUR')
         spends_client.add_spend('category2', 1000, currency='USD')
@@ -144,7 +92,7 @@ class TestSearch:
         spends_client.add_spend('past spending', 700, date=datetime(2021, 1, 1))
         spends_client.add_spend('past spending', 700, date=datetime.now() - timedelta(days=9))
         yield
-        spends_client.remove_all_spending()
+        spends_client.delete_all_spending()
 
     @pytest.mark.parametrize('category, expected_length', [
         ('category', 6),
@@ -152,27 +100,24 @@ class TestSearch:
         ('category2', 2),
         ('category3', 3),
     ])
-    def test_search_by_category(self, browser, data, category: str, expected_length: int):
-        browser.go_to_niffler()
-        assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed()
-
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
-        browser.main_page.search_spending(category=category, period='all')
-        browser.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
-        assert browser.is_element_have_property(MainPage.TABLE_SPENDINGS, 'childElementCount', value=expected_length)
+    def test_search_by_category(self, niffler: Niffler, data, category: str, expected_length: int):
+        niffler.main_page.go_to_niffler()
+        count_before = niffler.main_page.get_count_spending_on_main_page()
+        niffler.main_page.search_spending(category=category, period='all')
+        niffler.main_page.wait_while_counts_spending_not_equal(count_before)
+        assert niffler.main_page.get_count_spending_on_main_page() == expected_length
 
     @pytest.mark.parametrize('date_period, expected_length', [
         ('last_month', 7),
         ('today', 6),
     ])
-    def test_search_by_date(self, browser, data, date_period: str, expected_length: int):
-        browser.go_to_niffler()
-        assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed()
+    def test_search_by_date(self, niffler: Niffler, date_period: str, expected_length: int):
+        niffler.main_page.go_to_niffler()
+        count_before = niffler.main_page.get_count_spending_on_main_page()
 
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
-        browser.main_page.search_spending(category='', period=date_period)
-        browser.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
-        assert browser.is_element_have_property(MainPage.TABLE_SPENDINGS, 'childElementCount', value=expected_length)
+        niffler.main_page.search_spending(category='', period=date_period)
+        niffler.main_page.wait_while_counts_spending_not_equal(count_before)
+        assert niffler.main_page.get_count_spending_on_main_page() == expected_length
 
     @pytest.mark.parametrize('currency, expected_length', [
         ('EUR', 1),
@@ -180,11 +125,50 @@ class TestSearch:
         ('KZT', 3),
         ('RUB', 3),
     ])
-    def test_search_by_currency(self, browser, data, currency: str, expected_length: int):
-        browser.go_to_niffler()
-        assert browser.find_element(MainPage.PROFILE_BUTTON).is_displayed()
+    def test_search_by_currency(self, niffler: Niffler, data, currency: str, expected_length: int):
+        niffler.main_page.go_to_niffler()
+        count_before = niffler.main_page.get_count_spending_on_main_page()
 
-        count_before = len(browser.find_elements(MainPage.LIST_SPENDINGS))
-        browser.main_page.select_currency(currency)
-        browser.wait_while_len_elements_not_equal(MainPage.LIST_SPENDINGS, count_before)
-        assert browser.is_element_have_property(MainPage.TABLE_SPENDINGS, 'childElementCount', value=expected_length)
+        niffler.main_page.select_currency(currency)
+        niffler.main_page.wait_while_counts_spending_not_equal(count_before)
+        assert niffler.main_page.get_count_spending_on_main_page() == expected_length
+
+
+class TestCategory:
+
+    @pytest.fixture()
+    def clean_categories(self, spends_client: SpendsHttpClient, spend_db: SpendDb):
+        categories_ids = spends_client.get_ids_all_categories()
+        spend_db.delete_categories_by_ids(categories_ids)
+
+    @staticmethod
+    def create_categories(spends_client, count):
+        for i in range(1, count + 1):
+            spends_client.add_category(f'limit{i}')
+
+    def test_limit_size_categories_for_user(self, spends_client, clean_categories):
+        self.create_categories(spends_client, 7)
+
+    @pytest.mark.parametrize('count, availability_adding', [
+        (7, False),
+        (8, True)
+    ])
+    def test_limit_size_categories_for_user(self, niffler, spends_client, clean_categories, count, availability_adding):
+        self.create_categories(spends_client, count)
+        niffler.profile_page.open_profile_page()
+
+        assert niffler.profile_page.is_categories_field_disabled() == availability_adding
+
+    @TestData.category({'category_name': 'duplicate', 'archived': False})
+    def test_no_possible_add_duplicate_category(self, clean_categories, niffler, category):
+        niffler.profile_page.open_profile_page()
+        niffler.profile_page.add_category('duplicate')
+        assert 'Cannot save duplicates' in niffler.profile_page.get_text_alert_message()
+
+    @TestData.category({'category_name': 'duplicate_archive', 'archived': False})
+    def test_no_possible_add_dupclicate_when_exist_archive_category(self, clean_categories, niffler, category):
+        niffler.profile_page.open_profile_page()
+        niffler.profile_page.set_archive_category()
+        niffler.profile_page.add_category('duplicate_archive')
+        niffler.profile_page.wait_error_alert_become_visible()
+        assert 'Cannot save duplicates' in niffler.profile_page.get_text_alert_message()

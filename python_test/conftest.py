@@ -1,8 +1,10 @@
 import os
+from typing import Any, Generator
 
 import pytest
 from dotenv import load_dotenv
 from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 from data_helper.api_helper import UserApiHelper, SpendsHttpClient
 from databases.spend_db import SpendDb
@@ -23,32 +25,52 @@ def envs() -> Envs:
     )
 
 
-@pytest.fixture(scope="session")
-def app_user(envs):
-    user_name, password = os.getenv("TEST_USERNAME"), os.getenv("TEST_PASSWORD")
-    UserApiHelper(envs.sign_up_url).create_user(user_name=user_name, user_password=password)
-    return user_name, password
-
-
-@pytest.fixture(scope='module')
-def auth(app_user: tuple[str, str]):
-    wd = webdriver.Chrome()
-    wd.maximize_window()
-    niffler = Niffler(wd)
-    user_name, password = app_user
-    niffler.go_to_niffler()
-    niffler.login_page.login_by_exist_user(user_name, password)
-    local_storage = niffler.wd.execute_script('return window.localStorage;')
-    token = local_storage['access_token']
-    yield niffler, token, {'user': user_name, 'password': password}
-
-
-@pytest.fixture(scope='module')
-def spends_client(envs: Envs, auth):
-    _, token, user = auth
-    return SpendsHttpClient(envs.gateway_url, token, user["user"])
+@pytest.fixture(scope='session')
+def app_user(envs: Envs):
+    UserApiHelper(envs.sign_up_url).create_user(user_name=envs.test_username, user_password=envs.test_password)
 
 
 @pytest.fixture(scope="session")
 def spend_db(envs) -> SpendDb:
     return SpendDb(envs.spend_db_url)
+
+
+@pytest.fixture(scope='module')
+def web_driver() -> Generator[WebDriver, Any, None]:
+    wd = webdriver.Chrome()
+    wd.maximize_window()
+    yield wd
+    wd.quit()
+
+
+@pytest.fixture(scope='module')
+def auth(web_driver: WebDriver, app_user, envs):
+    niffler = Niffler(web_driver)
+    niffler.login_page.go_to_niffler()
+    niffler.login_page.login_by_exist_user(envs.test_username, envs.test_password)
+    assert niffler.main_page.is_page_load(), 'Главная страница не прогрузилась'
+    local_storage = niffler.login_page.wd.execute_script('return window.localStorage;')
+    token = local_storage['access_token']
+    spends_client = SpendsHttpClient(envs.gateway_url, token, envs.test_username)
+    yield niffler, spends_client
+
+
+@pytest.fixture(scope='module')
+def niffler(auth: tuple[Niffler, SpendsHttpClient]) -> Generator[Niffler, Any, None]:
+    niffler, _ = auth
+    yield niffler
+
+
+@pytest.fixture(scope='module')
+def spends_client(auth: tuple[Niffler, SpendsHttpClient]) -> SpendsHttpClient:
+    _, spends_client = auth
+    return spends_client
+
+
+@pytest.fixture(params=[])
+def category(request, spends_client, spend_db):
+    test_category = spends_client.add_category(request.param['category_name'], request.param['archived'])
+    yield test_category
+    all_categories_ids = spends_client.get_ids_all_categories()
+    if test_category.id in all_categories_ids:
+        spend_db.delete_category(test_category.id)
