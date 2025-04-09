@@ -4,6 +4,7 @@ import pytest
 from faker import Faker
 from selenium import webdriver
 
+from model.config import Envs
 from model.niffler import Niffler
 from python_test.model.LoginPage import LoginPage
 from python_test.model.SignUpPage import SignUpPage
@@ -21,8 +22,8 @@ class TestPositiveScenario:
         yield niffler
         wd.quit()
 
-    def test_login_by_exist_user(self, browser: Niffler, app_user: tuple[str, str]):
-        user_name, password = app_user
+    def test_login_by_exist_user(self, browser: Niffler, envs: Envs):
+        user_name, password = envs.test_username, envs.test_password
         browser.login_page.go_to_niffler()
 
         browser.login_page.login_by_exist_user(user_name, password)

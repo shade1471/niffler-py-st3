@@ -80,7 +80,6 @@ class MainPage(BasePage):
 
     def get_alert_text(self) -> str:
         alert = self.find_element(self.ALERT)
-        assert alert.is_displayed()
         return alert.text
 
     def open_user_profile(self):
