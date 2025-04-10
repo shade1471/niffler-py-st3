@@ -9,7 +9,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from data_helper.api_helper import UserApiHelper, SpendsHttpClient
 from databases.spend_db import SpendDb
 from model.config import Envs
-from model.db.spend import SpendAdd
+from model.db.spend import SpendAdd, Category
 from model.niffler import Niffler
 
 
@@ -45,7 +45,7 @@ def web_driver() -> Generator[WebDriver, Any, None]:
 
 
 @pytest.fixture(scope='module')
-def auth(web_driver: WebDriver, app_user, envs):
+def auth(web_driver: WebDriver, app_user, envs) -> Generator[tuple[Niffler, SpendsHttpClient], Any, None]:
     niffler = Niffler(web_driver)
     niffler.login_page.go_to_niffler()
     niffler.login_page.login_by_exist_user(envs.test_username, envs.test_password)
@@ -69,8 +69,8 @@ def spends_client(auth: tuple[Niffler, SpendsHttpClient]) -> SpendsHttpClient:
 
 
 @pytest.fixture(params=[])
-def category(request, spends_client: SpendsHttpClient, spend_db: SpendDb):
-    test_category = spends_client.add_category(request.param['category_name'], request.param['archived'])
+def category(request, spends_client: SpendsHttpClient, spend_db: SpendDb) -> Generator[Category, Any, None]:
+    test_category = spends_client.add_category(**request.param)
     yield test_category
     all_categories_ids = spends_client.get_ids_all_categories()
     if test_category.id in all_categories_ids:
@@ -79,13 +79,7 @@ def category(request, spends_client: SpendsHttpClient, spend_db: SpendDb):
 
 @pytest.fixture(params=[])
 def spend(request, spends_client: SpendsHttpClient) -> Generator[SpendAdd, Any, None]:
-    category_name, amount = request.param['category'], request.param['amount']
-    currency, desc = 'RUB', ''
-    if 'currency' in request.param.keys():
-        currency = request.param['currency']
-    if 'desc' in request.param.keys():
-        desc = request.param['desc']
-    test_spend = spends_client.add_spend(category=category_name, amount=amount, currency=currency, desc=desc)
+    test_spend = spends_client.add_spend(**request.param)
     yield test_spend
     all_spends = spends_client.get_ids_all_spending()
     if test_spend.id in all_spends:

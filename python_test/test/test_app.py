@@ -5,6 +5,7 @@ import pytest
 from conftest import spends_client
 from databases.spend_db import SpendDb
 from marks import TestData
+from model.config import Envs
 from model.db.spend import SpendAdd, Category
 from model.niffler import Niffler
 from python_test.data_helper.api_helper import SpendsHttpClient
@@ -75,6 +76,21 @@ class TestSpending:
 
         assert niffler.main_page.get_alert_text() == 'Spendings succesfully deleted'
         assert niffler.main_page.get_count_spending_on_main_page() == count_before - 1
+
+    @TestData.spend({
+        'category': 'test_db',
+        'amount': 10_000,
+        'currency': 'KZT',
+        'desc': 'Проверка данных из БД',
+        'date': datetime(2024, 12, 31)
+    })
+    def test_data_spend_from_db(self, data, spend: SpendAdd, spend_db: SpendDb, envs: Envs):
+        spend_from_db = spend_db.get_spend_by_id(spend_id=spend.id)
+        assert spend_from_db.username == envs.test_username
+        assert spend_from_db.amount == spend.amount
+        assert spend_from_db.spend_date == datetime.strptime(spend.spendDate, "%Y-%m-%dT%H:%M:%S.%f%z").date()
+        assert spend_from_db.currency == spend.currency
+        assert spend_from_db.description == spend.description
 
 
 class TestSearch:
@@ -190,3 +206,14 @@ class TestCategory:
         niffler.main_page.click_add_spending()
         all_categories = niffler.spending_page.get_all_availability_categories()
         assert category.name in all_categories
+
+    @TestData.category({
+        'category_name': 'test_db',
+        'archived': False,
+    })
+    def test_data_category_from_db(self, clean_categories, category: Category, spend_db: SpendDb, envs: Envs):
+        category_from_db = spend_db.get_category_by_id(category_id=category.id)
+        assert category_from_db.archived == category.archived
+        assert category_from_db.name == category.name
+        assert category_from_db.username == category.username
+        assert category_from_db.id.__str__() == category.id

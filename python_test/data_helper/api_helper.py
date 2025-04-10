@@ -47,8 +47,8 @@ class SpendsHttpClient:
             'Content-Type': 'application/json'
         })
 
-    def add_spend(self, category: str, amount: float, currency='RUB', desc: str = '',
-                  date: datetime = None) -> SpendAdd:
+    def add_spend(self, category: str, amount: float, currency: str = 'RUB', desc: str = '',
+                  date: datetime | str = None) -> SpendAdd:
         if currency not in ('RUB', 'KZT', 'EUR', 'USD'):
             raise ValueError('Не правильный тип валюты')
         if not date:

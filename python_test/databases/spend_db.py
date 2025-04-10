@@ -3,7 +3,7 @@ from typing import Sequence
 from sqlalchemy import create_engine, Engine
 from sqlmodel import Session, select
 
-from model.db.spend import Category
+from model.db.spend import Category, Spend
 
 
 class SpendDb:
@@ -20,6 +20,11 @@ class SpendDb:
     def get_category_by_id(self, category_id: str) -> Category:
         with Session(self.engine) as session:
             statement = select(Category).where(Category.id == category_id)
+            return session.exec(statement).first()
+
+    def get_spend_by_id(self, spend_id: str) -> Spend:
+        with Session(self.engine) as session:
+            statement = select(Spend).where(Spend.id == spend_id)
             return session.exec(statement).first()
 
     def delete_category(self, category_id: str):

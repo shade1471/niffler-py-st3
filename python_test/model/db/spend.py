@@ -13,9 +13,9 @@ class Category(SQLModel, table=True):
 
 
 class Spend(SQLModel, table=True):
-    id: Optional[str] = Field(default=None, primary_key=True)
+    id: str = Field(default=None, primary_key=True)
     username: str
-    spendDate: datetime
+    spend_date: datetime
     currency: str
     amount: float
     description: str
