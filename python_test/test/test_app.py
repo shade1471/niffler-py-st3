@@ -5,7 +5,7 @@ import pytest
 from conftest import spends_client
 from databases.spend_db import SpendDb
 from marks import TestData
-from model.ProfilePage import ProfilePage
+from model.db.spend import SpendAdd, Category
 from model.niffler import Niffler
 from python_test.data_helper.api_helper import SpendsHttpClient
 
@@ -15,11 +15,11 @@ class TestSpending:
     @pytest.fixture(scope='class')
     def data(self, spends_client: SpendsHttpClient):
         spends_client.delete_all_spending()
-        spends_client.add_spend('study', 500)
+        spends_client.add_spend('study', 2_000)
         yield
         spends_client.delete_all_spending()
 
-    def test_add_spending_gui(self, niffler: Niffler, data):
+    def test_add_spending_gui(self, data, niffler: Niffler):
         niffler.main_page.go_to_niffler()
         count_before = niffler.main_page.get_count_spending_on_main_page()
         niffler.main_page.click_add_spending()
@@ -67,11 +67,11 @@ class TestSpending:
         niffler.spending_page.click_save()
         assert niffler.spending_page.get_alert_text() == 'Amount should be greater than 0.01'
 
-    def test_delete_spending_gui(self, niffler: Niffler, data, spends_client: SpendsHttpClient):
-        spend_id = spends_client.add_spend('study', 500)
+    @TestData.spend({'category': 'study', 'amount': 10_000})
+    def test_delete_spending_gui(self, niffler: Niffler, data, spend: SpendAdd):
         niffler.main_page.go_to_niffler()
         count_before = niffler.main_page.get_count_spending_on_main_page()
-        niffler.main_page.delete_spending_by_id(spend_id)
+        niffler.main_page.delete_spending_by_id(spend.id)
 
         assert niffler.main_page.get_alert_text() == 'Spendings succesfully deleted'
         assert niffler.main_page.get_count_spending_on_main_page() == count_before - 1
@@ -146,29 +146,47 @@ class TestCategory:
         for i in range(1, count + 1):
             spends_client.add_category(f'limit{i}')
 
-    def test_limit_size_categories_for_user(self, spends_client, clean_categories):
-        self.create_categories(spends_client, 7)
-
     @pytest.mark.parametrize('count, availability_adding', [
         (7, False),
         (8, True)
     ])
-    def test_limit_size_categories_for_user(self, niffler, spends_client, clean_categories, count, availability_adding):
+    def test_limit_size_categories_for_user(self, niffler: Niffler, spends_client: SpendsHttpClient, clean_categories,
+                                            count: int, availability_adding: bool):
         self.create_categories(spends_client, count)
         niffler.profile_page.open_profile_page()
 
         assert niffler.profile_page.is_categories_field_disabled() == availability_adding
 
     @TestData.category({'category_name': 'duplicate', 'archived': False})
-    def test_no_possible_add_duplicate_category(self, clean_categories, niffler, category):
+    def test_no_possible_add_duplicate_category(self, clean_categories, niffler: Niffler, category: Category):
         niffler.profile_page.open_profile_page()
         niffler.profile_page.add_category('duplicate')
         assert 'Cannot save duplicates' in niffler.profile_page.get_text_alert_message()
 
     @TestData.category({'category_name': 'duplicate_archive', 'archived': False})
-    def test_no_possible_add_dupclicate_when_exist_archive_category(self, clean_categories, niffler, category):
+    def test_no_possible_add_dupclicate_when_exist_archive_category(self, clean_categories, niffler: Niffler,
+                                                                    category: Category):
         niffler.profile_page.open_profile_page()
         niffler.profile_page.set_archive_category()
         niffler.profile_page.add_category('duplicate_archive')
         niffler.profile_page.wait_error_alert_become_visible()
         assert 'Cannot save duplicates' in niffler.profile_page.get_text_alert_message()
+
+    @TestData.category({'category_name': 'archive', 'archived': False})
+    def test_no_visibility_archived_category_where_add_spending(self, clean_categories, niffler: Niffler,
+                                                                spends_client: SpendsHttpClient,
+                                                                category: Category):
+        niffler.profile_page.open_profile_page()
+        niffler.profile_page.set_archive_category()
+        self.create_categories(spends_client, 3)
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        all_categories = niffler.spending_page.get_all_availability_categories()
+        assert category.name not in all_categories
+
+    @TestData.category({'category_name': 'new_category', 'archived': False})
+    def test_visibility_exist_category_where_add_spending(self, clean_categories, niffler: Niffler, category: Category):
+        niffler.main_page.go_to_niffler()
+        niffler.main_page.click_add_spending()
+        all_categories = niffler.spending_page.get_all_availability_categories()
+        assert category.name in all_categories

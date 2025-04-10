@@ -21,6 +21,7 @@ class SpendingPage(BasePage):
     DATE_FIELD = (By.NAME, 'date')
     ALERT = (By.CSS_SELECTOR, '.MuiAlert-message')
     ADD_BUTTON = (By.ID, 'save')
+    LIST_CATEGORIES = (By.CSS_SELECTOR, '.MuiChip-labelMedium')
 
     def is_page_load(self):
         return self.find_element(self.AMOUNT_FIELD).is_displayed()
@@ -76,3 +77,7 @@ class SpendingPage(BasePage):
     def get_alert_text(self) -> str:
         el = self.wait_element_becomes_visible(self.ALERT)
         return el.text
+
+    def get_all_availability_categories(self):
+        elements = self.find_elements(self.LIST_CATEGORIES)
+        return [el.text for el in elements]

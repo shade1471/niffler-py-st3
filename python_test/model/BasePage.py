@@ -1,5 +1,4 @@
 import os
-from urllib.parse import urljoin
 
 from dotenv import load_dotenv
 from selenium.webdriver.remote.webelement import WebElement

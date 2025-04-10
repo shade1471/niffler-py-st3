@@ -5,9 +5,7 @@ from faker import Faker
 from selenium import webdriver
 
 from model.config import Envs
-from model.niffler import Niffler
 from python_test.model.LoginPage import LoginPage
-from python_test.model.SignUpPage import SignUpPage
 from python_test.model.niffler import Niffler
 
 fake = Faker()
@@ -83,8 +81,7 @@ class TestNegativeScenario:
         browser.sign_up_page.fill_password_submit(random_text)
         browser.sign_up_page.click_sign_up()
 
-        fields_lst = [browser.sign_up_page.find_element(e)
-                      for e in (SignUpPage.PASSWORD_ERROR_NOTIFY, SignUpPage.PASSWORD_SUBMIT_ERROR_NOTIFY)]
+        fields_lst = browser.sign_up_page.get_notify_list_off_all_fields()
         error_text = 'Allowed password length should be from 3 to 12 characters'
         assert all(el.text == error_text for el in fields_lst), 'Не у каждого поля есть текст предупреждение'
 

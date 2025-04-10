@@ -1,7 +1,8 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field
 
 
 class Category(SQLModel, table=True):
@@ -12,7 +13,7 @@ class Category(SQLModel, table=True):
 
 
 class Spend(SQLModel, table=True):
-    id: str = Field(default=None, primary_key=True)
+    id: Optional[str] = Field(default=None, primary_key=True)
     username: str
     spendDate: datetime
     currency: str
@@ -22,8 +23,10 @@ class Spend(SQLModel, table=True):
 
 
 class SpendAdd(BaseModel):
-    amount: float
-    description: str
-    category: str
+    id: Optional[str] = None
     spendDate: str
-    currency: str
+    category: Category
+    currency: str = 'RUB'
+    amount: float
+    description: str = ''
+    username: str

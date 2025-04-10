@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 import requests
 
-from model.db.spend import Category
+from model.db.spend import Category, SpendAdd
 
 
 class UserApiHelper:
@@ -47,32 +47,27 @@ class SpendsHttpClient:
             'Content-Type': 'application/json'
         })
 
-    def add_spend(self, category: str, amount: int, currency='RUB', desc: str = '',
-                  date: datetime = None) -> int:
+    def add_spend(self, category: str, amount: float, currency='RUB', desc: str = '',
+                  date: datetime = None) -> SpendAdd:
         if currency not in ('RUB', 'KZT', 'EUR', 'USD'):
             raise ValueError('Не правильный тип валюты')
         if not date:
             date = datetime.now(timezone.utc)
         formatted_time = date.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
-        spend_dict = {
-            "spendDate": formatted_time,
-            "category": {
-                "name": category,
-                "username": self.user_name,
-                "archived": True
-            },
-            "currency": currency,
-            "amount": amount,
-            "description": desc,
-            "username": self.user_name
-        }
-
-        _resp = self.session.post(f'{self.base_url_spends}/add', json=spend_dict)
+        category_spend = Category(name=category, username=self.user_name, archived=False)
+        spend = SpendAdd(
+            spendDate=formatted_time,
+            category=category_spend,
+            currency=currency,
+            amount=amount,
+            description=desc,
+            username=self.user_name
+        )
+        _resp = self.session.post(f'{self.base_url_spends}/add', json=spend.model_dump())
         self.raise_for_status(_resp)
-        body = _resp.json()
-        return body['id']
+        return SpendAdd.model_validate(_resp.json())
 
-    def get_ids_all_spending(self):
+    def get_ids_all_spending(self) -> list[str]:
         ids = []
         for currency in ['RUB', 'KZT', 'USD', 'EUR']:
             _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
@@ -81,13 +76,12 @@ class SpendsHttpClient:
             ids += [spend['id'] for spend in body]
         return ids
 
-    def get_spending_ids_by_currency(self, currency: Literal['RUB', 'KZT', 'USD', 'EUR'] = 'RUB'):
+    def get_spending_ids_by_currency(self, currency: Literal['RUB', 'KZT', 'USD', 'EUR'] = 'RUB') -> list[str]:
         _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
         self.raise_for_status(_resp)
-        body = _resp.json()
-        return [spend['id'] for spend in body]
+        return [spend['id'] for spend in _resp.json()]
 
-    def delete_spending_by_id(self, spending_id: int):
+    def delete_spending_by_id(self, spending_id: str) -> int:
         _resp = self.session.delete(f'{self.base_url_spends}/remove?ids={spending_id}')
         self.raise_for_status(_resp)
         return _resp.status_code
@@ -103,15 +97,10 @@ class SpendsHttpClient:
         self.raise_for_status(_resp)
         return Category.model_validate(_resp.json())
 
-    def get_ids_all_categories(self, exclude_archived: bool = False):
+    def get_ids_all_categories(self, exclude_archived: bool = False) -> list[str]:
         _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
         self.raise_for_status(_resp)
         return [spend['id'] for spend in _resp.json()]
-
-    # def delete_all_categories(self):
-    #     ids_categories = self.get_ids_all_categories()
-    #     for id_category in ids_categories:
-    #         delete_category(id_category)
 
     @staticmethod
     def raise_for_status(response: requests.Response):

@@ -52,3 +52,6 @@ class SignUpPage(BasePage):
 
     def get_error_text_by_user_field(self):
         return self.find_element(self.USER_ERROR_NOTIFY).text
+
+    def get_notify_list_off_all_fields(self):
+        return [self.find_element(e) for e in (self.PASSWORD_ERROR_NOTIFY, self.PASSWORD_SUBMIT_ERROR_NOTIFY)]
