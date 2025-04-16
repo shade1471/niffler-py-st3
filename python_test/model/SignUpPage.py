@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 
 from python_test.model.BasePage import BasePage
@@ -19,28 +20,34 @@ class SignUpPage(BasePage):
     def is_page_load(self):
         return self.find_element(self.SIGN_UP_BUTTON).is_displayed()
 
+    @allure.step('Перейти на страницу регистрации Niffler')
     def go_sign_up(self):
         self.wd.get(self.sign_up_url)
         assert self.is_page_load(), 'Страница регистрации не прогрузилась'
 
+    @allure.step('Заполнить поле "Имя пользователя"')
     def fill_user_name(self, name: str):
         el = self.find_element(self.USER_NAME_FIELD)
         el.clear()
         el.send_keys(name)
 
+    @allure.step('Заполнить поле "Пароль"')
     def fill_password(self, password: str):
         el = self.find_element(self.PASSWORD_FIELD)
         el.clear()
         el.send_keys(password)
 
+    @allure.step('Заполнить поле "Подтверждение пароля"')
     def fill_password_submit(self, user_password: str):
         el = self.find_element(self.PASSWORD_SUBMIT_FIELD)
         el.clear()
         el.send_keys(user_password)
 
+    @allure.step('Нажать кнопку "Sign UP"')
     def click_sign_up(self):
         self.find_element(self.SIGN_UP_BUTTON).click()
 
+    @allure.step('Зарегистрировать пользователя {user_name}')
     def sign_up_user(self, user_name: str, user_password: str):
         self.fill_user_name(user_name)
         self.fill_password(user_password)
@@ -50,6 +57,7 @@ class SignUpPage(BasePage):
     def get_success_sign_up_notify(self):
         return self.find_element(self.SUCCESS_NOTIFY).text
 
+    @allure.step('Получить текст ошибки у поля "Имя пользователя"')
     def get_error_text_by_user_field(self):
         return self.find_element(self.USER_ERROR_NOTIFY).text
 

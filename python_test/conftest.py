@@ -2,15 +2,41 @@ import os
 from typing import Any, Generator
 
 import pytest
+from allure_commons.reporter import AllureReporter
+from allure_pytest.listener import AllureListener
 from dotenv import load_dotenv
+from pytest import FixtureDef, FixtureRequest
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
-from data_helper.api_helper import UserApiHelper, SpendsHttpClient
-from databases.spend_db import SpendDb
-from model.config import Envs
-from model.db.spend import SpendAdd, Category
-from model.niffler import Niffler
+from python_test.data_helper.api_helper import UserApiHelper, SpendsHttpClient
+from python_test.databases.spend_db import SpendDb
+from python_test.model.config import Envs
+from python_test.model.db.spend import SpendAdd, Category
+from python_test.model.niffler import Niffler
+
+
+def allure_logger(config) -> AllureReporter:
+    listener: AllureListener = config.pluginmanager.get_plugin("allure_listener")
+    return listener.allure_logger
+
+
+@pytest.hookimpl(hookwrapper=True, trylast=True)
+def pytest_fixture_setup(fixturedef: FixtureDef, request: FixtureRequest):
+    yield
+    logger = allure_logger(request.config)
+    item = logger.get_last_item()
+    scope_letter = fixturedef.scope[0].upper()
+    normalize_fix_name = " ".join(fixturedef.argname.split("_")).title()
+    item.name = f'[{scope_letter}] {normalize_fix_name}'
+
+
+@pytest.hookimpl(hookwrapper=True, tryfirst=True)
+def pytest_runtest_teardown(item):
+    yield
+    reporter = allure_logger(item.config)
+    test = reporter.get_test(None)
+    test.labels = list(filter(lambda x: x.name not in ("suite", "subSuite", "parentSuite"), test.labels))
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -69,7 +95,8 @@ def spends_client(auth: tuple[Niffler, SpendsHttpClient]) -> SpendsHttpClient:
 
 
 @pytest.fixture(params=[])
-def category(request, spends_client: SpendsHttpClient, spend_db: SpendDb) -> Generator[Category, Any, None]:
+def category(request: FixtureRequest, spends_client: SpendsHttpClient, spend_db: SpendDb) -> Generator[
+    Category, Any, None]:
     test_category = spends_client.add_category(**request.param)
     yield test_category
     all_categories_ids = spends_client.get_ids_all_categories()
@@ -78,7 +105,7 @@ def category(request, spends_client: SpendsHttpClient, spend_db: SpendDb) -> Gen
 
 
 @pytest.fixture(params=[])
-def spend(request, spends_client: SpendsHttpClient) -> Generator[SpendAdd, Any, None]:
+def spend(request: FixtureRequest, spends_client: SpendsHttpClient) -> Generator[SpendAdd, Any, None]:
     test_spend = spends_client.add_spend(**request.param)
     yield test_spend
     all_spends = spends_client.get_ids_all_spending()
