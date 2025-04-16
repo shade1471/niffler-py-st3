@@ -47,7 +47,15 @@ class SpendsHttpClient:
             'Content-Type': 'application/json'
         })
 
-    def add_spend(self, category: str, amount: float, currency: str = 'RUB', desc: str = '',
+    def get_spend_by_id(self, spend_id: str):
+        _resp = self.session.get(f'{self.base_url_spends}/{spend_id}')
+        self.raise_for_status(_resp)
+        return SpendAdd.model_validate(_resp.json())
+
+    def add_spend(self, category: str,
+                  amount: float,
+                  currency: str = 'RUB',
+                  desc: str = '',
                   date: datetime | str = None) -> SpendAdd:
         if currency not in ('RUB', 'KZT', 'EUR', 'USD'):
             raise ValueError('Не правильный тип валюты')
@@ -64,6 +72,31 @@ class SpendsHttpClient:
             username=self.user_name
         )
         _resp = self.session.post(f'{self.base_url_spends}/add', json=spend.model_dump())
+        self.raise_for_status(_resp)
+        return SpendAdd.model_validate(_resp.json())
+
+    def update_spend(self, spend_id: str,
+                     category: str,
+                     amount: float,
+                     currency: str = 'RUB',
+                     desc: str = '',
+                     date: datetime | str = None) -> SpendAdd:
+        if currency not in ('RUB', 'KZT', 'EUR', 'USD'):
+            raise ValueError('Не правильный тип валюты')
+        if not date:
+            date = datetime.now(timezone.utc)
+        formatted_time = date.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
+        category_spend = Category(name=category, username=self.user_name, archived=False)
+        spend = SpendAdd(
+            id=spend_id,
+            spendDate=formatted_time,
+            category=category_spend,
+            currency=currency,
+            amount=amount,
+            description=desc,
+            username=self.user_name
+        )
+        _resp = self.session.patch(f'{self.base_url_spends}/edit', json=spend.model_dump())
         self.raise_for_status(_resp)
         return SpendAdd.model_validate(_resp.json())
 
@@ -94,6 +127,12 @@ class SpendsHttpClient:
     def add_category(self, category_name: str, archived: bool = False) -> Category:
         category_dict = {'name': category_name, 'username': self.user_name, 'archived': archived}
         _resp = self.session.post(f'{self.base_url_categories}/add', json=category_dict)
+        self.raise_for_status(_resp)
+        return Category.model_validate(_resp.json())
+
+    def update_category(self, category_id: str, category_name: str, archived: bool = False):
+        category_dict = {"id": category_id, 'name': category_name, 'username': self.user_name, 'archived': archived}
+        _resp = self.session.patch(f'{self.base_url_categories}/update', json=category_dict)
         self.raise_for_status(_resp)
         return Category.model_validate(_resp.json())
 

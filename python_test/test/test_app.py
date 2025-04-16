@@ -92,6 +92,33 @@ class TestSpending:
         assert spend_from_db.currency == spend.currency
         assert spend_from_db.description == spend.description
 
+    @TestData.spend({
+        'category': 'study',
+        'amount': 600,
+        'currency': 'USD',
+        'desc': 'Coursera online courses',
+        'date': datetime(2024, 10, 10)
+    })
+    def test_data_spend_from_db_after_api_update(self, data, spend: SpendAdd, spend_db: SpendDb,
+                                                 spends_client: SpendsHttpClient):
+        new_category = 'Обучение'
+        new_amount = 50_000
+        new_currency = 'RUB'
+        new_desc = 'Онлайн курсы'
+        new_date = datetime(2024, 10, 15)
+
+        update_spend = spends_client.update_spend(spend.id, new_category, new_amount, new_currency, new_desc, new_date)
+
+        spend_from_db = spend_db.get_spend_by_id(spend_id=spend.id)
+        category_from_db = spend_db.get_category_by_id(update_spend.category.id)
+
+        assert spend_from_db.id.__str__() == spend.id
+        assert category_from_db.name == new_category
+        assert spend_from_db.amount == new_amount
+        assert spend_from_db.currency == new_currency
+        assert spend_from_db.description == new_desc
+        assert spend_from_db.spend_date == new_date.date()
+
 
 class TestSearch:
 
@@ -190,8 +217,7 @@ class TestCategory:
 
     @TestData.category({'category_name': 'archive', 'archived': False})
     def test_no_visibility_archived_category_where_add_spending(self, clean_categories, niffler: Niffler,
-                                                                spends_client: SpendsHttpClient,
-                                                                category: Category):
+                                                                spends_client: SpendsHttpClient, category: Category):
         niffler.profile_page.open_profile_page()
         niffler.profile_page.set_archive_category()
         self.create_categories(spends_client, 3)
@@ -213,7 +239,22 @@ class TestCategory:
     })
     def test_data_category_from_db(self, clean_categories, category: Category, spend_db: SpendDb, envs: Envs):
         category_from_db = spend_db.get_category_by_id(category_id=category.id)
+
         assert category_from_db.archived == category.archived
         assert category_from_db.name == category.name
-        assert category_from_db.username == category.username
-        assert category_from_db.id.__str__() == category.id
+        assert category_from_db.username == envs.test_username
+
+    @TestData.category({
+        'category_name': 'category_db_after_update',
+        'archived': False,
+    })
+    def test_data_category_from_db_after_api_update(self, clean_categories, category: Category, spend_db: SpendDb,
+                                                    spends_client: SpendsHttpClient):
+        new_category_name = 'api_update_category'
+        new_attribute_archived = True
+
+        spends_client.update_category(category.id, new_category_name, new_attribute_archived)
+        category_from_db = spend_db.get_category_by_id(category_id=category.id)
+
+        assert category_from_db.name == new_category_name
+        assert category_from_db.archived == new_attribute_archived
