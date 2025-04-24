@@ -13,7 +13,7 @@ class BasePage:
     def __init__(self, driver):
         self.wd = driver
         self.base_url = os.getenv('FRONTEND_URL')
-        self.sign_up_url = os.getenv('SIGN_UP_URL')
+        self.sign_up_url = f'{os.getenv('AUTH_URL')}/register'
 
     def find_element(self, locator: tuple[str, str], timeout=15) -> WebElement:
         return WebDriverWait(self.wd, timeout).until(EC.presence_of_element_located(locator),

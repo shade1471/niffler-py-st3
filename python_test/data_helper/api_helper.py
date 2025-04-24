@@ -22,8 +22,8 @@ class UserApiHelper:
     session: requests.Session
     base_url: str
 
-    def __init__(self, sign_up_url: str):
-        self.sign_up_url = sign_up_url
+    def __init__(self, auth_url: str):
+        self.sign_up_url = f'{auth_url}/register'
         self.session = requests.session()
         self.session.hooks["response"].append(attach_response)
 

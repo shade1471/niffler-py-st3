@@ -1,8 +1,10 @@
 import os
 from typing import Any, Generator
 
+import allure
 import pytest
 from allure_commons.reporter import AllureReporter
+from allure_commons.types import AttachmentType
 from allure_pytest.listener import AllureListener
 from dotenv import load_dotenv
 from pytest import FixtureDef, FixtureRequest
@@ -10,6 +12,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from python_test.data_helper.api_helper import UserApiHelper, SpendsHttpClient
+from python_test.data_helper.auth_client import AuthClient
 from python_test.databases.spend_db import SpendDb
 from python_test.model.config import Envs
 from python_test.model.db.spend import SpendAdd, Category
@@ -45,7 +48,8 @@ def envs() -> Envs:
     return Envs(
         frontend_url=os.getenv("FRONTEND_URL"),
         gateway_url=os.getenv("GATEWAY_URL"),
-        sign_up_url=os.getenv('SIGN_UP_URL'),
+        auth_url=os.getenv('AUTH_URL'),
+        auth_secret=os.getenv("AUTH_SECRET"),
         spend_db_url=os.getenv("SPEND_DB_URL"),
         test_username=os.getenv("TEST_USERNAME"),
         test_password=os.getenv("TEST_PASSWORD")
@@ -54,7 +58,7 @@ def envs() -> Envs:
 
 @pytest.fixture(scope='session')
 def app_user(envs: Envs):
-    UserApiHelper(envs.sign_up_url).create_user(user_name=envs.test_username, user_password=envs.test_password)
+    UserApiHelper(envs.auth_url).create_user(user_name=envs.test_username, user_password=envs.test_password)
 
 
 @pytest.fixture(scope="session")
@@ -71,7 +75,7 @@ def web_driver() -> Generator[WebDriver, Any, None]:
 
 
 @pytest.fixture(scope='module')
-def auth(web_driver: WebDriver, app_user, envs) -> Generator[tuple[Niffler, SpendsHttpClient], Any, None]:
+def auth_web(web_driver: WebDriver, app_user, envs) -> Generator[tuple[Niffler, SpendsHttpClient], Any, None]:
     niffler = Niffler(web_driver)
     niffler.login_page.go_to_niffler()
     niffler.login_page.login_by_exist_user(envs.test_username, envs.test_password)
@@ -82,15 +86,22 @@ def auth(web_driver: WebDriver, app_user, envs) -> Generator[tuple[Niffler, Spen
     yield niffler, spends_client
 
 
+@pytest.fixture(scope="session")
+def auth_api_token(envs: Envs):
+    token = AuthClient(envs).auth(envs.test_username, envs.test_password)
+    allure.attach(token, name="token.txt", attachment_type=AttachmentType.TEXT)
+    return token
+
+
 @pytest.fixture(scope='module')
-def niffler(auth: tuple[Niffler, SpendsHttpClient]) -> Generator[Niffler, Any, None]:
-    niffler, _ = auth
+def niffler(auth_web) -> Generator[Niffler, Any, None]:
+    niffler, _ = auth_web
     yield niffler
 
 
 @pytest.fixture(scope='module')
-def spends_client(auth: tuple[Niffler, SpendsHttpClient]) -> SpendsHttpClient:
-    _, spends_client = auth
+def spends_client(auth_web) -> SpendsHttpClient:
+    _, spends_client = auth_web
     return spends_client
 
 
