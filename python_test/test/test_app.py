@@ -7,7 +7,8 @@ from python_test.data_helper.api_helper import SpendsHttpClient
 from python_test.databases.spend_db import SpendDb
 from python_test.marks import TestData
 from python_test.model.config import Envs
-from python_test.model.db.spend import SpendAdd, Category
+from python_test.model.db.category import Category
+from python_test.model.db.spend import SpendAdd
 from python_test.model.niffler import Niffler
 from python_test.report_helper import Epic, Feature, Story
 

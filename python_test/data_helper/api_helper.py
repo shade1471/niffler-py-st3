@@ -6,36 +6,28 @@ from urllib.parse import urljoin
 
 import allure
 import requests
-from allure_commons.types import AttachmentType
-from requests import Response
-from requests_toolbelt.utils.dump import dump_response
 
-from python_test.model.db.spend import SpendAdd, Category
-
-
-def attach_response(response: Response, *args, **kwargs):
-    attachment_name = f'{response.request.method} {response.request.url}'
-    allure.attach(dump_response(response), attachment_name, attachment_type=AttachmentType.TEXT)
+from python_test.model.config import Envs
+from python_test.model.db.category import Category
+from python_test.model.db.spend import SpendAdd
+from python_test.utils.sessions import BaseSession
 
 
 class UserApiHelper:
     session: requests.Session
     base_url: str
 
-    def __init__(self, auth_url: str):
-        self.sign_up_url = f'{auth_url}/register'
-        self.session = requests.session()
-        self.session.hooks["response"].append(attach_response)
+    def __init__(self, envs: Envs):
+        self.session = BaseSession(base_url=f'{envs.auth_url}')
 
     @allure.step('Создать пользователя {user_name}')
     def create_user(self, user_name: str, user_password: str):
-        with requests.Session() as session:
-            _resp = session.get(self.sign_up_url)
-            data = {'username': user_name,
-                    'password': user_password,
-                    'passwordSubmit': user_password,
-                    '_csrf': _resp.cookies['XSRF-TOKEN']}
-            response = session.post(self.sign_up_url, data)
+        _resp = self.session.get('/register')
+        data = {'username': user_name,
+                'password': user_password,
+                'passwordSubmit': user_password,
+                '_csrf': _resp.cookies['XSRF-TOKEN']}
+        response = self.session.post('', data)
         if response.status_code == HTTPStatus.CREATED:
             logging.info(f'Пользователь {user_name} зарегистрирован')
         else:
@@ -44,12 +36,14 @@ class UserApiHelper:
 
 class SpendsHttpClient:
     session: requests.Session
+    base_url: str
     base_url_spends: str
     base_url_categories: str
 
-    def __init__(self, gateway_url: str, token: str, user: str):
-        self.base_url_spends = urljoin(gateway_url, "/api/spends")
-        self.base_url_categories = urljoin(gateway_url, "/api/categories")
+    def __init__(self, envs: Envs, token: str, user: str):
+        self.session = BaseSession(base_url=envs.gateway_url)
+        self.base_url_spends = urljoin(envs.gateway_url, "/api/spends")
+        self.base_url_categories = urljoin(envs.gateway_url, "/api/categories")
         self.user_name = user
         self.session = requests.session()
         self.session.headers.update({
@@ -57,12 +51,10 @@ class SpendsHttpClient:
             'Authorization': f'Bearer {token}',
             'Content-Type': 'application/json'
         })
-        self.session.hooks["response"].append(attach_response)
 
     @allure.step('Получить трату по id')
     def get_spend_by_id(self, spend_id: str):
         _resp = self.session.get(f'{self.base_url_spends}/{spend_id}')
-        self.raise_for_status(_resp)
         return SpendAdd.model_validate(_resp.json())
 
     @allure.step('Добавить новую трату')
@@ -86,7 +78,6 @@ class SpendsHttpClient:
             username=self.user_name
         )
         _resp = self.session.post(f'{self.base_url_spends}/add', json=spend.model_dump())
-        self.raise_for_status(_resp)
         return SpendAdd.model_validate(_resp.json())
 
     @allure.step('Обновить трату')
@@ -112,7 +103,6 @@ class SpendsHttpClient:
             username=self.user_name
         )
         _resp = self.session.patch(f'{self.base_url_spends}/edit', json=spend.model_dump())
-        self.raise_for_status(_resp)
         return SpendAdd.model_validate(_resp.json())
 
     @allure.step('Получить id всех трат пользователя')
@@ -120,7 +110,6 @@ class SpendsHttpClient:
         ids = []
         for currency in ['RUB', 'KZT', 'USD', 'EUR']:
             _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
-            self.raise_for_status(_resp)
             body = _resp.json()
             ids += [spend['id'] for spend in body]
         return ids
@@ -128,13 +117,11 @@ class SpendsHttpClient:
     @allure.step('Получить id всех трат пользователя по типу валюты')
     def get_spending_ids_by_currency(self, currency: Literal['RUB', 'KZT', 'USD', 'EUR'] = 'RUB') -> list[str]:
         _resp = self.session.get(f'{self.base_url_spends}/all?filterCurrency={currency}')
-        self.raise_for_status(_resp)
         return [spend['id'] for spend in _resp.json()]
 
     @allure.step('Удалить трату')
     def delete_spending_by_id(self, spending_id: str) -> int:
         _resp = self.session.delete(f'{self.base_url_spends}/remove?ids={spending_id}')
-        self.raise_for_status(_resp)
         return _resp.status_code
 
     @allure.step('Удалить все траты пользователя')
@@ -147,27 +134,15 @@ class SpendsHttpClient:
     def add_category(self, category_name: str, archived: bool = False) -> Category:
         category_dict = {'name': category_name, 'username': self.user_name, 'archived': archived}
         _resp = self.session.post(f'{self.base_url_categories}/add', json=category_dict)
-        self.raise_for_status(_resp)
         return Category.model_validate(_resp.json())
 
     @allure.step('Обновить категорию')
     def update_category(self, category_id: str, category_name: str, archived: bool = False):
         category_dict = {"id": category_id, 'name': category_name, 'username': self.user_name, 'archived': archived}
         _resp = self.session.patch(f'{self.base_url_categories}/update', json=category_dict)
-        self.raise_for_status(_resp)
         return Category.model_validate(_resp.json())
 
     @allure.step('Получить id всех категорий пользователя')
     def get_ids_all_categories(self, exclude_archived: bool = False) -> list[str]:
         _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
-        self.raise_for_status(_resp)
         return [spend['id'] for spend in _resp.json()]
-
-    @staticmethod
-    def raise_for_status(response: requests.Response):
-        try:
-            response.raise_for_status()
-        except requests.HTTPError as e:
-            if response.status_code >= 400:
-                e.add_note(response.text)
-                raise
