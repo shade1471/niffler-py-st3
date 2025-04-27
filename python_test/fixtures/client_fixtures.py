@@ -7,7 +7,7 @@ from python_test.model.config import Envs
 
 @pytest.fixture(scope="session")
 def spends_client(envs: Envs, auth_token: str) -> SpendsHttpClient:
-    return SpendsHttpClient(envs, auth_token, envs.test_username)
+    return SpendsHttpClient(envs, auth_token)
 
 
 @pytest.fixture(scope="session")

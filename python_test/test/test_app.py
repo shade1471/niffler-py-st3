@@ -112,7 +112,7 @@ class TestSpending:
         'date': datetime(2024, 12, 31)
     })
     @allure.story(Story.api)
-    @allure.title('Добавление траты через API')
+    @allure.title('Добавление траты через API, проверка корректности данных в БД')
     def test_data_spend_from_db(self, data, spend: SpendAdd, spend_db: SpendDb, envs: Envs):
         spend_from_db = spend_db.get_spend_by_id(spend_id=spend.id)
 
@@ -131,7 +131,7 @@ class TestSpending:
         'date': datetime(2024, 10, 10)
     })
     @allure.story(Story.api)
-    @allure.title('Обновление траты через API')
+    @allure.title('Обновление траты через API, проверка корректности данных в БД')
     def test_data_spend_from_db_after_api_update(self, data, spend: SpendAdd, spend_db: SpendDb,
                                                  spends_client: SpendsHttpClient):
         new_category = 'Обучение'
@@ -306,7 +306,7 @@ class TestCategory:
         'archived': False,
     })
     @allure.story(Story.api)
-    @allure.title('Добавление категории через API')
+    @allure.title('Добавление категории через API, проверка корректности данных в БД')
     def test_data_category_from_db(self, clean_categories, category: Category, spend_db: SpendDb, envs: Envs):
         category_from_db = spend_db.get_category_by_id(category_id=category.id)
 
@@ -320,7 +320,7 @@ class TestCategory:
         'archived': False,
     })
     @allure.story(Story.api)
-    @allure.title('Обновление категории через API')
+    @allure.title('Обновление категории через API, проверка корректности данных в БД')
     def test_data_category_from_db_after_api_update(self, clean_categories, category: Category, spend_db: SpendDb,
                                                     spends_client: SpendsHttpClient):
         new_category_name = 'api_update_category'

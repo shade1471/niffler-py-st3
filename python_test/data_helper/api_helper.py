@@ -40,11 +40,11 @@ class SpendsHttpClient:
     base_url_spends: str
     base_url_categories: str
 
-    def __init__(self, envs: Envs, token: str, user: str):
+    def __init__(self, envs: Envs, token: str):
         self.session = BaseSession(base_url=envs.gateway_url)
         self.base_url_spends = urljoin(envs.gateway_url, "/api/spends")
         self.base_url_categories = urljoin(envs.gateway_url, "/api/categories")
-        self.user_name = user
+        self.user_name = envs.test_username
         self.session = requests.session()
         self.session.headers.update({
             'Accept': 'application/json',
@@ -136,6 +136,12 @@ class SpendsHttpClient:
         _resp = self.session.post(f'{self.base_url_categories}/add', json=category_dict)
         return Category.model_validate(_resp.json())
 
+    @allure.step('Получить категорию по id')
+    def get_category_by_id(self, category_id: str, exclude_archived: bool = False) -> Category:
+        _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
+        category = next((cat for cat in _resp.json() if cat['id'] == category_id), None)
+        return Category.model_validate(category)
+
     @allure.step('Обновить категорию')
     def update_category(self, category_id: str, category_name: str, archived: bool = False):
         category_dict = {"id": category_id, 'name': category_name, 'username': self.user_name, 'archived': archived}
@@ -145,4 +151,4 @@ class SpendsHttpClient:
     @allure.step('Получить id всех категорий пользователя')
     def get_ids_all_categories(self, exclude_archived: bool = False) -> list[str]:
         _resp = self.session.get(f'{self.base_url_categories}/all', params={'archived': exclude_archived})
-        return [spend['id'] for spend in _resp.json()]
+        return [cat['id'] for cat in _resp.json()]
