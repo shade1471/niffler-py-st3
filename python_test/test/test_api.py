@@ -247,7 +247,7 @@ class TestApi:
                 assert 'Can`t add over than 8 categories for user' in body['detail']
 
         @pytest.mark.parametrize('count', (1, 51))
-        @allure.title('Граничные значения для значения по количеству символов в имени категории')
+        @allure.title('Граничные значения по количеству символов в имени категории, negative')
         def test_negative_boundary_values_for_name_category(self, clean_categories, spends_client: SpendsHttpClient,
                                                             count):
             name_category = Faker().lexify(text='?' * count).lower()
@@ -263,7 +263,7 @@ class TestApi:
                 assert body['detail'] == 'Allowed category length should be from 2 to 50 characters'
 
         @pytest.mark.parametrize('count', (2, 50))
-        @allure.title('Граничные значения для значения по количеству символов в имени категории')
+        @allure.title('Граничные значения для по количеству символов в имени категории, positive')
         def test_positive_boundary_values_for_name_category(self, clean_categories, spends_client: SpendsHttpClient,
                                                             count):
             name_category = Faker().lexify(text='?' * count).lower()
