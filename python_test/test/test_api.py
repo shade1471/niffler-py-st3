@@ -4,6 +4,7 @@ from http import HTTPStatus
 import allure
 import pytest
 from faker import Faker
+from requests import HTTPError
 
 from python_test.data_helper.api_helper import SpendsHttpClient
 from python_test.databases.spend_db import SpendDb
@@ -88,11 +89,12 @@ class TestApi:
             new_spend.pop('amount')
 
             with allure.step('Проверить невозможность добавления новой траты по API без суммы'):
-                resp = client.session.request('post', url=f'{client.base_url_spends}/add', json=new_spend)
-                assert resp.status_code == HTTPStatus.BAD_REQUEST
+                with pytest.raises(HTTPError) as exc_info:
+                    client.session.post(url='/api/spends/add', json=new_spend)
+                assert exc_info.value.response.status_code == HTTPStatus.BAD_REQUEST
 
             with allure.step('Проверить ответ, об обязательном наличии поля суммы'):
-                body = resp.json()
+                body = exc_info.value.response.json()
                 assert body['title'] == 'Bad Request'
                 assert body['detail'] == 'Amount can not be null'
 
@@ -104,11 +106,12 @@ class TestApi:
             new_spend.pop('currency')
 
             with allure.step('Проверить невозможность добавления новой траты по API без типа валюты'):
-                resp = client.session.request('post', url=f'{client.base_url_spends}/add', json=new_spend)
-                assert resp.status_code == HTTPStatus.BAD_REQUEST
+                with pytest.raises(HTTPError) as exc_info:
+                    client.session.post(url='/api/spends/add', json=new_spend)
+                assert exc_info.value.response.status_code == HTTPStatus.BAD_REQUEST
 
             with allure.step('Проверить ответ, об обязательном наличии поля тип валюты'):
-                body = resp.json()
+                body = exc_info.value.response.json()
                 assert body['title'] == 'Bad Request'
                 assert body['detail'] == 'Currency can not be null'
 
@@ -119,11 +122,12 @@ class TestApi:
             new_spend.pop('category')
 
             with allure.step('Проверить невозможность добавления новой траты по API без категории'):
-                resp = client.session.request('post', url=f'{client.base_url_spends}/add', json=new_spend)
-                assert resp.status_code == HTTPStatus.BAD_REQUEST
+                with pytest.raises(HTTPError) as exc_info:
+                    client.session.post(url='/api/spends/add', json=new_spend)
+                assert exc_info.value.response.status_code == HTTPStatus.BAD_REQUEST
 
             with allure.step('Проверить ответ, об обязательном наличии категории'):
-                body = resp.json()
+                body = exc_info.value.response.json()
                 assert body['title'] == 'Bad Request'
                 assert body['detail'] == 'Category can not be null'
 
@@ -147,11 +151,12 @@ class TestApi:
             new_spend['amount'] = 0.009
 
             with allure.step('Попытаться добавить новую трату с суммой меньше 0.01'):
-                resp = client.session.request('post', url=f'{client.base_url_spends}/add', json=new_spend)
-                assert resp.status_code == HTTPStatus.BAD_REQUEST
+                with pytest.raises(HTTPError) as exc_info:
+                    client.session.post(url='/api/spends/add', json=new_spend)
+                assert exc_info.value.response.status_code == HTTPStatus.BAD_REQUEST
 
             with allure.step('Проверить ответ, о минимальном значении суммы'):
-                body = resp.json()
+                body = exc_info.value.response.json()
                 assert body['title'] == 'Bad Request'
                 assert body['detail'] == 'Amount should be greater than 0.01'
 
@@ -203,7 +208,7 @@ class TestApi:
             new_category = {'name': 'test_duplicate_category', 'username': spends_client.user_name, 'archived': False}
 
             with allure.step('Попытаться добавить дубликат категории'):
-                resp = spends_client.session.post(f'{spends_client.base_url_categories}/add', json=new_category)
+                resp = spends_client.session.post('/api/categories/add', json=new_category)
                 assert resp.status_code == HTTPStatus.CONFLICT
 
             with allure.step('Проверить ответ, о невозможности добавления дубликата категории'):
@@ -221,8 +226,8 @@ class TestApi:
                 spends_client.update_category(category.id, new_category['name'], True)
 
             with allure.step('Попытаться добавить дубликат архивной категории'):
-                resp = spends_client.session.post(f'{spends_client.base_url_categories}/add', json=new_category)
-                assert resp.status_code == HTTPStatus.CONFLICT
+                resp = spends_client.session.post('/api/categories/add', json=new_category)
+            assert resp.status_code == HTTPStatus.CONFLICT
 
             with allure.step('Проверить ответ, о невозможности добавления дубликата архивной категории'):
                 body = resp.json()
@@ -238,7 +243,7 @@ class TestApi:
                 assert len(spends_client.get_ids_all_categories()) == 8
 
             with allure.step('Попытаться добавить новую категорию'):
-                resp = spends_client.session.post(f'{spends_client.base_url_categories}/add', json=new_category)
+                resp = spends_client.session.post('/api/categories/add', json=new_category)
                 assert resp.status_code == HTTPStatus.NOT_ACCEPTABLE
 
             with allure.step('Проверить ответ, о невозможности добавления категории из-за существующего лимита'):
@@ -254,11 +259,12 @@ class TestApi:
             new_category = {'name': name_category, 'username': spends_client.user_name, 'archived': False}
 
             with allure.step(f'Попытаться добавить новую категории с именем из {count} символов'):
-                resp = spends_client.session.post(f'{spends_client.base_url_categories}/add', json=new_category)
-                assert resp.status_code == HTTPStatus.BAD_REQUEST
+                with pytest.raises(HTTPError) as exc_info:
+                    spends_client.session.post('/api/categories/add', json=new_category)
+                assert exc_info.value.response.status_code == HTTPStatus.BAD_REQUEST
 
             with allure.step('Проверить ответ, о допустимом количестве символов в имени категории'):
-                body = resp.json()
+                body = exc_info.value.response.json()
                 assert body['title'] == 'Bad Request'
                 assert body['detail'] == 'Allowed category length should be from 2 to 50 characters'
 
@@ -270,7 +276,7 @@ class TestApi:
             new_category = {'name': name_category, 'username': spends_client.user_name, 'archived': False}
 
             with allure.step(f'Попытаться добавить новую категории с именем из {count} символов'):
-                resp = spends_client.session.post(f'{spends_client.base_url_categories}/add', json=new_category)
+                resp = spends_client.session.post('/api/categories/add', json=new_category)
                 assert resp.status_code == HTTPStatus.OK
 
             with allure.step('Проверить валидность ответа'):
