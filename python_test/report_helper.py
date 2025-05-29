@@ -9,6 +9,7 @@ class Feature:
     search = 'Поиск'
     category = 'Категории трат'
     api = 'API'
+    kafka = 'Kafka'
 
 
 class Story:

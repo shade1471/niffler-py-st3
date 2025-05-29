@@ -10,6 +10,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from python_test.data_helper.api_helper import UserApiHelper, SpendsHttpClient
+from python_test.data_helper.kafka_client import KafkaClient
 from python_test.databases.spend_db import SpendDb
 from python_test.model.config import Envs
 from python_test.model.db.category import Category
@@ -52,7 +53,9 @@ def envs() -> Envs:
         auth_secret=os.getenv("AUTH_SECRET"),
         spend_db_url=os.getenv("SPEND_DB_URL"),
         test_username=os.getenv("TEST_USERNAME"),
-        test_password=os.getenv("TEST_PASSWORD")
+        test_password=os.getenv("TEST_PASSWORD"),
+        kafka_address=os.getenv("KAFKA_ADDRESS"),
+        userdata_db_url=os.getenv('USERDATA_DB_URL')
     )
 
 
@@ -95,3 +98,9 @@ def spend(request: FixtureRequest, spends_client: SpendsHttpClient) -> Generator
     all_spends = spends_client.get_ids_all_spending()
     if test_spend.id in all_spends:
         spends_client.delete_spending_by_id(test_spend.id)
+
+@pytest.fixture(scope="session")
+def kafka(envs):
+    """Взаимодействие с Kafka"""
+    with KafkaClient(envs) as k:
+        yield k
