@@ -5,6 +5,7 @@ from typing import Literal
 
 import allure
 import requests
+from requests import Session
 
 from python_test.model.config import Envs
 from python_test.model.db.category import Category
@@ -17,20 +18,22 @@ class UserApiHelper:
     base_url: str
 
     def __init__(self, envs: Envs):
-        self.session = BaseSession(base_url=f'{envs.auth_url}')
+        self.session = Session()
+        self.base_url = envs.auth_url
 
     @allure.step('Создать пользователя {user_name}')
     def create_user(self, user_name: str, user_password: str):
-        _resp = self.session.get('/register')
+        _resp = self.session.get(f'{self.base_url}/register')
         data = {'username': user_name,
                 'password': user_password,
                 'passwordSubmit': user_password,
                 '_csrf': _resp.cookies['XSRF-TOKEN']}
-        response = self.session.post('', data)
+        response = self.session.post(f'{self.base_url}/register', data)
         if response.status_code == HTTPStatus.CREATED:
             logging.info(f'Пользователь {user_name} зарегистрирован')
         else:
             logging.info(f'Пользователь {user_name} существует')
+        return response
 
 
 class SpendsHttpClient:

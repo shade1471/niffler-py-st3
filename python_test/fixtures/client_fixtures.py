@@ -2,6 +2,7 @@ import pytest
 
 from python_test.data_helper.api_helper import SpendsHttpClient
 from python_test.databases.spend_db import SpendDb
+from python_test.databases.usertdata_db import UserdataDb
 from python_test.model.config import Envs
 
 
@@ -13,3 +14,8 @@ def spends_client(envs: Envs, auth_token: str) -> SpendsHttpClient:
 @pytest.fixture(scope="session")
 def spend_db(envs: Envs) -> SpendDb:
     return SpendDb(envs)
+
+
+@pytest.fixture(scope="session")
+def userdata_db(envs: Envs) -> UserdataDb:
+    return UserdataDb(envs)
