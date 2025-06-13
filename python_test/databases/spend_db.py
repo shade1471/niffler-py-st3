@@ -6,8 +6,8 @@ from sqlalchemy import create_engine, Engine, event
 from sqlmodel import Session, select
 
 from python_test.model.config import Envs
-from python_test.model.db.spend import Spend
 from python_test.model.db.category import Category
+from python_test.model.db.spend import Spend
 
 
 class SpendDb:
@@ -47,8 +47,9 @@ class SpendDb:
     def delete_category(self, category_id: str):
         with Session(self.engine) as session:
             category = session.get(Category, category_id)
-            session.delete(category)
-            session.commit()
+            if category is not None:
+                session.delete(category)
+                session.commit()
 
     @allure.step('Удалить из БД категории из списка')
     def delete_categories_by_ids(self, categories_ids: list[str]):

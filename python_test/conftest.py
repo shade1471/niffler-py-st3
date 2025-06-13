@@ -1,5 +1,10 @@
 import os
+import sys
+from pathlib import Path
 from typing import Any, Generator
+
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
 
 import pytest
 from allure_commons.reporter import AllureReporter
@@ -59,7 +64,7 @@ def envs() -> Envs:
     )
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope='session', autouse=True)
 def app_user(envs: Envs):
     UserApiHelper(envs).create_user(user_name=envs.test_username, user_password=envs.test_password)
 
@@ -98,6 +103,7 @@ def spend(request: FixtureRequest, spends_client: SpendsHttpClient) -> Generator
     all_spends = spends_client.get_ids_all_spending()
     if test_spend.id in all_spends:
         spends_client.delete_spending_by_id(test_spend.id)
+
 
 @pytest.fixture(scope="session")
 def kafka(envs):
