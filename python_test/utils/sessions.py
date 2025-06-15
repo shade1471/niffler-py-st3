@@ -3,7 +3,7 @@ from urllib.parse import parse_qs, urlparse
 import requests
 from requests import Session
 
-from python_test.utils.allure_helpers import allure_attach_request
+from python_test.utils.allure_helpers import allure_attach_request, allure_request_logger
 
 
 def raise_for_status(function):
@@ -59,3 +59,18 @@ class AuthSession(Session):
             if code:
                 self.code = code
         return response
+
+
+class SoapSession(Session):
+    """Сессия с передачей base_url и логированием запроса, ответа, хедеров ответа."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__()
+        self.base_url = kwargs.pop("base_url", "")
+        self.headers.update({'Content-Type': 'text/xml;charset=UTF-8'})
+
+    @raise_for_status
+    @allure_request_logger
+    def request(self, method='POST', url='', **kwargs):
+        """Логирование запроса, метод POST для всех"""
+        return super().request(method, self.base_url + url, **kwargs)

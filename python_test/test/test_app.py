@@ -227,6 +227,10 @@ class TestSearch:
 @allure.feature(Feature.category)
 class TestCategory:
 
+    @pytest.fixture(scope='class', autouse=True)
+    def delete_all_spending(self, spends_client):
+        spends_client.delete_all_spending()
+
     @pytest.fixture()
     def clean_categories(self, spends_client: SpendsHttpClient, spend_db: SpendDb):
         categories_ids = spends_client.get_ids_all_categories()

@@ -60,7 +60,8 @@ def envs() -> Envs:
         test_username=os.getenv("TEST_USERNAME"),
         test_password=os.getenv("TEST_PASSWORD"),
         kafka_address=os.getenv("KAFKA_ADDRESS"),
-        userdata_db_url=os.getenv('USERDATA_DB_URL')
+        userdata_db_url=os.getenv('USERDATA_DB_URL'),
+        soap_address=os.getenv("SOAP_ADDRESS"),
     )
 
 
