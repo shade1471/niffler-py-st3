@@ -1,0 +1,24 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:updateUserRequest>
+            <nif:user>
+                <nif:id>{{ uuid }}</nif:id>
+                <nif:username>{{ username }}</nif:username>
+                <!--Optional:-->
+                <nif:firstname>{{ firstname }}</nif:firstname>
+                <!--Optional:-->
+                <nif:surname>{{ surname }}</nif:surname>
+                <!--Optional:-->
+                <nif:fullname>{{ fullname }}</nif:fullname>
+                <nif:currency>{{ currency }}</nif:currency>
+                <!--Optional:-->
+                <nif:photo>{{ photo }}</nif:photo>
+                <!--Optional:-->
+                <nif:photoSmall>{{ photo_small }}</nif:photoSmall>
+                <!--Optional:-->
+                <nif:friendshipStatus>{{ friendship_status }}</nif:friendshipStatus>
+            </nif:user>
+        </nif:updateUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

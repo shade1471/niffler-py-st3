@@ -10,6 +10,7 @@ class Feature:
     category = 'Категории трат'
     api = 'API'
     kafka = 'Kafka'
+    soap = 'SOAP'
 
 
 class Story:

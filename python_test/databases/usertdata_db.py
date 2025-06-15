@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine, Engine, event
+from sqlalchemy.exc import NoResultFound
 from sqlmodel import Session, select
 
 import allure
@@ -7,7 +8,7 @@ from allure_commons.types import AttachmentType
 from collections.abc import Sequence
 
 from python_test.model.config import Envs
-from python_test.model.db.user import User
+from python_test.model.db.user import User, Friendship
 
 
 class UserdataDb:
@@ -29,3 +30,12 @@ class UserdataDb:
         with Session(self.engine) as session:
             statement = select(User).where(User.username == username)
             return session.exec(statement).one()
+
+    def get_friendship(self, user_uuid: str, user_to_uuid: str):
+        with Session(self.engine) as session:
+            statement = select(Friendship).where(Friendship.requester_id == user_uuid,
+                                                 Friendship.addressee_id == user_to_uuid)
+            try:
+                return session.exec(statement).one()
+            except NoResultFound:
+                return None
