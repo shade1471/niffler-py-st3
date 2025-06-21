@@ -3,6 +3,8 @@ import sys
 from pathlib import Path
 from typing import Any, Generator
 
+from selenium.webdriver.chrome.options import Options
+
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
@@ -72,7 +74,11 @@ def app_user(envs: Envs):
 
 @pytest.fixture(scope='module')
 def web_driver() -> Generator[WebDriver, Any, None]:
-    wd = webdriver.Chrome()
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    wd = webdriver.Chrome(options=options)
     wd.maximize_window()
     yield wd
     wd.quit()
