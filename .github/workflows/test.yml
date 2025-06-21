@@ -51,9 +51,13 @@ jobs:
         working-directory: ./python_test
         run: pip install --upgrade -r requirements.txt
 
-      - name: Run parallel tests
+#      - name: Run parallel tests
+#        working-directory: ./python_test
+#        run: pytest --alluredir=./allure-results --clean-alluredir test/test_api.py
+
+      - name: Run tests
         working-directory: ./python_test
-        run: pytest --alluredir=./allure-results --clean-alluredir test/test_api.py
+        run: pytest --alluredir=./allure-results --clean-alluredir test/test_app.py
 
       - name: Generate Allure Report
         uses: simple-elf/allure-report-action@v1
