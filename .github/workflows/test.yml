@@ -8,12 +8,12 @@ jobs:
   python_tests:
     runs-on: ubuntu-latest
     env:
-      FRONTEND_URL: http://127.0.0.1
-      GATEWAY_URL: http://127.0.0.1:8090
-      AUTH_URL: http://127.0.0.1:9000
+      FRONTEND_URL: http://frontend.niffler.dc
+      GATEWAY_URL: http://gateway.niffler.dc:8090
+      AUTH_URL: http://auth.niffler.dc:9000
       AUTH_SECRET: niffler:client
-      SPEND_DB_URL: postgresql+psycopg2://postgres:secret@127.0.0.1:5432/niffler-spend
-      USERDATA_DB_URL: postgresql+psycopg2://postgres:secret@127.0.0.1:5432/niffler-userdata
+      SPEND_DB_URL: postgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-spend
+      USERDATA_DB_URL: postgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata
       TEST_USERNAME: qa_guru
       TEST_PASSWORD: qa_guru
       KAFKA_ADDRESS: localhost
@@ -38,6 +38,10 @@ jobs:
       - name: Build backends
         run: |
           bash docker-compose-dev.sh
+
+      - name: Edit hosts file
+        run: |
+          echo -e "127.0.0.1\tlocalhost\n127.0.0.1\tfrontend.niffler.dc\n127.0.0.1\tauth.niffler.dc\n127.0.0.1\tgateway.niffler.dc\n127.0.0.1\tkafka" | sudo tee -a /etc/hosts
 
       - name: Get the last commit message
         run: |
