@@ -31,7 +31,6 @@ jobs:
       - name: Build backends
         run: |
           bash docker-compose-dev.sh
-          ./gradlew jibDockerBuild -x :niffler-e-2-e-tests:test
       - name: Get the last commit message
         run: |
           echo "HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)" >> $GITHUB_ENV
@@ -39,6 +38,8 @@ jobs:
         with:
           python-version: '3.13'
           cache: 'pip'
+      - name: Go to working directory
+        run: cd python_test
       - name: Install dependencies
         run: pip install --upgrade -r requirements.txt
 
