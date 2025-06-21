@@ -39,10 +39,11 @@ jobs:
 #      - name: Get the last commit message
 #        run: |
 #          echo "HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)" >> $GITHUB_ENV
-      - name: Go to working directory
-        run: |
-          cd python_test
+#      - name: Go to working directory
+#        run: |
+#          cd python_test
       - name: Install dependencies
+        working-directory: ./python_test
         run: pip install --upgrade -r requirements.txt
 
 
