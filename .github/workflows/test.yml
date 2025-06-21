@@ -39,9 +39,9 @@ jobs:
           python-version: '3.13'
           cache: 'pip'
       - name: Go to working directory
-        run: cd python_test
+        run: cd .\python_test\
       - name: Install dependencies
-        run: pip install --upgrade -r requirements.txt
+        run: echo pwd && pip install --upgrade -r requirements.txt
 
 
 #      - name: Run e2e tests
