@@ -76,7 +76,6 @@ def app_user(envs: Envs):
 def web_driver() -> Generator[WebDriver, Any, None]:
     options = Options()
     options.add_argument("--headless")
-    options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     wd = webdriver.Chrome(options=options)
     wd.maximize_window()

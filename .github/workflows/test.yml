@@ -53,15 +53,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y chromium-browser
 
-      - name: Run parallel tests
-        if: always()
-        working-directory: ./python_test
-        run: pytest -n auto --dist=worksteal --alluredir=./allure-results --clean-alluredir test/test_api.py test/test_auth.py test/test_soap.py
-
       - name: Run tests
         if: always()
         working-directory: ./python_test
         run: pytest --alluredir=./allure-results test/test_app.py test/test_kafka.py
+
+      - name: Run parallel tests
+        if: always()
+        working-directory: ./python_test
+        run: pytest -n auto --dist=worksteal --alluredir=./allure-results --clean-alluredir test/test_api.py test/test_auth.py test/test_soap.py
 
       - name: Generate Allure Report
         if: always()
