@@ -1,0 +1,182 @@
+INFO     root:api_helper.py:33 Пользователь Michael Walker зарегистрирован
+INFO     root:api_helper.py:33 Пользователь Bradley Yoder зарегистрирован
+INFO     root:api_helper.py:33 Пользователь Jessica Cox зарегистрирован
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "392"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:sendInvitationRequest>
+            <nif:username>Michael Walker</nif:username>
+            <nif:friendToBeRequested>Bradley Yoder</nif:friendToBeRequested>
+        </nif:sendInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "417",
+  "Date": "Mon, 23 Jun 2025 03:18:09 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>346639c7-c34b-4065-97a2-cb4d5b417d02</ns2:id><ns2:username>Bradley Yoder</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>INVITE_SENT</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+
+
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "390"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:sendInvitationRequest>
+            <nif:username>Michael Walker</nif:username>
+            <nif:friendToBeRequested>Jessica Cox</nif:friendToBeRequested>
+        </nif:sendInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "415",
+  "Date": "Mon, 23 Jun 2025 03:18:09 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>5b578db6-3a2b-476f-a82e-b8abc7b1276e</ns2:id><ns2:username>Jessica Cox</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>INVITE_SENT</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+
+
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "388"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:acceptInvitationRequest>
+            <nif:username>Bradley Yoder</nif:username>
+            <nif:friendToBeAdded>Michael Walker</nif:friendToBeAdded>
+        </nif:acceptInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "413",
+  "Date": "Mon, 23 Jun 2025 03:18:09 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>99be2826-5730-4b74-81f5-2d9b7e935caf</ns2:id><ns2:username>Michael Walker</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>FRIEND</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+
+
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "386"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:acceptInvitationRequest>
+            <nif:username>Jessica Cox</nif:username>
+            <nif:friendToBeAdded>Michael Walker</nif:friendToBeAdded>
+        </nif:acceptInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "413",
+  "Date": "Mon, 23 Jun 2025 03:18:09 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>99be2826-5730-4b74-81f5-2d9b7e935caf</ns2:id><ns2:username>Michael Walker</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>FRIEND</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+
+
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "378"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:friendsRequest>
+            <nif:username>Michael Walker</nif:username>
+            <!--Optional:-->
+            <nif:searchQuery></nif:searchQuery>
+        </nif:friendsRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "611",
+  "Date": "Mon, 23 Jun 2025 03:18:09 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:usersResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>346639c7-c34b-4065-97a2-cb4d5b417d02</ns2:id><ns2:username>Bradley Yoder</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>FRIEND</ns2:friendshipStatus></ns2:user><ns2:user><ns2:id>5b578db6-3a2b-476f-a82e-b8abc7b1276e</ns2:id><ns2:username>Jessica Cox</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>FRIEND</ns2:friendshipStatus></ns2:user></ns2:usersResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
