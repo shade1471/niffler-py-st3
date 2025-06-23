@@ -1,0 +1,81 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "sqlalchemy.exc.NoResultFound: No row was found when one was required",
+      "children" : [ {
+        "name" : "Отклонение запроса на дружбу",
+        "uid" : "9a2cdc0de3defb8d",
+        "parentUid" : "de53fd9e52f45ad1f1607b04946219a5",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750672135859,
+          "stop" : 1750672136153,
+          "duration" : 294
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "de53fd9e52f45ad1f1607b04946219a5"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  }, {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'username'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7ff9612cc590>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7ff9612cc590> = <python_test.model.niffler.Niffler object at 0x7ff9619ae660>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "fffe816302277dc8",
+        "parentUid" : "d9553bed3467c31372486d9abe95c340",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750672136481,
+          "stop" : 1750672137424,
+          "duration" : 943
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'password'" ]
+      } ],
+      "uid" : "d9553bed3467c31372486d9abe95c340"
+    }, {
+      "name" : "AssertionError: assert 'Bad credentials' == 'Неверные уче... пользователя'\n  \n  - Неверные учетные данные пользователя\n  + Bad credentials",
+      "children" : [ {
+        "name" : "Авторизация под не существующим пользователем",
+        "uid" : "917f8090608fb056",
+        "parentUid" : "f3cae5550777fa45d8f17803798fff98",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750672138424,
+          "stop" : 1750672139643,
+          "duration" : 1219
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "f3cae5550777fa45d8f17803798fff98"
+    }, {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7ff9612cc590>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7ff9612cc590> = <python_test.model.niffler.Niffler object at 0x7ff9619ae660>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "5084cc5a5f63df81",
+        "parentUid" : "dd2b51a02764d402d9286db96d182686",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750672138624,
+          "stop" : 1750672139826,
+          "duration" : 1202
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'user'" ]
+      } ],
+      "uid" : "dd2b51a02764d402d9286db96d182686"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
