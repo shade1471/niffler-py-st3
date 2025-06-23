@@ -63,7 +63,7 @@ class TestNegativeScenario:
     def browser(self) -> Generator[Niffler, Any, None]:
         options = Options()
         options.add_argument("--headless")
-        options.add_argument("--incognito")
+        # options.add_argument("--incognito")
         options.add_argument("--disable-dev-shm-usage")
         wd = webdriver.Chrome(options=options)
         niffler = Niffler(wd)
