@@ -4,6 +4,7 @@ import allure
 import pytest
 from faker import Faker
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 from python_test.model.LoginPage import LoginPage
 from python_test.model.config import Envs
@@ -20,7 +21,11 @@ class TestPositiveScenario:
 
     @pytest.fixture(scope="function")
     def browser(self) -> Generator[Niffler, Any, None]:
-        wd = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--incognito")
+        options.add_argument("--disable-dev-shm-usage")
+        wd = webdriver.Chrome(options=options)
         niffler = Niffler(wd)
         yield niffler
         wd.quit()
