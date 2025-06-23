@@ -1,4 +1,4 @@
-name: python tests niffler
+name: Niffler tests on python
 
 on:
   pull_request:
@@ -35,6 +35,7 @@ jobs:
         with:
             java-version: '21'
             distribution: 'temurin'
+
       - name: Build backends
         run: |
           bash docker-compose-dev.sh
@@ -76,8 +77,8 @@ jobs:
           name: allure-report
           path: python_test/allure-report
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: python_test/allure-report
+#      - name: Deploy to GitHub Pages
+#        uses: peaceiris/actions-gh-pages@v3
+#        with:
+#          github_token: ${{ secrets.GITHUB_TOKEN }}
+#          publish_dir: python_test/allure-report
