@@ -52,6 +52,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
+          sudo apt-get install -y locales
+          sudo locale-gen ru_RU.UTF-8
+          echo 'LANG=ru_RU.UTF-8' | sudo tee -a /etc/default/locale
 
       - name: Run tests
         if: always()
