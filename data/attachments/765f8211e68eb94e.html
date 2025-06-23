@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>POST to http://gateway.niffler.dc:8090/api/categories/add</code></pre>
+</div>
+
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>b'{"name": "syfmkjknkndnssgdkatzlsajxcavckizgadbjrooamaeesdcsz", "username": "qa_guru", "archived": false}'</code></pre>
+    </div>
+
+
+
+
+    <h4>Headers</h4>
+    <div>
+    
+        <div>
+            <pre><code><b>User-Agent</b>: python-requests/2.32.3</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept-Encoding</b>: gzip, deflate</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Connection</b>: keep-alive</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Authorization</b>: Bearer eyJraWQiOiI2NzFmYzY2OC03MDY0LTQyMmQtYTJjOS00ZGU2MzgwODgxYzkiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNjU5ODU4LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNjYzNDU4LCJpYXQiOjE3NTA2NTk4NTgsImp0aSI6ImVhYzkwMDA5LTQ3MWItNDMyZS04ODdjLWQ5NDE2MGMxOWUxOSJ9.M4NZo4R74WAzZQkb16cCyW9X5qkmHEtyGNjGkbpan0f58hTRTQzf0otKuyVvyReF8ebP1Ay2zHqQ5xKr_4uAI_fU5HGoUOYIQwNiZF8LwURPivP8eblR35v1mG0pWvKKuJYRaK_lJz_RCafBp8HdbYK8jCoRv92g8tM2IMKnSSC0YrThr8RgL3CEaoGiN2FTdjZxC6vjI_bMKTuZJVYyKRzh4JKHoOdEoEeYR8BidR1T8uIwbGk4aNG-NCASlRTIB9wUj41huo_sTO3z_JQniM-seYhmIq0ym0mH_nfzoiJiClJC5g7V7mYIPwPDJZIiPHMVgQHNbPKEDHiNYPkToQ</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Type</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Length</b>: 104</code></pre>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -X POST -H 'Accept: application/json' -H 'Accept-Encoding: gzip, deflate' -H 'Authorization: Bearer eyJraWQiOiI2NzFmYzY2OC03MDY0LTQyMmQtYTJjOS00ZGU2MzgwODgxYzkiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNjU5ODU4LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNjYzNDU4LCJpYXQiOjE3NTA2NTk4NTgsImp0aSI6ImVhYzkwMDA5LTQ3MWItNDMyZS04ODdjLWQ5NDE2MGMxOWUxOSJ9.M4NZo4R74WAzZQkb16cCyW9X5qkmHEtyGNjGkbpan0f58hTRTQzf0otKuyVvyReF8ebP1Ay2zHqQ5xKr_4uAI_fU5HGoUOYIQwNiZF8LwURPivP8eblR35v1mG0pWvKKuJYRaK_lJz_RCafBp8HdbYK8jCoRv92g8tM2IMKnSSC0YrThr8RgL3CEaoGiN2FTdjZxC6vjI_bMKTuZJVYyKRzh4JKHoOdEoEeYR8BidR1T8uIwbGk4aNG-NCASlRTIB9wUj41huo_sTO3z_JQniM-seYhmIq0ym0mH_nfzoiJiClJC5g7V7mYIPwPDJZIiPHMVgQHNbPKEDHiNYPkToQ' -H 'Connection: keep-alive' -H 'Content-Length: 104' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.32.3' -d '{"name": "syfmkjknkndnssgdkatzlsajxcavckizgadbjrooamaeesdcsz", "username": "qa_guru", "archived": false}' http://gateway.niffler.dc:8090/api/categories/add</code></pre>
+    </div>
+
+</body>
+</html>
