@@ -44,10 +44,6 @@ jobs:
         run: |
           echo -e "127.0.0.1\tlocalhost\n127.0.0.1\tfrontend.niffler.dc\n127.0.0.1\tauth.niffler.dc\n127.0.0.1\tgateway.niffler.dc\n127.0.0.1\tkafka" | sudo tee -a /etc/hosts
 
-      - name: Get the last commit message
-        run: |
-          echo "HEAD_COMMIT_MESSAGE=$(git show -s --format=%s)" >> $GITHUB_ENV
-
       - name: Install dependencies
         working-directory: ./python_test
         run: pip install --upgrade -r requirements.txt
@@ -57,28 +53,34 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y chromium-browser
 
-#      - name: Run parallel tests
-#        working-directory: ./python_test
-#        run: pytest --alluredir=./allure-results --clean-alluredir test/test_api.py
+      - name: Run parallel tests
+        if: always()
+        working-directory: ./python_test
+        run: pytest -n auto --dist=worksteal --alluredir=./allure-results --clean-alluredir test/test_api.py test/test_auth.py test/test_soap.py
 
       - name: Run tests
+        if: always()
         working-directory: ./python_test
-        run: pytest --alluredir=./allure-results --clean-alluredir test/test_app.py
+        run: pytest --alluredir=./allure-results test/test_app.py test/test_kafka.py
 
       - name: Generate Allure Report
+        if: always()
         uses: simple-elf/allure-report-action@v1
         with:
           allure_results: python_test/allure-results
           allure_report: python_test/allure-report
 
       - name: Upload Allure Report as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
           path: python_test/allure-report
 
-#      - name: Deploy to GitHub Pages
-#        uses: peaceiris/actions-gh-pages@v3
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_dir: python_test/allure-report
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: python_test/allure-report
+          keep_files: true
