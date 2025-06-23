@@ -1,0 +1,238 @@
+{
+  "uid" : "780ecdd4283bac03",
+  "name" : "Наличие свойства required у полей имя пользователя и пароль",
+  "fullName" : "test.test_auth.TestNegativeScenario#test_required_field",
+  "historyId" : "a42991aca7d1494e84fb0dba166660b4",
+  "time" : {
+    "start" : 1750655181865,
+    "stop" : 1750655182277,
+    "duration" : 412
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590> = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>.login_page",
+  "statusTrace" : "self = <test.test_auth.TestNegativeScenario object at 0x7fdbd079d590>\nbrowser = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>\nfield_name = 'user'\n\n    @allure.feature(Feature.log_in)\n    @allure.title('Наличие свойства required у полей имя пользователя и пароль')\n    @pytest.mark.parametrize('field_name', ['user', 'password'])\n    def test_required_field(self, browser: Niffler, field_name: str):\n        send_text_in_field = {'user': browser.login_page.fill_user_name, 'password': browser.login_page.fill_password}\n        element = {'user': LoginPage.USER_NAME_FIELD, 'password': LoginPage.PASSWORD_FIELD}\n        browser.login_page.go_to_niffler()\n    \n        el = browser.login_page.find_element(element[field_name])\n        assert el.get_attribute('required')\n    \n        send_text_in_field[field_name]('test')\n        browser.login_page.click_log_in()\n        element_with_message = next((el for el in element.keys() if el != field_name), None)\n    \n        with allure.step('Проверить текст о незаполненности поля'):\n>           assert browser.login_page.is_element_have_property(element[element_with_message], 'validationMessage',\n                                                               'Заполните это поле.')\nE           AssertionError: assert False\nE            +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\nE            +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590>.is_element_have_property\nE            +      where <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590> = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>.login_page\n\ntest/test_auth.py:100: AssertionError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750655176968,
+      "stop" : 1750655176970,
+      "duration" : 2
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[C] Browser",
+    "time" : {
+      "start" : 1750655179116,
+      "stop" : 1750655179992,
+      "duration" : 876
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750655176970,
+      "stop" : 1750655176971,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750655176971,
+      "stop" : 1750655177115,
+      "duration" : 144
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750655176971,
+        "stop" : 1750655177115,
+        "duration" : 144
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  } ],
+  "testStage" : {
+    "status" : "failed",
+    "statusMessage" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590> = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>.login_page",
+    "statusTrace" : "self = <test.test_auth.TestNegativeScenario object at 0x7fdbd079d590>\nbrowser = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>\nfield_name = 'user'\n\n    @allure.feature(Feature.log_in)\n    @allure.title('Наличие свойства required у полей имя пользователя и пароль')\n    @pytest.mark.parametrize('field_name', ['user', 'password'])\n    def test_required_field(self, browser: Niffler, field_name: str):\n        send_text_in_field = {'user': browser.login_page.fill_user_name, 'password': browser.login_page.fill_password}\n        element = {'user': LoginPage.USER_NAME_FIELD, 'password': LoginPage.PASSWORD_FIELD}\n        browser.login_page.go_to_niffler()\n    \n        el = browser.login_page.find_element(element[field_name])\n        assert el.get_attribute('required')\n    \n        send_text_in_field[field_name]('test')\n        browser.login_page.click_log_in()\n        element_with_message = next((el for el in element.keys() if el != field_name), None)\n    \n        with allure.step('Проверить текст о незаполненности поля'):\n>           assert browser.login_page.is_element_have_property(element[element_with_message], 'validationMessage',\n                                                               'Заполните это поле.')\nE           AssertionError: assert False\nE            +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\nE            +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590>.is_element_have_property\nE            +      where <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590> = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>.login_page\n\ntest/test_auth.py:100: AssertionError",
+    "steps" : [ {
+      "name" : "Перейти на страницу авторизации Niffler",
+      "time" : {
+        "start" : 1750655181865,
+        "stop" : 1750655182073,
+        "duration" : 208
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Заполнить поле \"Имя пользователя\"",
+      "time" : {
+        "start" : 1750655182087,
+        "stop" : 1750655182185,
+        "duration" : 98
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'test'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Нажать кнопку \"Log In\"",
+      "time" : {
+        "start" : 1750655182185,
+        "stop" : 1750655182262,
+        "duration" : 77
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Проверить текст о незаполненности поля",
+      "time" : {
+        "start" : 1750655182262,
+        "stop" : 1750655182277,
+        "duration" : 15
+      },
+      "status" : "failed",
+      "statusMessage" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7fdbd013c590> = <python_test.model.niffler.Niffler object at 0x7fdbd0496660>.login_page\n",
+      "statusTrace" : "  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_auth.py\", line 100, in test_required_field\n    assert browser.login_page.is_element_have_property(element[element_with_message], 'validationMessage',\n                                                       'Заполните это поле.')\n",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : true,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 4,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "browser::0",
+    "time" : {
+      "start" : 1750655182287,
+      "stop" : 1750655182420,
+      "duration" : 133
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "Авторизация пользователя"
+  }, {
+    "name" : "story",
+    "value" : "Негативные сценарии"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "host",
+    "value" : "fv-az789-65"
+  }, {
+    "name" : "thread",
+    "value" : "11217-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_auth"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "field_name",
+    "value" : "'user'"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "780ecdd4283bac03.json",
+  "parameterValues" : [ "'user'" ]
+}
