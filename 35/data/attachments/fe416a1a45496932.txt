@@ -1,0 +1,51 @@
+INFO     root:api_helper.py:33 Пользователь Kimberly Jackson зарегистрирован
+INFO     root:api_helper.py:33 Пользователь Thomas Lee зарегистрирован
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "970"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:updateUserRequest>
+            <nif:user>
+                <nif:id>4fb13c87-a658-460c-a334-0d7d70f08cb0</nif:id>
+                <nif:username>Thomas Lee</nif:username>
+                <!--Optional:-->
+                <nif:firstname></nif:firstname>
+                <!--Optional:-->
+                <nif:surname></nif:surname>
+                <!--Optional:-->
+                <nif:fullname>Juan Beck</nif:fullname>
+                <nif:currency>KZT</nif:currency>
+                <!--Optional:-->
+                <nif:photo></nif:photo>
+                <!--Optional:-->
+                <nif:photoSmall></nif:photoSmall>
+                <!--Optional:-->
+                <nif:friendshipStatus></nif:friendshipStatus>
+            </nif:user>
+        </nif:updateUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "445",
+  "Date": "Mon, 23 Jun 2025 10:00:32 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>4fb13c87-a658-460c-a334-0d7d70f08cb0</ns2:id><ns2:username>Thomas Lee</ns2:username><ns2:fullname>Juan Beck</ns2:fullname><ns2:currency>KZT</ns2:currency><ns2:friendshipStatus>VOID</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
