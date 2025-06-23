@@ -1,0 +1,81 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(6b4cb7c3-2c20-43ca-88bf-6b853dbae7fa) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('6b4cb7c3-2c20-43ca-88bf-6b853dbae7fa')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+      "children" : [ {
+        "name" : "Граничные значения для по количеству символов в имени категории, positive",
+        "uid" : "6c7399ee7c557a1b",
+        "parentUid" : "2a84fe887860abb6544882a1637aad2b",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750670591331,
+          "stop" : 1750670591331,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "50" ]
+      } ],
+      "uid" : "2a84fe887860abb6544882a1637aad2b"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  }, {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'username'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fc762324440>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7fc762324440> = <python_test.model.niffler.Niffler object at 0x7fc762a93230>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "1ea000ccbcf3e25a",
+        "parentUid" : "90b1b8fa85d321dab31b21969fee5cf3",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750670593515,
+          "stop" : 1750670594685,
+          "duration" : 1170
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'password'" ]
+      } ],
+      "uid" : "90b1b8fa85d321dab31b21969fee5cf3"
+    }, {
+      "name" : "AssertionError: assert 'Bad credentials' == 'Неверные уче... пользователя'\n  \n  - Неверные учетные данные пользователя\n  + Bad credentials",
+      "children" : [ {
+        "name" : "Авторизация под не существующим пользователем",
+        "uid" : "15383f3f390f86d6",
+        "parentUid" : "f3cae5550777fa45d8f17803798fff98",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750670595948,
+          "stop" : 1750670596828,
+          "duration" : 880
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "f3cae5550777fa45d8f17803798fff98"
+    }, {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7f09289aac10>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7f09289aac10> = <python_test.model.niffler.Niffler object at 0x7f0928be7110>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "ba1127321b1b534d",
+        "parentUid" : "2dd196ce988528efa0a5c1bf78fa91d2",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750670596241,
+          "stop" : 1750670597025,
+          "duration" : 784
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'user'" ]
+      } ],
+      "uid" : "2dd196ce988528efa0a5c1bf78fa91d2"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}

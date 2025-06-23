@@ -1,0 +1,1329 @@
+{
+  "uid" : "8706475b3ebcea1e",
+  "name" : "Максимальное количество не архивных категорий для пользователя",
+  "fullName" : "test.test_app.TestCategory#test_limit_size_categories_for_user",
+  "historyId" : "02d302d044b634d2b432e25f90b38921",
+  "time" : {
+    "start" : 1750670576011,
+    "stop" : 1750670576772,
+    "duration" : 761
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750670548428,
+      "stop" : 1750670548956,
+      "duration" : 528
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750670548428,
+        "stop" : 1750670548955,
+        "duration" : 527
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Spends Client",
+    "time" : {
+      "start" : 1750670549539,
+      "stop" : 1750670549539,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750670548368,
+      "stop" : 1750670548427,
+      "duration" : 59
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750670548428,
+      "stop" : 1750670548428,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[C] Delete All Spending",
+    "time" : {
+      "start" : 1750670575908,
+      "stop" : 1750670575977,
+      "duration" : 69
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Удалить все траты пользователя",
+      "time" : {
+        "start" : 1750670575908,
+        "stop" : 1750670575977,
+        "duration" : 69
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Получить id всех трат пользователя",
+        "time" : {
+          "start" : 1750670575908,
+          "stop" : 1750670575977,
+          "duration" : 69
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "GET /api/spends/all?filterCurrency=RUB",
+          "time" : {
+            "start" : 1750670575914,
+            "stop" : 1750670575926,
+            "duration" : 12
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "a70eb869889a8f3e",
+            "name" : "Request",
+            "source" : "a70eb869889a8f3e.html",
+            "type" : "text/html",
+            "size" : 3623
+          }, {
+            "uid" : "7808827dd5cde340",
+            "name" : "Response json 200",
+            "source" : "7808827dd5cde340.json",
+            "type" : "application/json",
+            "size" : 2
+          }, {
+            "uid" : "345d6e3a3237ac15",
+            "name" : "Response headers 200",
+            "source" : "345d6e3a3237ac15.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        }, {
+          "name" : "GET /api/spends/all?filterCurrency=KZT",
+          "time" : {
+            "start" : 1750670575932,
+            "stop" : 1750670575943,
+            "duration" : 11
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "5373920875852801",
+            "name" : "Request",
+            "source" : "5373920875852801.html",
+            "type" : "text/html",
+            "size" : 3623
+          }, {
+            "uid" : "c6e2d9e1cfce3358",
+            "name" : "Response json 200",
+            "source" : "c6e2d9e1cfce3358.json",
+            "type" : "application/json",
+            "size" : 2
+          }, {
+            "uid" : "cab3c0d82fa3be12",
+            "name" : "Response headers 200",
+            "source" : "cab3c0d82fa3be12.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        }, {
+          "name" : "GET /api/spends/all?filterCurrency=USD",
+          "time" : {
+            "start" : 1750670575947,
+            "stop" : 1750670575961,
+            "duration" : 14
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "7ef60170265e779a",
+            "name" : "Request",
+            "source" : "7ef60170265e779a.html",
+            "type" : "text/html",
+            "size" : 3623
+          }, {
+            "uid" : "4cfa7fa706ac1fd5",
+            "name" : "Response json 200",
+            "source" : "4cfa7fa706ac1fd5.json",
+            "type" : "application/json",
+            "size" : 2
+          }, {
+            "uid" : "4613f327c12ca0ba",
+            "name" : "Response headers 200",
+            "source" : "4613f327c12ca0ba.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        }, {
+          "name" : "GET /api/spends/all?filterCurrency=EUR",
+          "time" : {
+            "start" : 1750670575965,
+            "stop" : 1750670575977,
+            "duration" : 12
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "d36be3c0cb1e23ce",
+            "name" : "Request",
+            "source" : "d36be3c0cb1e23ce.html",
+            "type" : "text/html",
+            "size" : 3623
+          }, {
+            "uid" : "1f63873ad420a8e8",
+            "name" : "Response json 200",
+            "source" : "1f63873ad420a8e8.json",
+            "type" : "application/json",
+            "size" : 2
+          }, {
+            "uid" : "283a06479a83b187",
+            "name" : "Response headers 200",
+            "source" : "283a06479a83b187.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ ],
+        "stepsCount" : 4,
+        "attachmentsCount" : 12,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 5,
+      "attachmentsCount" : 12,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 6,
+    "attachmentsCount" : 12,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Auth Token",
+    "time" : {
+      "start" : 1750670548956,
+      "stop" : 1750670549538,
+      "duration" : 582
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "GET /oauth2/authorize",
+      "time" : {
+        "start" : 1750670549000,
+        "stop" : 1750670549128,
+        "duration" : 128
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "3c15998735cd8d45",
+        "name" : "Request",
+        "source" : "3c15998735cd8d45.html",
+        "type" : "text/html",
+        "size" : 2119
+      }, {
+        "uid" : "93e84eece1af13b0",
+        "name" : "Response text 200",
+        "source" : "93e84eece1af13b0.txt",
+        "type" : "text/plain",
+        "size" : 2897
+      }, {
+        "uid" : "653d774be195fabc",
+        "name" : "Response headers 200",
+        "source" : "653d774be195fabc.json",
+        "type" : "application/json",
+        "size" : 667
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "POST /login",
+      "time" : {
+        "start" : 1750670549135,
+        "stop" : 1750670549449,
+        "duration" : 314
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "f656ea648f98ae8d",
+        "name" : "Request",
+        "source" : "f656ea648f98ae8d.html",
+        "type" : "text/html",
+        "size" : 2397
+      }, {
+        "uid" : "2e9483dab37bf24c",
+        "name" : "Response text 200",
+        "source" : "2e9483dab37bf24c.txt",
+        "type" : "text/plain",
+        "size" : 417
+      }, {
+        "uid" : "48f4e089d70cfaaf",
+        "name" : "Response headers 200",
+        "source" : "48f4e089d70cfaaf.json",
+        "type" : "application/json",
+        "size" : 287
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "POST /oauth2/token",
+      "time" : {
+        "start" : 1750670549453,
+        "stop" : 1750670549538,
+        "duration" : 85
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "cc1c935ec02484bc",
+        "name" : "Request",
+        "source" : "cc1c935ec02484bc.html",
+        "type" : "text/html",
+        "size" : 3376
+      }, {
+        "uid" : "233709e4bec06f15",
+        "name" : "Response json 200",
+        "source" : "233709e4bec06f15.json",
+        "type" : "application/json",
+        "size" : 1529
+      }, {
+        "uid" : "7604c716ff54ecfb",
+        "name" : "Response headers 200",
+        "source" : "7604c716ff54ecfb.json",
+        "type" : "application/json",
+        "size" : 504
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 3,
+    "attachmentsCount" : 9,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[M] Web Driver",
+    "time" : {
+      "start" : 1750670549539,
+      "stop" : 1750670551067,
+      "duration" : 1528
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[M] Niffler",
+    "time" : {
+      "start" : 1750670551067,
+      "stop" : 1750670552807,
+      "duration" : 1740
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Перейти на страницу авторизации Niffler",
+      "time" : {
+        "start" : 1750670551067,
+        "stop" : 1750670551355,
+        "duration" : 288
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Авторизоваться под пользователем",
+      "time" : {
+        "start" : 1750670551355,
+        "stop" : 1750670551539,
+        "duration" : 184
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Заполнить поле \"Имя пользователя\"",
+        "time" : {
+          "start" : 1750670551355,
+          "stop" : 1750670551433,
+          "duration" : 78
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'qa_guru'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Заполнить поле \"Пароль\"",
+        "time" : {
+          "start" : 1750670551433,
+          "stop" : 1750670551491,
+          "duration" : 58
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "password",
+          "value" : "'qa_guru'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Нажать кнопку \"Log In\"",
+        "time" : {
+          "start" : 1750670551491,
+          "stop" : 1750670551539,
+          "duration" : 48
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : false
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 3,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 5,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[F] Clean Categories",
+    "time" : {
+      "start" : 1750670575977,
+      "stop" : 1750670576011,
+      "duration" : 34
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Получить id всех категорий пользователя",
+      "time" : {
+        "start" : 1750670575978,
+        "stop" : 1750670575994,
+        "duration" : 16
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "GET /api/categories/all",
+        "time" : {
+          "start" : 1750670575984,
+          "stop" : 1750670575994,
+          "duration" : 10
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "15139ff773be99a4",
+          "name" : "Request",
+          "source" : "15139ff773be99a4.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "7060299b7e0d5c54",
+          "name" : "Response json 200",
+          "source" : "7060299b7e0d5c54.json",
+          "type" : "application/json",
+          "size" : 1110
+        }, {
+          "uid" : "b44d7c94a5f89bc0",
+          "name" : "Response headers 200",
+          "source" : "b44d7c94a5f89bc0.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "exclude_archived",
+        "value" : "False"
+      } ],
+      "stepsCount" : 1,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Удалить из БД категории из списка",
+      "time" : {
+        "start" : 1750670575994,
+        "stop" : 1750670576011,
+        "duration" : 17
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670575994,
+          "stop" : 1750670575999,
+          "duration" : 5
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "7b0a1804bb69e11e",
+          "name" : "SELECT niffler-spend",
+          "source" : "7b0a1804bb69e11e.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "ac4479d5fdf91313",
+          "name" : "DELETE niffler-spend",
+          "source" : "ac4479d5fdf91313.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'c182cd01-47f5-4b7e-8b39-604d9d1b98e9'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670575999,
+          "stop" : 1750670576001,
+          "duration" : 2
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "b7055717d4090f2e",
+          "name" : "SELECT niffler-spend",
+          "source" : "b7055717d4090f2e.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "7b27bc3f9a37024a",
+          "name" : "DELETE niffler-spend",
+          "source" : "7b27bc3f9a37024a.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'fdc3f268-683c-43ed-ba98-375ffd33b993'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670576001,
+          "stop" : 1750670576003,
+          "duration" : 2
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "efb6e484fc29c73b",
+          "name" : "SELECT niffler-spend",
+          "source" : "efb6e484fc29c73b.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "62169a3937ac3c97",
+          "name" : "DELETE niffler-spend",
+          "source" : "62169a3937ac3c97.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'8df6232e-b96a-4159-ae27-b66b14e20079'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670576004,
+          "stop" : 1750670576005,
+          "duration" : 1
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "6c86dcf136eda311",
+          "name" : "SELECT niffler-spend",
+          "source" : "6c86dcf136eda311.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "b712efcf4bc7aa3e",
+          "name" : "DELETE niffler-spend",
+          "source" : "b712efcf4bc7aa3e.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'85f61ac8-a5a1-4fbd-9275-6e482d324ad3'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670576005,
+          "stop" : 1750670576007,
+          "duration" : 2
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "8c847a2874496dad",
+          "name" : "SELECT niffler-spend",
+          "source" : "8c847a2874496dad.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "bc70c20965e40b8b",
+          "name" : "DELETE niffler-spend",
+          "source" : "bc70c20965e40b8b.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'bea7ea2a-4456-471a-8c1d-de337ba07d77'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670576007,
+          "stop" : 1750670576009,
+          "duration" : 2
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "d5ca707cf5cebf68",
+          "name" : "SELECT niffler-spend",
+          "source" : "d5ca707cf5cebf68.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "84e13fca94989ecb",
+          "name" : "DELETE niffler-spend",
+          "source" : "84e13fca94989ecb.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'a7409a47-a853-4542-988a-18725c40fdfc'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750670576009,
+          "stop" : 1750670576011,
+          "duration" : 2
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "46f27126a1cfd4b",
+          "name" : "SELECT niffler-spend",
+          "source" : "46f27126a1cfd4b.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "680437819b7f7463",
+          "name" : "DELETE niffler-spend",
+          "source" : "680437819b7f7463.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'0b3ba7f4-27bf-4d77-b17a-6f9e8292d03c'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "categories_ids",
+        "value" : "['c182cd01-47f5-4b7e-8b39-604d9d1b98e9', 'fdc3f268-683c-43ed-ba98-375ffd33b993', '8df6232e-b96a-4159-ae27-b66b14e20079', '85f61ac8-a5a1-4fbd-9275-6e482d324ad3', 'bea7ea2a-4456-471a-8c1d-de337ba07d77', 'a7409a47-a853-4542-988a-18725c40fdfc', '0b3ba7f4-27bf-4d77-b17a-6f9e8292d03c']"
+      } ],
+      "stepsCount" : 7,
+      "attachmentsCount" : 14,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 10,
+    "attachmentsCount" : 17,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Spend Db",
+    "time" : {
+      "start" : 1750670566594,
+      "stop" : 1750670566627,
+      "duration" : 33
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать 7 категории(й)",
+      "time" : {
+        "start" : 1750670576012,
+        "stop" : 1750670576147,
+        "duration" : 135
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576012,
+          "stop" : 1750670576040,
+          "duration" : 28
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576016,
+            "stop" : 1750670576040,
+            "duration" : 24
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "589d5dc5522d3220",
+            "name" : "Request",
+            "source" : "589d5dc5522d3220.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "1947f5b3ce0bf3db",
+            "name" : "Response json 200",
+            "source" : "1947f5b3ce0bf3db.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "1b654c9385d718c1",
+            "name" : "Response headers 200",
+            "source" : "1b654c9385d718c1.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit1'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576040,
+          "stop" : 1750670576056,
+          "duration" : 16
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576045,
+            "stop" : 1750670576056,
+            "duration" : 11
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "a6a15ab33175504b",
+            "name" : "Request",
+            "source" : "a6a15ab33175504b.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "caa26598de7d1162",
+            "name" : "Response json 200",
+            "source" : "caa26598de7d1162.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "cd1fe9958dc842ef",
+            "name" : "Response headers 200",
+            "source" : "cd1fe9958dc842ef.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit2'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576056,
+          "stop" : 1750670576071,
+          "duration" : 15
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576060,
+            "stop" : 1750670576071,
+            "duration" : 11
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "e389a78965a5302b",
+            "name" : "Request",
+            "source" : "e389a78965a5302b.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "eb146431997fdc80",
+            "name" : "Response json 200",
+            "source" : "eb146431997fdc80.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "cb42e054b0c504c6",
+            "name" : "Response headers 200",
+            "source" : "cb42e054b0c504c6.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit3'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576071,
+          "stop" : 1750670576085,
+          "duration" : 14
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576075,
+            "stop" : 1750670576085,
+            "duration" : 10
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "4fbc52a289226b33",
+            "name" : "Request",
+            "source" : "4fbc52a289226b33.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "5dc048bb40066f48",
+            "name" : "Response json 200",
+            "source" : "5dc048bb40066f48.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "c46bce0add8b252f",
+            "name" : "Response headers 200",
+            "source" : "c46bce0add8b252f.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit4'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576086,
+          "stop" : 1750670576102,
+          "duration" : 16
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576090,
+            "stop" : 1750670576102,
+            "duration" : 12
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "809ccbb276d94682",
+            "name" : "Request",
+            "source" : "809ccbb276d94682.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "4bf8fb69ba8277fb",
+            "name" : "Response json 200",
+            "source" : "4bf8fb69ba8277fb.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "d758bfaff556b7e3",
+            "name" : "Response headers 200",
+            "source" : "d758bfaff556b7e3.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit5'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576102,
+          "stop" : 1750670576124,
+          "duration" : 22
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576109,
+            "stop" : 1750670576124,
+            "duration" : 15
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "a9052d9cb1ebbb7c",
+            "name" : "Request",
+            "source" : "a9052d9cb1ebbb7c.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "ffcbbead741f284d",
+            "name" : "Response json 200",
+            "source" : "ffcbbead741f284d.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "bc8fdc95bf5e3746",
+            "name" : "Response headers 200",
+            "source" : "bc8fdc95bf5e3746.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit6'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Добавить категорию",
+        "time" : {
+          "start" : 1750670576124,
+          "stop" : 1750670576147,
+          "duration" : 23
+        },
+        "status" : "passed",
+        "steps" : [ {
+          "name" : "POST /api/categories/add",
+          "time" : {
+            "start" : 1750670576131,
+            "stop" : 1750670576146,
+            "duration" : 15
+          },
+          "status" : "passed",
+          "steps" : [ ],
+          "attachments" : [ {
+            "uid" : "ac624f670eede780",
+            "name" : "Request",
+            "source" : "ac624f670eede780.html",
+            "type" : "text/html",
+            "size" : 3915
+          }, {
+            "uid" : "cc3b11302f13ca29",
+            "name" : "Response json 200",
+            "source" : "cc3b11302f13ca29.json",
+            "type" : "application/json",
+            "size" : 124
+          }, {
+            "uid" : "2115202441ac7b78",
+            "name" : "Response headers 200",
+            "source" : "2115202441ac7b78.json",
+            "type" : "application/json",
+            "size" : 490
+          } ],
+          "parameters" : [ ],
+          "stepsCount" : 0,
+          "attachmentsCount" : 3,
+          "shouldDisplayMessage" : false,
+          "hasContent" : true
+        } ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "category_name",
+          "value" : "'limit7'"
+        }, {
+          "name" : "archived",
+          "value" : "False"
+        } ],
+        "stepsCount" : 1,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "spends_client",
+        "value" : "<python_test.data_helper.api_helper.SpendsHttpClient object at 0x7fa3598f2120>"
+      }, {
+        "name" : "count",
+        "value" : "7"
+      } ],
+      "stepsCount" : 14,
+      "attachmentsCount" : 21,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Открыть страницу пользователя",
+      "time" : {
+        "start" : 1750670576147,
+        "stop" : 1750670576762,
+        "duration" : 615
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Проверить возможность добавления новой категории",
+      "time" : {
+        "start" : 1750670576762,
+        "stop" : 1750670576772,
+        "duration" : 10
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 17,
+    "attachmentsCount" : 21,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "web_driver::0",
+    "time" : {
+      "start" : 1750670584716,
+      "stop" : 1750670584800,
+      "duration" : 84
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "niffler::0",
+    "time" : {
+      "start" : 1750670584715,
+      "stop" : 1750670584715,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "Категории трат"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "story",
+    "value" : "Ограничения по категориям"
+  }, {
+    "name" : "host",
+    "value" : "fv-az816-166"
+  }, {
+    "name" : "thread",
+    "value" : "10347-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_app"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "count",
+    "value" : "7"
+  }, {
+    "name" : "is_not_possible_add",
+    "value" : "False"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "8706475b3ebcea1e.json",
+  "parameterValues" : [ "7", "False" ]
+}
