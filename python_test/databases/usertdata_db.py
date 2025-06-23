@@ -26,7 +26,7 @@ class UserdataDb:
             name = f'{command_name} {context.engine.url.database}'
             allure.attach(statement_with_params, name=name, attachment_type=AttachmentType.TEXT)
 
-    def get_user(self, username: str) -> Sequence[User]:
+    def get_user(self, username: str) -> User:
         with Session(self.engine) as session:
             statement = select(User).where(User.username == username)
             return session.exec(statement).one()
