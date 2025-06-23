@@ -1,0 +1,150 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(5526936f-6021-4fa5-acb0-afa31446b105) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('5526936f-6021-4fa5-acb0-afa31446b105')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+      "children" : [ {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "8e961aab139dd35c",
+        "parentUid" : "ac581500438ca86a93e937335f8a68d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671171619,
+          "stop" : 1750671171619,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'EUR'" ]
+      }, {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "940fc1d3de15802f",
+        "parentUid" : "ac581500438ca86a93e937335f8a68d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671173678,
+          "stop" : 1750671173678,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'KZT'" ]
+      }, {
+        "name" : "Добавление новой категории через API",
+        "uid" : "6b3d9460c5cdfce5",
+        "parentUid" : "ac581500438ca86a93e937335f8a68d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671174685,
+          "stop" : 1750671174685,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_create_category', 'archived': False}" ]
+      }, {
+        "name" : "Обновление существующей категории через API",
+        "uid" : "812074e22eb4fed",
+        "parentUid" : "ac581500438ca86a93e937335f8a68d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671175504,
+          "stop" : 1750671175504,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_update_category', 'archived': False}" ]
+      }, {
+        "name" : "Нет возможности добавить дубль существующей категории",
+        "uid" : "72d79d34f25ad3a8",
+        "parentUid" : "ac581500438ca86a93e937335f8a68d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671176319,
+          "stop" : 1750671176319,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_duplicate_category', 'archived': False}" ]
+      } ],
+      "uid" : "ac581500438ca86a93e937335f8a68d6"
+    }, {
+      "name" : "sqlalchemy.exc.NoResultFound: No row was found when one was required",
+      "children" : [ {
+        "name" : "Отклонение запроса на дружбу",
+        "uid" : "ed294cb85cdf5350",
+        "parentUid" : "de53fd9e52f45ad1f1607b04946219a5",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750671175051,
+          "stop" : 1750671175291,
+          "duration" : 240
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "de53fd9e52f45ad1f1607b04946219a5"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  }, {
+    "name" : "Product defects",
+    "children" : [ {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'username'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7f1c05b90440>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7f1c05b90440> = <python_test.model.niffler.Niffler object at 0x7f1c062db4d0>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "6c810f8cdd3f444f",
+        "parentUid" : "127420757065d99095f6fadbf1aa6779",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750671174593,
+          "stop" : 1750671175293,
+          "duration" : 700
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'password'" ]
+      } ],
+      "uid" : "127420757065d99095f6fadbf1aa6779"
+    }, {
+      "name" : "AssertionError: assert 'Bad credentials' == 'Неверные уче... пользователя'\n  \n  - Неверные учетные данные пользователя\n  + Bad credentials",
+      "children" : [ {
+        "name" : "Авторизация под не существующим пользователем",
+        "uid" : "e2adcf13b2805474",
+        "parentUid" : "f3cae5550777fa45d8f17803798fff98",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750671177155,
+          "stop" : 1750671178447,
+          "duration" : 1292
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "f3cae5550777fa45d8f17803798fff98"
+    }, {
+      "name" : "AssertionError: assert False\n +  where False = is_element_have_property(('name', 'password'), 'validationMessage', 'Заполните это поле.')\n +    where is_element_have_property = <python_test.model.LoginPage.LoginPage object at 0x7fec5f3ed7f0>.is_element_have_property\n +      where <python_test.model.LoginPage.LoginPage object at 0x7fec5f3ed7f0> = <python_test.model.niffler.Niffler object at 0x7fec5f3ecad0>.login_page",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "9b297be7f74f8aae",
+        "parentUid" : "b3c047ea08831f1986290603e7605ccd",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750671178108,
+          "stop" : 1750671178676,
+          "duration" : 568
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'user'" ]
+      } ],
+      "uid" : "b3c047ea08831f1986290603e7605ccd"
+    } ],
+    "uid" : "8fb3a91ba5aaf9de24cc8a92edc82b5d"
+  } ],
+  "name" : "categories"
+}
