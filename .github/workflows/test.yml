@@ -63,11 +63,20 @@ jobs:
         working-directory: ./python_test
         run: pytest -n auto --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py
 
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
       - name: Generate Allure Report
         if: always()
         uses: simple-elf/allure-report-action@v1
         with:
           allure_results: python_test/allure-results
+          allure_history: python_test/allure-history
           allure_report: python_test/allure-report
 
       - name: Upload Allure Report as artifact
@@ -82,6 +91,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: python_test/allure-report
-          keep_files: true
-          force_orphan: false
+          publish_branch: gh-pages
+          publish_dir: python_test/allure-history
+#          publish_dir: python_test/allure-report
+
