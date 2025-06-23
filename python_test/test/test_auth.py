@@ -61,7 +61,11 @@ class TestNegativeScenario:
 
     @pytest.fixture(scope="class")
     def browser(self) -> Generator[Niffler, Any, None]:
-        wd = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--incognito")
+        options.add_argument("--disable-dev-shm-usage")
+        wd = webdriver.Chrome(options=options)
         niffler = Niffler(wd)
         yield niffler
         wd.quit()
