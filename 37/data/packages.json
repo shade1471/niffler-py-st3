@@ -1,0 +1,160 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "children" : [ {
+    "name" : "test",
+    "children" : [ {
+      "name" : "test_auth",
+      "children" : [ {
+        "name" : "Авторизация под существующим пользователем",
+        "uid" : "393a361b4b02b4db",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677120582,
+          "stop" : 1750677124102,
+          "duration" : 3520
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Регистрация пользователя с валидными данными",
+        "uid" : "643385f40c862e20",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677124729,
+          "stop" : 1750677125266,
+          "duration" : 537
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Авторизация под не существующим пользователем",
+        "uid" : "687c16a3adae8f19",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750677125652,
+          "stop" : 1750677126276,
+          "duration" : 624
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "3801e3071b825fe4",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750677126321,
+          "stop" : 1750677126593,
+          "duration" : 272
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'user'" ]
+      }, {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "9b5a2f31450100b4",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "failed",
+        "time" : {
+          "start" : 1750677126599,
+          "stop" : 1750677126862,
+          "duration" : 263
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'password'" ]
+      }, {
+        "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+        "uid" : "7bf7e9add0d7548b",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677126868,
+          "stop" : 1750677127269,
+          "duration" : 401
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2" ]
+      }, {
+        "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+        "uid" : "5984292f80f08403",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677127271,
+          "stop" : 1750677128129,
+          "duration" : 858
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "13" ]
+      }, {
+        "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+        "uid" : "29ec7b4b5a603946",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677128131,
+          "stop" : 1750677128495,
+          "duration" : 364
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2" ]
+      }, {
+        "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+        "uid" : "4899eaf4649f58a4",
+        "parentUid" : "f0e7dc0c8e17de20af60cb3cab7aea31",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677128497,
+          "stop" : 1750677128899,
+          "duration" : 402
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "51" ]
+      } ],
+      "uid" : "f0e7dc0c8e17de20af60cb3cab7aea31"
+    }, {
+      "name" : "test_kafka",
+      "children" : [ {
+        "name" : "Убедиться в наличии сообщения в Kafka после успешной регистрации нового пользователя",
+        "uid" : "ca884f168a6a42bd",
+        "parentUid" : "059df3ba1cbc321e4f33ef2ec4c78e34",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677128965,
+          "stop" : 1750677129148,
+          "duration" : 183
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Сервис niffler-userdata должен забирать сообщение из топика Kafka",
+        "uid" : "433fa2322d8b037",
+        "parentUid" : "059df3ba1cbc321e4f33ef2ec4c78e34",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750677129188,
+          "stop" : 1750677129996,
+          "duration" : 808
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "059df3ba1cbc321e4f33ef2ec4c78e34"
+    } ],
+    "uid" : "d662795e8d349f9b5595bf62f43ea7ae"
+  } ],
+  "name" : "packages"
+}
