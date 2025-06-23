@@ -1,0 +1,51 @@
+INFO     root:api_helper.py:33 Пользователь Marissa Garcia зарегистрирован
+INFO     root:api_helper.py:33 Пользователь Cynthia Wood зарегистрирован
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "979"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:updateUserRequest>
+            <nif:user>
+                <nif:id>1a6a120f-7121-4d7f-bf62-1a8a7df8f575</nif:id>
+                <nif:username>Cynthia Wood</nif:username>
+                <!--Optional:-->
+                <nif:firstname></nif:firstname>
+                <!--Optional:-->
+                <nif:surname></nif:surname>
+                <!--Optional:-->
+                <nif:fullname>Jasmine Anderson</nif:fullname>
+                <nif:currency>KZT</nif:currency>
+                <!--Optional:-->
+                <nif:photo></nif:photo>
+                <!--Optional:-->
+                <nif:photoSmall></nif:photoSmall>
+                <!--Optional:-->
+                <nif:friendshipStatus></nif:friendshipStatus>
+            </nif:user>
+        </nif:updateUserRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "454",
+  "Date": "Mon, 23 Jun 2025 03:30:43 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>1a6a120f-7121-4d7f-bf62-1a8a7df8f575</ns2:id><ns2:username>Cynthia Wood</ns2:username><ns2:fullname>Jasmine Anderson</ns2:fullname><ns2:currency>KZT</ns2:currency><ns2:friendshipStatus>VOID</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
