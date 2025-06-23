@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH to http://gateway.niffler.dc:8090/api/categories/update</code></pre>
+</div>
+
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>b'{"id": "c0df0947-94ae-4d15-a6a3-e5ed94b9ade2", "name": "test_duplicate", "username": "qa_guru", "archived": true}'</code></pre>
+    </div>
+
+
+
+
+    <h4>Headers</h4>
+    <div>
+    
+        <div>
+            <pre><code><b>User-Agent</b>: python-requests/2.32.3</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept-Encoding</b>: gzip, deflate</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Connection</b>: keep-alive</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Authorization</b>: Bearer eyJraWQiOiI4ZDI3ZDNiNS05YWExLTQ5NWQtOTdiZS1mZjNkZGFlN2EyMGIiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNjU0NDk4LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNjU4MDk4LCJpYXQiOjE3NTA2NTQ0OTgsImp0aSI6Ijc3ZjljZTUyLTczYzUtNGI0YS1iZGY0LTdiMzkyMmE1YTZlYiJ9.tvlTOq2hSR9FH5Pmay-sEEyYTGk4kcTmE55mvq6ELllyKCJz6yaMmljAGlUnMmwJGr2zRKss7AYrt0kRe7MXedOKAVKyH_-rb87PXa9UHT7DP5c6IvGgBB3QFE3PYRQMtZGa-xZst1WjH8q9wSKC_207QDNbR5uRml-psGvZa6f4uiFB0XRKkqAEOVL00ikMLP3vDPqQF61Vi7t95zE26auCPSMxULKIrVGnd1H79JcmLKk2t_nCNicP5uQYkEmPIH2xU3qyVv6qb8lohUFXcIONpOwztY0IPrXdU9bm1U2kN_g_tbqtboBQi4ffGSdfJ_9c7DZkBP1YD1GdZX7Cow</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Type</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Length</b>: 113</code></pre>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -X PATCH -H 'Accept: application/json' -H 'Accept-Encoding: gzip, deflate' -H 'Authorization: Bearer eyJraWQiOiI4ZDI3ZDNiNS05YWExLTQ5NWQtOTdiZS1mZjNkZGFlN2EyMGIiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNjU0NDk4LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNjU4MDk4LCJpYXQiOjE3NTA2NTQ0OTgsImp0aSI6Ijc3ZjljZTUyLTczYzUtNGI0YS1iZGY0LTdiMzkyMmE1YTZlYiJ9.tvlTOq2hSR9FH5Pmay-sEEyYTGk4kcTmE55mvq6ELllyKCJz6yaMmljAGlUnMmwJGr2zRKss7AYrt0kRe7MXedOKAVKyH_-rb87PXa9UHT7DP5c6IvGgBB3QFE3PYRQMtZGa-xZst1WjH8q9wSKC_207QDNbR5uRml-psGvZa6f4uiFB0XRKkqAEOVL00ikMLP3vDPqQF61Vi7t95zE26auCPSMxULKIrVGnd1H79JcmLKk2t_nCNicP5uQYkEmPIH2xU3qyVv6qb8lohUFXcIONpOwztY0IPrXdU9bm1U2kN_g_tbqtboBQi4ffGSdfJ_9c7DZkBP1YD1GdZX7Cow' -H 'Connection: keep-alive' -H 'Content-Length: 113' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.32.3' -d '{"id": "c0df0947-94ae-4d15-a6a3-e5ed94b9ade2", "name": "test_duplicate", "username": "qa_guru", "archived": true}' http://gateway.niffler.dc:8090/api/categories/update</code></pre>
+    </div>
+
+</body>
+</html>

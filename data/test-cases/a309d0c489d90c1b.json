@@ -1,0 +1,244 @@
+{
+  "uid" : "a309d0c489d90c1b",
+  "name" : "Отклонение запроса на дружбу",
+  "fullName" : "test.test_soap.TestSoapNiffler#test_decline_invitation",
+  "historyId" : "8acd6b4b25069584c97d5a73c1515706",
+  "time" : {
+    "start" : 1750654499566,
+    "stop" : 1750654499812,
+    "duration" : 246
+  },
+  "status" : "broken",
+  "statusMessage" : "sqlalchemy.exc.NoResultFound: No row was found when one was required",
+  "statusTrace" : "self = <test.test_soap.TestSoapNiffler object at 0x7fc40c4d1ae0>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7fc40c3cda90>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...stgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws')\nuserdata_db = <python_test.databases.usertdata_db.UserdataDb object at 0x7fc40e8d0440>\n\n    @allure.title('Отклонение запроса на дружбу')\n    def test_decline_invitation(self, soap_session, envs, userdata_db):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n            user_1_from_db = userdata_db.get_user(user_1)\n>           user_2_from_db = userdata_db.get_user(user_2)\n\ntest/test_soap.py:119: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ndatabases/usertdata_db.py:32: in get_user\n    return session.exec(statement).one()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py:1808: in one\n    return self._only_one_row(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.engine.result.ScalarResult object at 0x7fc407b2a120>\nraise_for_second_row = True, raise_for_none = True, scalar = False\n\n    def _only_one_row(\n        self,\n        raise_for_second_row: bool,\n        raise_for_none: bool,\n        scalar: bool,\n    ) -> Optional[_R]:\n        onerow = self._fetchone_impl\n    \n        row: Optional[_InterimRowType[Any]] = onerow(hard_close=True)\n        if row is None:\n            if raise_for_none:\n>               raise exc.NoResultFound(\n                    \"No row was found when one was required\"\n                )\nE               sqlalchemy.exc.NoResultFound: No row was found when one was required\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py:752: NoResultFound",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] Userdata Db",
+    "time" : {
+      "start" : 1750654498178,
+      "stop" : 1750654498259,
+      "duration" : 81
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750654497974,
+      "stop" : 1750654497975,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[M] Soap Session",
+    "time" : {
+      "start" : 1750654498141,
+      "stop" : 1750654498142,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750654497973,
+      "stop" : 1750654497974,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750654497975,
+      "stop" : 1750654498141,
+      "duration" : 166
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750654497975,
+        "stop" : 1750654498141,
+        "duration" : 166
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  } ],
+  "testStage" : {
+    "status" : "broken",
+    "statusMessage" : "sqlalchemy.exc.NoResultFound: No row was found when one was required",
+    "statusTrace" : "self = <test.test_soap.TestSoapNiffler object at 0x7fc40c4d1ae0>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7fc40c3cda90>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...stgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws')\nuserdata_db = <python_test.databases.usertdata_db.UserdataDb object at 0x7fc40e8d0440>\n\n    @allure.title('Отклонение запроса на дружбу')\n    def test_decline_invitation(self, soap_session, envs, userdata_db):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n            user_1_from_db = userdata_db.get_user(user_1)\n>           user_2_from_db = userdata_db.get_user(user_2)\n\ntest/test_soap.py:119: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ndatabases/usertdata_db.py:32: in get_user\n    return session.exec(statement).one()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py:1808: in one\n    return self._only_one_row(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.engine.result.ScalarResult object at 0x7fc407b2a120>\nraise_for_second_row = True, raise_for_none = True, scalar = False\n\n    def _only_one_row(\n        self,\n        raise_for_second_row: bool,\n        raise_for_none: bool,\n        scalar: bool,\n    ) -> Optional[_R]:\n        onerow = self._fetchone_impl\n    \n        row: Optional[_InterimRowType[Any]] = onerow(hard_close=True)\n        if row is None:\n            if raise_for_none:\n>               raise exc.NoResultFound(\n                    \"No row was found when one was required\"\n                )\nE               sqlalchemy.exc.NoResultFound: No row was found when one was required\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py:752: NoResultFound",
+    "steps" : [ {
+      "name" : "Создать пользователей Michelle Sanders и Linda Hernandez в системе",
+      "time" : {
+        "start" : 1750654499567,
+        "stop" : 1750654499811,
+        "duration" : 244
+      },
+      "status" : "broken",
+      "statusMessage" : "sqlalchemy.exc.NoResultFound: No row was found when one was required\n",
+      "statusTrace" : "  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_soap.py\", line 119, in test_decline_invitation\n    user_2_from_db = userdata_db.get_user(user_2)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/usertdata_db.py\", line 32, in get_user\n    return session.exec(statement).one()\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py\", line 1808, in one\n    return self._only_one_row(\n           ~~~~~~~~~~~~~~~~~~^\n        raise_for_second_row=True, raise_for_none=True, scalar=False\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/result.py\", line 752, in _only_one_row\n    raise exc.NoResultFound(\n        \"No row was found when one was required\"\n    )\n",
+      "steps" : [ {
+        "name" : "Создать пользователя 'Michelle Sanders'",
+        "time" : {
+          "start" : 1750654499567,
+          "stop" : 1750654499693,
+          "duration" : 126
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Michelle Sanders'"
+        }, {
+          "name" : "user_password",
+          "value" : "'BEk4GaUFNn'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Создать пользователя 'Linda Hernandez'",
+        "time" : {
+          "start" : 1750654499693,
+          "stop" : 1750654499808,
+          "duration" : 115
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Linda Hernandez'"
+        }, {
+          "name" : "user_password",
+          "value" : "'K6UL9bcs55'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ {
+        "uid" : "df585581d75946ee",
+        "name" : "SELECT niffler-userdata",
+        "source" : "df585581d75946ee.txt",
+        "type" : "text/plain",
+        "size" : 191
+      }, {
+        "uid" : "c9b8146d5491f76",
+        "name" : "SELECT niffler-userdata",
+        "source" : "c9b8146d5491f76.txt",
+        "type" : "text/plain",
+        "size" : 190
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 2,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : true,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "9feefbe31c42a0e",
+      "name" : "log",
+      "source" : "9feefbe31c42a0e.txt",
+      "type" : "text/plain",
+      "size" : 206
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 3,
+    "attachmentsCount" : 3,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "SOAP"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "host",
+    "value" : "fv-az791-576"
+  }, {
+    "name" : "thread",
+    "value" : "11794-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_soap"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ ]
+  },
+  "source" : "a309d0c489d90c1b.json",
+  "parameterValues" : [ ]
+}
