@@ -1,0 +1,258 @@
+{
+  "uid" : "edfc552040ec9a41",
+  "name" : "Принятие запроса на дружбу",
+  "fullName" : "test.test_soap.TestSoapNiffler#test_accept_invitation",
+  "historyId" : "cdf98741ede9b0c8595f8d04bddc2c50",
+  "time" : {
+    "start" : 1750752666834,
+    "stop" : 1750752667251,
+    "duration" : 417
+  },
+  "status" : "broken",
+  "statusMessage" : "sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nLINE 2: FROM \"user\" \n             ^\n\n[SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nFROM \"user\" \nWHERE \"user\".username = %(username_1)s]\n[parameters: {'username_1': 'Patricia Holmes'}]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+  "statusTrace" : "self = <sqlalchemy.engine.base.Connection object at 0x7f22a8a23770>\ndialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\nstatement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x7f22a8a23e00>\nparameters = [{'username_1': 'Patricia Holmes'}]\n\n    def _exec_single_context(\n        self,\n        dialect: Dialect,\n        context: ExecutionContext,\n        statement: Union[str, Compiled],\n        parameters: Optional[_AnyMultiExecuteParams],\n    ) -> CursorResult[Any]:\n        \"\"\"continue the _execute_context() method for a single DBAPI\n        cursor.execute() or cursor.executemany() call.\n    \n        \"\"\"\n        if dialect.bind_typing is BindTyping.SETINPUTSIZES:\n            generic_setinputsizes = context._prepare_set_input_sizes()\n    \n            if generic_setinputsizes:\n                try:\n                    dialect.do_set_input_sizes(\n                        context.cursor, generic_setinputsizes, context\n                    )\n                except BaseException as e:\n                    self._handle_dbapi_exception(\n                        e, str(statement), parameters, None, context\n                    )\n    \n        cursor, str_statement, parameters = (\n            context.cursor,\n            context.statement,\n            context.parameters,\n        )\n    \n        effective_parameters: Optional[_AnyExecuteParams]\n    \n        if not context.executemany:\n            effective_parameters = parameters[0]\n        else:\n            effective_parameters = parameters\n    \n        if self._has_events or self.engine._has_events:\n            for fn in self.dispatch.before_cursor_execute:\n                str_statement, effective_parameters = fn(\n                    self,\n                    cursor,\n                    str_statement,\n                    effective_parameters,\n                    context,\n                    context.executemany,\n                )\n    \n        if self._echo:\n            self._log_info(str_statement)\n    \n            stats = context._get_cache_stats()\n    \n            if not self.engine.hide_parameters:\n                self._log_info(\n                    \"[%s] %r\",\n                    stats,\n                    sql_util._repr_params(\n                        effective_parameters,\n                        batches=10,\n                        ismulti=context.executemany,\n                    ),\n                )\n            else:\n                self._log_info(\n                    \"[%s] [SQL parameters hidden due to hide_parameters=True]\",\n                    stats,\n                )\n    \n        evt_handled: bool = False\n        try:\n            if context.execute_style is ExecuteStyle.EXECUTEMANY:\n                effective_parameters = cast(\n                    \"_CoreMultiExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_executemany:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_executemany(\n                        cursor,\n                        str_statement,\n                        effective_parameters,\n                        context,\n                    )\n            elif not effective_parameters and context.no_parameters:\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute_no_params:\n                        if fn(cursor, str_statement, context):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_execute_no_params(\n                        cursor, str_statement, context\n                    )\n            else:\n                effective_parameters = cast(\n                    \"_CoreSingleExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n>                   self.dialect.do_execute(\n                        cursor, str_statement, effective_parameters, context\n                    )\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncursor = <cursor object at 0x7f22a87035b0; closed: -1>\nstatement = 'SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \\nFROM \"user\" \\nWHERE \"user\".username = %(username_1)s'\nparameters = {'username_1': 'Patricia Holmes'}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       psycopg2.errors.UndefinedTable: relation \"user\" does not exist\nE       LINE 2: FROM \"user\" \nE                    ^\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: UndefinedTable\n\nThe above exception was the direct cause of the following exception:\n\nself = <test.test_soap.TestSoapNiffler object at 0x7f22a8d10b90>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7f22a8a23380>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...stgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws')\nuserdata_db = <python_test.databases.usertdata_db.UserdataDb object at 0x7f22a8eede80>\n\n    @allure.title('Принятие запроса на дружбу')\n    def test_accept_invitation(self, soap_session, envs, userdata_db):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n>           user_1_from_db = userdata_db.get_user(user_1)\n\ntest/test_soap.py:99: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ndatabases/usertdata_db.py:43: in get_user\n    wait_for_record(session, User, username=username)\ndatabases/usertdata_db.py:17: in wait_for_record\n    record = session.exec(select(model).filter_by(**filters)).one()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlmodel/orm/session.py:66: in exec\n    results = super().execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2365: in execute\n    return self._execute_internal(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2251: in _execute_internal\n    result: Result[Any] = compile_state_cls.orm_execute_statement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement\n    result = conn.execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1416: in execute\n    return meth(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:523: in _execute_on_connection\n    return connection._execute_clauseelement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1638: in _execute_clauseelement\n    ret = self._execute_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1843: in _execute_context\n    return self._exec_single_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1983: in _exec_single_context\n    self._handle_dbapi_exception(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2352: in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: in _exec_single_context\n    self.dialect.do_execute(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncursor = <cursor object at 0x7f22a87035b0; closed: -1>\nstatement = 'SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \\nFROM \"user\" \\nWHERE \"user\".username = %(username_1)s'\nparameters = {'username_1': 'Patricia Holmes'}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nE       LINE 2: FROM \"user\" \nE                    ^\nE       \nE       [SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nE       FROM \"user\" \nE       WHERE \"user\".username = %(username_1)s]\nE       [parameters: {'username_1': 'Patricia Holmes'}]\nE       (Background on this error at: https://sqlalche.me/e/20/f405)\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: ProgrammingError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[M] Soap Session",
+    "time" : {
+      "start" : 1750752666832,
+      "stop" : 1750752666833,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750752663412,
+      "stop" : 1750752663413,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Userdata Db",
+    "time" : {
+      "start" : 1750752666770,
+      "stop" : 1750752666832,
+      "duration" : 62
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750752663413,
+      "stop" : 1750752663577,
+      "duration" : 164
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750752663414,
+        "stop" : 1750752663577,
+        "duration" : 163
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750752663406,
+      "stop" : 1750752663412,
+      "duration" : 6
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "broken",
+    "statusMessage" : "sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nLINE 2: FROM \"user\" \n             ^\n\n[SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nFROM \"user\" \nWHERE \"user\".username = %(username_1)s]\n[parameters: {'username_1': 'Patricia Holmes'}]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+    "statusTrace" : "self = <sqlalchemy.engine.base.Connection object at 0x7f22a8a23770>\ndialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\nstatement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x7f22a8a23e00>\nparameters = [{'username_1': 'Patricia Holmes'}]\n\n    def _exec_single_context(\n        self,\n        dialect: Dialect,\n        context: ExecutionContext,\n        statement: Union[str, Compiled],\n        parameters: Optional[_AnyMultiExecuteParams],\n    ) -> CursorResult[Any]:\n        \"\"\"continue the _execute_context() method for a single DBAPI\n        cursor.execute() or cursor.executemany() call.\n    \n        \"\"\"\n        if dialect.bind_typing is BindTyping.SETINPUTSIZES:\n            generic_setinputsizes = context._prepare_set_input_sizes()\n    \n            if generic_setinputsizes:\n                try:\n                    dialect.do_set_input_sizes(\n                        context.cursor, generic_setinputsizes, context\n                    )\n                except BaseException as e:\n                    self._handle_dbapi_exception(\n                        e, str(statement), parameters, None, context\n                    )\n    \n        cursor, str_statement, parameters = (\n            context.cursor,\n            context.statement,\n            context.parameters,\n        )\n    \n        effective_parameters: Optional[_AnyExecuteParams]\n    \n        if not context.executemany:\n            effective_parameters = parameters[0]\n        else:\n            effective_parameters = parameters\n    \n        if self._has_events or self.engine._has_events:\n            for fn in self.dispatch.before_cursor_execute:\n                str_statement, effective_parameters = fn(\n                    self,\n                    cursor,\n                    str_statement,\n                    effective_parameters,\n                    context,\n                    context.executemany,\n                )\n    \n        if self._echo:\n            self._log_info(str_statement)\n    \n            stats = context._get_cache_stats()\n    \n            if not self.engine.hide_parameters:\n                self._log_info(\n                    \"[%s] %r\",\n                    stats,\n                    sql_util._repr_params(\n                        effective_parameters,\n                        batches=10,\n                        ismulti=context.executemany,\n                    ),\n                )\n            else:\n                self._log_info(\n                    \"[%s] [SQL parameters hidden due to hide_parameters=True]\",\n                    stats,\n                )\n    \n        evt_handled: bool = False\n        try:\n            if context.execute_style is ExecuteStyle.EXECUTEMANY:\n                effective_parameters = cast(\n                    \"_CoreMultiExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_executemany:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_executemany(\n                        cursor,\n                        str_statement,\n                        effective_parameters,\n                        context,\n                    )\n            elif not effective_parameters and context.no_parameters:\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute_no_params:\n                        if fn(cursor, str_statement, context):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_execute_no_params(\n                        cursor, str_statement, context\n                    )\n            else:\n                effective_parameters = cast(\n                    \"_CoreSingleExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n>                   self.dialect.do_execute(\n                        cursor, str_statement, effective_parameters, context\n                    )\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncursor = <cursor object at 0x7f22a87035b0; closed: -1>\nstatement = 'SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \\nFROM \"user\" \\nWHERE \"user\".username = %(username_1)s'\nparameters = {'username_1': 'Patricia Holmes'}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       psycopg2.errors.UndefinedTable: relation \"user\" does not exist\nE       LINE 2: FROM \"user\" \nE                    ^\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: UndefinedTable\n\nThe above exception was the direct cause of the following exception:\n\nself = <test.test_soap.TestSoapNiffler object at 0x7f22a8d10b90>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7f22a8a23380>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...stgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws')\nuserdata_db = <python_test.databases.usertdata_db.UserdataDb object at 0x7f22a8eede80>\n\n    @allure.title('Принятие запроса на дружбу')\n    def test_accept_invitation(self, soap_session, envs, userdata_db):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n>           user_1_from_db = userdata_db.get_user(user_1)\n\ntest/test_soap.py:99: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ndatabases/usertdata_db.py:43: in get_user\n    wait_for_record(session, User, username=username)\ndatabases/usertdata_db.py:17: in wait_for_record\n    record = session.exec(select(model).filter_by(**filters)).one()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlmodel/orm/session.py:66: in exec\n    results = super().execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2365: in execute\n    return self._execute_internal(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2251: in _execute_internal\n    result: Result[Any] = compile_state_cls.orm_execute_statement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/context.py:306: in orm_execute_statement\n    result = conn.execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1416: in execute\n    return meth(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:523: in _execute_on_connection\n    return connection._execute_clauseelement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1638: in _execute_clauseelement\n    ret = self._execute_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1843: in _execute_context\n    return self._exec_single_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1983: in _exec_single_context\n    self._handle_dbapi_exception(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2352: in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: in _exec_single_context\n    self.dialect.do_execute(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f22a8a22510>\ncursor = <cursor object at 0x7f22a87035b0; closed: -1>\nstatement = 'SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \\nFROM \"user\" \\nWHERE \"user\".username = %(username_1)s'\nparameters = {'username_1': 'Patricia Holmes'}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f22a8ca3ce0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nE       LINE 2: FROM \"user\" \nE                    ^\nE       \nE       [SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nE       FROM \"user\" \nE       WHERE \"user\".username = %(username_1)s]\nE       [parameters: {'username_1': 'Patricia Holmes'}]\nE       (Background on this error at: https://sqlalche.me/e/20/f405)\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: ProgrammingError",
+    "steps" : [ {
+      "name" : "Создать пользователей Patricia Holmes и Mr. Jason Stone в системе",
+      "time" : {
+        "start" : 1750752666835,
+        "stop" : 1750752667225,
+        "duration" : 390
+      },
+      "status" : "broken",
+      "statusMessage" : "sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nLINE 2: FROM \"user\" \n             ^\n\n[SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nFROM \"user\" \nWHERE \"user\".username = %(username_1)s]\n[parameters: {'username_1': 'Patricia Holmes'}]\n(Background on this error at: https://sqlalche.me/e/20/f405)\n",
+      "statusTrace" : "  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_soap.py\", line 99, in test_accept_invitation\n    user_1_from_db = userdata_db.get_user(user_1)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/usertdata_db.py\", line 43, in get_user\n    wait_for_record(session, User, username=username)\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/usertdata_db.py\", line 17, in wait_for_record\n    record = session.exec(select(model).filter_by(**filters)).one()\n             ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlmodel/orm/session.py\", line 66, in exec\n    results = super().execute(\n        statement,\n    ...<4 lines>...\n        _add_event=_add_event,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 2365, in execute\n    return self._execute_internal(\n           ~~~~~~~~~~~~~~~~~~~~~~^\n        statement,\n        ^^^^^^^^^^\n    ...<4 lines>...\n        _add_event=_add_event,\n        ^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 2251, in _execute_internal\n    result: Result[Any] = compile_state_cls.orm_execute_statement(\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self,\n        ^^^^^\n    ...<4 lines>...\n        conn,\n        ^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/context.py\", line 306, in orm_execute_statement\n    result = conn.execute(\n        statement, params or {}, execution_options=execution_options\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1416, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py\", line 523, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1638, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1843, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1983, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 2352, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1964, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py\", line 945, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n",
+      "steps" : [ {
+        "name" : "Создать пользователя 'Patricia Holmes'",
+        "time" : {
+          "start" : 1750752666835,
+          "stop" : 1750752666989,
+          "duration" : 154
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Patricia Holmes'"
+        }, {
+          "name" : "user_password",
+          "value" : "'C1S1R2b56t'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Создать пользователя 'Mr. Jason Stone'",
+        "time" : {
+          "start" : 1750752666990,
+          "stop" : 1750752667154,
+          "duration" : 164
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Mr. Jason Stone'"
+        }, {
+          "name" : "user_password",
+          "value" : "'PVU3W0Iezp'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ {
+        "uid" : "797dc40e79fda878",
+        "name" : "SELECT niffler-userdata",
+        "source" : "797dc40e79fda878.txt",
+        "type" : "text/plain",
+        "size" : 190
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 2,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : true,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "9e01eb46c43bc0e7",
+      "name" : "log",
+      "source" : "9e01eb46c43bc0e7.txt",
+      "type" : "text/plain",
+      "size" : 205
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 3,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "feature",
+    "value" : "SOAP"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1384-32"
+  }, {
+    "name" : "thread",
+    "value" : "6804-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_soap"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 1,
+        "skipped" : 0,
+        "passed" : 1,
+        "unknown" : 0,
+        "total" : 2
+      },
+      "items" : [ {
+        "uid" : "ddef297db05c696",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/42/#testresult/ddef297db05c696",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750735605046,
+          "stop" : 1750735605602,
+          "duration" : 556
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "edfc552040ec9a41.json",
+  "parameterValues" : [ ]
+}
