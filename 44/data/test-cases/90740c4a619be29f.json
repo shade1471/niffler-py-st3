@@ -1,0 +1,269 @@
+{
+  "uid" : "90740c4a619be29f",
+  "name" : "Убедиться в наличии сообщения в Kafka после успешной регистрации нового пользователя",
+  "fullName" : "test.test_kafka.TestKafka#test_message_should_be_produced_to_kafka_after_successful_registration",
+  "historyId" : "d94ce57622e0c972fcd69976f76b33e7",
+  "time" : {
+    "start" : 1750753988410,
+    "stop" : 1750753988582,
+    "duration" : 172
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750753931633,
+      "stop" : 1750753931695,
+      "duration" : 62
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750753931696,
+      "stop" : 1750753932280,
+      "duration" : 584
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750753931696,
+        "stop" : 1750753932280,
+        "duration" : 584
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750753931696,
+      "stop" : 1750753931696,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Kafka",
+    "time" : {
+      "start" : 1750753988407,
+      "stop" : 1750753988409,
+      "duration" : 2
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Зарегистрировать нового пользователя",
+      "time" : {
+        "start" : 1750753988474,
+        "stop" : 1750753988571,
+        "duration" : 97
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Создать пользователя 'kimberlyvargas'",
+        "time" : {
+          "start" : 1750753988475,
+          "stop" : 1750753988571,
+          "duration" : 96
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'kimberlyvargas'"
+        }, {
+          "name" : "user_password",
+          "value" : "'1IbxpTDvuU'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 1,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Проверить, что сообщение из Kafka существует",
+      "time" : {
+        "start" : 1750753988581,
+        "stop" : 1750753988581,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Проверить содержимое сообщения",
+      "time" : {
+        "start" : 1750753988581,
+        "stop" : 1750753988581,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ {
+      "uid" : "3f42f70996566a0f",
+      "name" : "log",
+      "source" : "3f42f70996566a0f.txt",
+      "type" : "text/plain",
+      "size" : 276
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 4,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "kafka::0",
+    "time" : {
+      "start" : 1750753989433,
+      "stop" : 1750753992436,
+      "duration" : 3003
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "feature",
+    "value" : "Kafka"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1701-117"
+  }, {
+    "name" : "thread",
+    "value" : "6885-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_kafka"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 4,
+        "unknown" : 0,
+        "total" : 4
+      },
+      "items" : [ {
+        "uid" : "a92774e145cc960",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/43/#testresult/a92774e145cc960",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750753059470,
+          "stop" : 1750753059648,
+          "duration" : 178
+        }
+      }, {
+        "uid" : "2dec9bb89a661971",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/43/#testresult/2dec9bb89a661971",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750752656182,
+          "stop" : 1750752656460,
+          "duration" : 278
+        }
+      }, {
+        "uid" : "22e9286af1f5e54c",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/42/#testresult/22e9286af1f5e54c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750735595604,
+          "stop" : 1750735595777,
+          "duration" : 173
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "90740c4a619be29f.json",
+  "parameterValues" : [ ]
+}
