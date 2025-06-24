@@ -19,13 +19,6 @@ jobs:
       KAFKA_ADDRESS: localhost
       SOAP_ADDRESS: http://localhost:8089/ws
     steps:
-
-      - name: Set locale to Russian
-        env:
-          LANG: ru_RU.UTF-8
-        run: |
-          echo "Тест"
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -59,19 +52,16 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y google-chrome-stable
-#          sudo apt-get install -y locales
-#          sudo locale-gen ru_RU.UTF-8
-#          echo 'LANG=ru_RU.UTF-8' | sudo tee -a /etc/default/locale
 
       - name: Run tests
         if: always()
         working-directory: ./python_test
-        run: pytest --alluredir=./allure-results --clean-alluredir test/test_auth.py test/test_kafka.py
+        run: pytest --alluredir=./allure-results --clean-alluredir test/app.py test/test_kafka.py
 
-      #      - name: Run parallel tests
-      #        if: always()
-      #        working-directory: ./python_test
-      #        run: pytest -n auto --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py
+      - name: Run parallel tests
+        if: always()
+        working-directory: ./python_test
+        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py
 
       - name: Load test report history
         uses: actions/checkout@v3
@@ -103,5 +93,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: python_test/allure-history
-#          publish_dir: python_test/allure-report
-

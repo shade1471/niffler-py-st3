@@ -28,8 +28,8 @@ class BasePage:
         WebDriverWait(self.wd, timeout).until(EC.visibility_of(element))
         return self.wd.execute_script(f"return arguments[0].{property_name};", element)
 
-    def is_element_have_property(self, locator: tuple[str, str], property_name: str, value: str | int) -> bool:
-        return self.get_element_property(locator, property_name) == value
+    def is_element_have_property(self, locator: tuple[str, str], property_name: str, values: list) -> bool:
+        return self.get_element_property(locator, property_name) in values
 
     def wait_element_staleness_of(self, locator: tuple[str, str], timeout=10):
         element = self.find_element(locator)
