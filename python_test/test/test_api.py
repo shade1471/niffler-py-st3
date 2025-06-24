@@ -40,6 +40,11 @@ def module_fixture(tmp_path_factory, worker_id, spends_client: SpendsHttpClient,
             _prepare_state()
 
 
+@pytest.fixture(scope='function', autouse=True)
+def wait_before_run_test():
+    time.sleep(1)  # Ожидание для отработки фикстуры модуля при параллельном запуске
+
+
 def get_spend_model(envs: Envs, category_name: str = '') -> dict:
     date = datetime.now(timezone.utc)
     formatted_time = date.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
