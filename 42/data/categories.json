@@ -1,0 +1,26 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(7a958c45-f242-4652-93b6-36e6c5403f6d) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('7a958c45-f242-4652-93b6-36e6c5403f6d')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+      "children" : [ {
+        "name" : "Граничные значения для по количеству символов в имени категории, positive",
+        "uid" : "44e9d9ca10838965",
+        "parentUid" : "ddc3b827bba8992b757d9fa6494ca527",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750735602144,
+          "stop" : 1750735602144,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "50" ]
+      } ],
+      "uid" : "ddc3b827bba8992b757d9fa6494ca527"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ],
+  "name" : "categories"
+}
