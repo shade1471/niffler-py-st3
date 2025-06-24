@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>POST to http://gateway.niffler.dc:8090/api/categories/add</code></pre>
+</div>
+
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>b'{"name": "test_currency_required", "username": "qa_guru", "archived": false}'</code></pre>
+    </div>
+
+
+
+
+    <h4>Headers</h4>
+    <div>
+    
+        <div>
+            <pre><code><b>User-Agent</b>: python-requests/2.32.3</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept-Encoding</b>: gzip, deflate</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Connection</b>: keep-alive</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Authorization</b>: Bearer eyJraWQiOiJlMGRkNDhjNC01ZDJjLTRkNGMtYjFlZC02YjE3YWQ2MzIzNDEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNzM0NzY0LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNzM4MzY0LCJpYXQiOjE3NTA3MzQ3NjQsImp0aSI6ImNjNDM4NjQyLWVmZDEtNDlhZC1hMGVjLTJlYzRhOTAwZjcyYSJ9.l8eIicjDb5Va9wZIsm8FzoFLQuhfzxgJsHXuAP7rCCBS60v27sTy-I3MUloMGBh6oqO4Yus70Z4sbrpX1VeiKdolpiyazrDb8DW9jOVAbxrT7jZMl5bw6TZZqxcyNn_5vNnsrnRCE1mN57323VRtqhIXdZsRoIP0_vq_hLiWalYBDRCTfKxfRm1x-iKUbO9ZIJIWRdSoeLNOo09vSHOkwVWo6ixjWh8MFvmkMrDFQJAx2QSKYbcXl06g_LznFZFlI3SOfM0ib-zP1AbPngr39dXcCi_Mc7ShbjXrlzMX67_GR5VT8AQX9A8ReZHCti6GVzgG6PdUxxbFDEcqVRuFQw</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Type</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Length</b>: 76</code></pre>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -X POST -H 'Accept: application/json' -H 'Accept-Encoding: gzip, deflate' -H 'Authorization: Bearer eyJraWQiOiJlMGRkNDhjNC01ZDJjLTRkNGMtYjFlZC02YjE3YWQ2MzIzNDEiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUwNzM0NzY0LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUwNzM4MzY0LCJpYXQiOjE3NTA3MzQ3NjQsImp0aSI6ImNjNDM4NjQyLWVmZDEtNDlhZC1hMGVjLTJlYzRhOTAwZjcyYSJ9.l8eIicjDb5Va9wZIsm8FzoFLQuhfzxgJsHXuAP7rCCBS60v27sTy-I3MUloMGBh6oqO4Yus70Z4sbrpX1VeiKdolpiyazrDb8DW9jOVAbxrT7jZMl5bw6TZZqxcyNn_5vNnsrnRCE1mN57323VRtqhIXdZsRoIP0_vq_hLiWalYBDRCTfKxfRm1x-iKUbO9ZIJIWRdSoeLNOo09vSHOkwVWo6ixjWh8MFvmkMrDFQJAx2QSKYbcXl06g_LznFZFlI3SOfM0ib-zP1AbPngr39dXcCi_Mc7ShbjXrlzMX67_GR5VT8AQX9A8ReZHCti6GVzgG6PdUxxbFDEcqVRuFQw' -H 'Connection: keep-alive' -H 'Content-Length: 76' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.32.3' -d '{"name": "test_currency_required", "username": "qa_guru", "archived": false}' http://gateway.niffler.dc:8090/api/categories/add</code></pre>
+    </div>
+
+</body>
+</html>

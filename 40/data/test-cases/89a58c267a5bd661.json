@@ -1,0 +1,657 @@
+{
+  "uid" : "89a58c267a5bd661",
+  "name" : "Граничные значения для значения суммы",
+  "fullName" : "test.test_api.TestSpend#test_amount_boundary_value_for_different_currency",
+  "historyId" : "866c918210b2364391677dc02a92a7ae",
+  "time" : {
+    "start" : 1750734763199,
+    "stop" : 1750734763199,
+    "duration" : 0
+  },
+  "status" : "broken",
+  "statusMessage" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+  "statusTrace" : "self = <sqlalchemy.engine.base.Connection object at 0x7f42f5163230>\ndialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\nstatement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x7f42f5045bd0>\nparameters = [{'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n\n    def _exec_single_context(\n        self,\n        dialect: Dialect,\n        context: ExecutionContext,\n        statement: Union[str, Compiled],\n        parameters: Optional[_AnyMultiExecuteParams],\n    ) -> CursorResult[Any]:\n        \"\"\"continue the _execute_context() method for a single DBAPI\n        cursor.execute() or cursor.executemany() call.\n    \n        \"\"\"\n        if dialect.bind_typing is BindTyping.SETINPUTSIZES:\n            generic_setinputsizes = context._prepare_set_input_sizes()\n    \n            if generic_setinputsizes:\n                try:\n                    dialect.do_set_input_sizes(\n                        context.cursor, generic_setinputsizes, context\n                    )\n                except BaseException as e:\n                    self._handle_dbapi_exception(\n                        e, str(statement), parameters, None, context\n                    )\n    \n        cursor, str_statement, parameters = (\n            context.cursor,\n            context.statement,\n            context.parameters,\n        )\n    \n        effective_parameters: Optional[_AnyExecuteParams]\n    \n        if not context.executemany:\n            effective_parameters = parameters[0]\n        else:\n            effective_parameters = parameters\n    \n        if self._has_events or self.engine._has_events:\n            for fn in self.dispatch.before_cursor_execute:\n                str_statement, effective_parameters = fn(\n                    self,\n                    cursor,\n                    str_statement,\n                    effective_parameters,\n                    context,\n                    context.executemany,\n                )\n    \n        if self._echo:\n            self._log_info(str_statement)\n    \n            stats = context._get_cache_stats()\n    \n            if not self.engine.hide_parameters:\n                self._log_info(\n                    \"[%s] %r\",\n                    stats,\n                    sql_util._repr_params(\n                        effective_parameters,\n                        batches=10,\n                        ismulti=context.executemany,\n                    ),\n                )\n            else:\n                self._log_info(\n                    \"[%s] [SQL parameters hidden due to hide_parameters=True]\",\n                    stats,\n                )\n    \n        evt_handled: bool = False\n        try:\n            if context.execute_style is ExecuteStyle.EXECUTEMANY:\n                effective_parameters = cast(\n                    \"_CoreMultiExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_executemany:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_executemany(\n                        cursor,\n                        str_statement,\n                        effective_parameters,\n                        context,\n                    )\n            elif not effective_parameters and context.no_parameters:\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute_no_params:\n                        if fn(cursor, str_statement, context):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_execute_no_params(\n                        cursor, str_statement, context\n                    )\n            else:\n                effective_parameters = cast(\n                    \"_CoreSingleExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n>                   self.dialect.do_execute(\n                        cursor, str_statement, effective_parameters, context\n                    )\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncursor = <cursor object at 0x7f42f4a9c9a0; closed: -1>\nstatement = 'DELETE FROM category WHERE category.id = %(id)s'\nparameters = {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       psycopg2.errors.ForeignKeyViolation: update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nE       DETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: ForeignKeyViolation\n\nThe above exception was the direct cause of the following exception:\n\ntmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/tmp/pytest-of-runner/pytest-0/popen-gw1'), _trace=<pluggy._tracing.TagTrac...c2ed490>, _basetemp=PosixPath('/tmp/pytest-of-runner/pytest-0/popen-gw1'), _retention_count=3, _retention_policy='all')\nworker_id = 'gw1'\nspends_client = <python_test.data_helper.api_helper.SpendsHttpClient object at 0x7f42f52c5d30>\nspend_db = <python_test.databases.spend_db.SpendDb object at 0x7f42f52c5160>\n\n    @pytest.fixture(scope=\"module\", autouse=True)\n    def module_fixture(tmp_path_factory, worker_id, spends_client: SpendsHttpClient, spend_db: SpendDb):\n        def _prepare_state():\n            all_spends_ids = spends_client.get_ids_all_spending()\n            for spend_id in all_spends_ids:\n                spends_client.delete_spending_by_id(spend_id)\n            categories_ids = spends_client.get_ids_all_categories()\n            spend_db.delete_categories_by_ids(categories_ids)\n    \n        if worker_id == \"master\":\n            _prepare_state()\n    \n        root_tmp_dir = tmp_path_factory.getbasetemp().parent\n    \n        fn = root_tmp_dir / \"prepare\"\n        with FileLock(str(fn) + \".lock\"):\n            if fn.is_file():\n                pass\n            else:\n>               _prepare_state()\n\ntest/test_api.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntest/test_api.py:27: in _prepare_state\n    spend_db.delete_categories_by_ids(categories_ids)\ndatabases/spend_db.py:57: in delete_categories_by_ids\n    self.delete_category(category_id)\ndatabases/spend_db.py:52: in delete_category\n    session.commit()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2032: in commit\n    trans.commit(_to_root=True)\n<string>:2: in commit\n    ???\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py:139: in _go\n    ret_value = fn(self, *arg, **kw)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:1313: in commit\n    self._prepare_impl()\n<string>:2: in _prepare_impl\n    ???\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py:139: in _go\n    ret_value = fn(self, *arg, **kw)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:1288: in _prepare_impl\n    self.session.flush()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4353: in flush\n    self._flush(objects)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4488: in _flush\n    with util.safe_reraise():\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__\n    raise exc_value.with_traceback(exc_tb)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4449: in _flush\n    flush_context.execute()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py:466: in execute\n    rec.execute(self)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py:679: in execute\n    util.preloaded.orm_persistence.delete_obj(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py:193: in delete_obj\n    _emit_delete_statements(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py:1465: in _emit_delete_statements\n    c = connection.execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1416: in execute\n    return meth(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:523: in _execute_on_connection\n    return connection._execute_clauseelement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1638: in _execute_clauseelement\n    ret = self._execute_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1843: in _execute_context\n    return self._exec_single_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1983: in _exec_single_context\n    self._handle_dbapi_exception(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2352: in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: in _exec_single_context\n    self.dialect.do_execute(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncursor = <cursor object at 0x7f42f4a9c9a0; closed: -1>\nstatement = 'DELETE FROM category WHERE category.id = %(id)s'\nparameters = {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nE       DETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\nE       \nE       [SQL: DELETE FROM category WHERE category.id = %(id)s]\nE       [parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\nE       (Background on this error at: https://sqlalche.me/e/20/gkpj)\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: IntegrityError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] Spends Client",
+    "time" : {
+      "start" : 1750734764738,
+      "stop" : 1750734764738,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1750734763204,
+      "stop" : 1750734763205,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[M] Module Fixture",
+    "time" : {
+      "start" : 1750734764803,
+      "stop" : 1750734765700,
+      "duration" : 897
+    },
+    "status" : "broken",
+    "statusMessage" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)\n",
+    "statusTrace" : "  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 38, in run_old_style_hookwrapper\n    res = yield\n          ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 139, in _multicall\n    teardown.throw(exception)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/setuponly.py\", line 36, in pytest_fixture_setup\n    return (yield)\n            ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 139, in _multicall\n    teardown.throw(exception)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 53, in run_old_style_hookwrapper\n    return result.get_result()\n           ~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_result.py\", line 103, in get_result\n    raise exc.with_traceback(tb)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 38, in run_old_style_hookwrapper\n    res = yield\n          ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 121, in _multicall\n    res = hook_impl.function(*args)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/fixtures.py\", line 1140, in pytest_fixture_setup\n    result = call_fixture_func(fixturefunc, request, kwargs)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/fixtures.py\", line 898, in call_fixture_func\n    fixture_result = fixturefunc(**kwargs)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_api.py\", line 39, in module_fixture\n    _prepare_state()\n    ~~~~~~~~~~~~~~^^\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_api.py\", line 27, in _prepare_state\n    spend_db.delete_categories_by_ids(categories_ids)\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/allure_commons/_allure.py\", line 202, in impl\n    return func(*a, **kw)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/spend_db.py\", line 57, in delete_categories_by_ids\n    self.delete_category(category_id)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/allure_commons/_allure.py\", line 202, in impl\n    return func(*a, **kw)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/spend_db.py\", line 52, in delete_category\n    session.commit()\n    ~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 2032, in commit\n    trans.commit(_to_root=True)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in commit\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1313, in commit\n    self._prepare_impl()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"<string>\", line 2, in _prepare_impl\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1288, in _prepare_impl\n    self.session.flush()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4353, in flush\n    self._flush(objects)\n    ~~~~~~~~~~~^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4488, in _flush\n    with util.safe_reraise():\n         ~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py\", line 146, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4449, in _flush\n    flush_context.execute()\n    ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 466, in execute\n    rec.execute(self)\n    ~~~~~~~~~~~^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 679, in execute\n    util.preloaded.orm_persistence.delete_obj(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self.mapper,\n        ^^^^^^^^^^^^\n        uow.states_for_mapper_hierarchy(self.mapper, True, False),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        uow,\n        ^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 193, in delete_obj\n    _emit_delete_statements(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        base_mapper,\n        ^^^^^^^^^^^^\n    ...<3 lines>...\n        delete,\n        ^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 1465, in _emit_delete_statements\n    c = connection.execute(\n        statement, del_objects, execution_options=execution_options\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1416, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py\", line 523, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1638, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1843, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1983, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 2352, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1964, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py\", line 945, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n",
+    "steps" : [ {
+      "name" : "Получить id всех трат пользователя",
+      "time" : {
+        "start" : 1750734765511,
+        "stop" : 1750734765634,
+        "duration" : 123
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "GET /api/spends/all?filterCurrency=RUB",
+        "time" : {
+          "start" : 1750734765518,
+          "stop" : 1750734765539,
+          "duration" : 21
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "878c437ca416840",
+          "name" : "Request",
+          "source" : "878c437ca416840.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "24e5f9aa9b395ce9",
+          "name" : "Response json 200",
+          "source" : "24e5f9aa9b395ce9.json",
+          "type" : "application/json",
+          "size" : 2
+        }, {
+          "uid" : "4f287d4de7ad9715",
+          "name" : "Response headers 200",
+          "source" : "4f287d4de7ad9715.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "GET /api/spends/all?filterCurrency=KZT",
+        "time" : {
+          "start" : 1750734765546,
+          "stop" : 1750734765569,
+          "duration" : 23
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "13a9d780050fecdd",
+          "name" : "Request",
+          "source" : "13a9d780050fecdd.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "8eb10c5f6232318",
+          "name" : "Response json 200",
+          "source" : "8eb10c5f6232318.json",
+          "type" : "application/json",
+          "size" : 2
+        }, {
+          "uid" : "9a362bf86712228c",
+          "name" : "Response headers 200",
+          "source" : "9a362bf86712228c.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "GET /api/spends/all?filterCurrency=USD",
+        "time" : {
+          "start" : 1750734765575,
+          "stop" : 1750734765602,
+          "duration" : 27
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "1135c7808634b0ae",
+          "name" : "Request",
+          "source" : "1135c7808634b0ae.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "56912bf6b743e8ff",
+          "name" : "Response json 200",
+          "source" : "56912bf6b743e8ff.json",
+          "type" : "application/json",
+          "size" : 2
+        }, {
+          "uid" : "65c7670a478254da",
+          "name" : "Response headers 200",
+          "source" : "65c7670a478254da.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "GET /api/spends/all?filterCurrency=EUR",
+        "time" : {
+          "start" : 1750734765609,
+          "stop" : 1750734765634,
+          "duration" : 25
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "4df7565144207ae6",
+          "name" : "Request",
+          "source" : "4df7565144207ae6.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "48333b2de9fdc0f",
+          "name" : "Response json 200",
+          "source" : "48333b2de9fdc0f.json",
+          "type" : "application/json",
+          "size" : 2
+        }, {
+          "uid" : "d79c540b3f5ee84d",
+          "name" : "Response headers 200",
+          "source" : "d79c540b3f5ee84d.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 4,
+      "attachmentsCount" : 12,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Получить id всех категорий пользователя",
+      "time" : {
+        "start" : 1750734765634,
+        "stop" : 1750734765652,
+        "duration" : 18
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "GET /api/categories/all",
+        "time" : {
+          "start" : 1750734765638,
+          "stop" : 1750734765652,
+          "duration" : 14
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "7730126cc7af942",
+          "name" : "Request",
+          "source" : "7730126cc7af942.html",
+          "type" : "text/html",
+          "size" : 3623
+        }, {
+          "uid" : "dd5cfdff48ffd76d",
+          "name" : "Response json 200",
+          "source" : "dd5cfdff48ffd76d.json",
+          "type" : "application/json",
+          "size" : 150
+        }, {
+          "uid" : "c4ff97ec0b6169ce",
+          "name" : "Response headers 200",
+          "source" : "c4ff97ec0b6169ce.json",
+          "type" : "application/json",
+          "size" : 490
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 3,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "exclude_archived",
+        "value" : "False"
+      } ],
+      "stepsCount" : 1,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Удалить из БД категории из списка",
+      "time" : {
+        "start" : 1750734765652,
+        "stop" : 1750734765696,
+        "duration" : 44
+      },
+      "status" : "broken",
+      "statusMessage" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)\n",
+      "statusTrace" : "  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/allure_commons/_allure.py\", line 202, in impl\n    return func(*a, **kw)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/spend_db.py\", line 57, in delete_categories_by_ids\n    self.delete_category(category_id)\n    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/allure_commons/_allure.py\", line 202, in impl\n    return func(*a, **kw)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/spend_db.py\", line 52, in delete_category\n    session.commit()\n    ~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 2032, in commit\n    trans.commit(_to_root=True)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in commit\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1313, in commit\n    self._prepare_impl()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"<string>\", line 2, in _prepare_impl\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1288, in _prepare_impl\n    self.session.flush()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4353, in flush\n    self._flush(objects)\n    ~~~~~~~~~~~^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4488, in _flush\n    with util.safe_reraise():\n         ~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py\", line 146, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4449, in _flush\n    flush_context.execute()\n    ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 466, in execute\n    rec.execute(self)\n    ~~~~~~~~~~~^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 679, in execute\n    util.preloaded.orm_persistence.delete_obj(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self.mapper,\n        ^^^^^^^^^^^^\n        uow.states_for_mapper_hierarchy(self.mapper, True, False),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        uow,\n        ^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 193, in delete_obj\n    _emit_delete_statements(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        base_mapper,\n        ^^^^^^^^^^^^\n    ...<3 lines>...\n        delete,\n        ^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 1465, in _emit_delete_statements\n    c = connection.execute(\n        statement, del_objects, execution_options=execution_options\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1416, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py\", line 523, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1638, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1843, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1983, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 2352, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1964, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py\", line 945, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n",
+      "steps" : [ {
+        "name" : "Удалить из БД категорию",
+        "time" : {
+          "start" : 1750734765652,
+          "stop" : 1750734765687,
+          "duration" : 35
+        },
+        "status" : "broken",
+        "statusMessage" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)\n",
+        "statusTrace" : "  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/allure_commons/_allure.py\", line 202, in impl\n    return func(*a, **kw)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/databases/spend_db.py\", line 52, in delete_category\n    session.commit()\n    ~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 2032, in commit\n    trans.commit(_to_root=True)\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^\n  File \"<string>\", line 2, in commit\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1313, in commit\n    self._prepare_impl()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"<string>\", line 2, in _prepare_impl\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py\", line 139, in _go\n    ret_value = fn(self, *arg, **kw)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 1288, in _prepare_impl\n    self.session.flush()\n    ~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4353, in flush\n    self._flush(objects)\n    ~~~~~~~~~~~^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4488, in _flush\n    with util.safe_reraise():\n         ~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py\", line 146, in __exit__\n    raise exc_value.with_traceback(exc_tb)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py\", line 4449, in _flush\n    flush_context.execute()\n    ~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 466, in execute\n    rec.execute(self)\n    ~~~~~~~~~~~^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py\", line 679, in execute\n    util.preloaded.orm_persistence.delete_obj(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self.mapper,\n        ^^^^^^^^^^^^\n        uow.states_for_mapper_hierarchy(self.mapper, True, False),\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n        uow,\n        ^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 193, in delete_obj\n    _emit_delete_statements(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        base_mapper,\n        ^^^^^^^^^^^^\n    ...<3 lines>...\n        delete,\n        ^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py\", line 1465, in _emit_delete_statements\n    c = connection.execute(\n        statement, del_objects, execution_options=execution_options\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1416, in execute\n    return meth(\n        self,\n        distilled_parameters,\n        execution_options or NO_OPTIONS,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py\", line 523, in _execute_on_connection\n    return connection._execute_clauseelement(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        self, distilled_params, execution_options\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1638, in _execute_clauseelement\n    ret = self._execute_context(\n        dialect,\n    ...<8 lines>...\n        cache_hit=cache_hit,\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1843, in _execute_context\n    return self._exec_single_context(\n           ~~~~~~~~~~~~~~~~~~~~~~~~~^\n        dialect, context, statement, parameters\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1983, in _exec_single_context\n    self._handle_dbapi_exception(\n    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^\n        e, str_statement, effective_parameters, cursor, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 2352, in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py\", line 1964, in _exec_single_context\n    self.dialect.do_execute(\n    ~~~~~~~~~~~~~~~~~~~~~~~^\n        cursor, str_statement, effective_parameters, context\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py\", line 945, in do_execute\n    cursor.execute(statement, parameters)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^\n",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "caccab684e9a1786",
+          "name" : "SELECT niffler-spend",
+          "source" : "caccab684e9a1786.txt",
+          "type" : "text/plain",
+          "size" : 218
+        }, {
+          "uid" : "d218a4e38def7705",
+          "name" : "DELETE niffler-spend",
+          "source" : "d218a4e38def7705.txt",
+          "type" : "text/plain",
+          "size" : 77
+        } ],
+        "parameters" : [ {
+          "name" : "category_id",
+          "value" : "'018c281b-c8c4-4868-a8c1-4e191a814037'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : true,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "categories_ids",
+        "value" : "['018c281b-c8c4-4868-a8c1-4e191a814037']"
+      } ],
+      "stepsCount" : 1,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 9,
+    "attachmentsCount" : 17,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Auth Token",
+    "time" : {
+      "start" : 1750734764106,
+      "stop" : 1750734764737,
+      "duration" : 631
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "GET /oauth2/authorize",
+      "time" : {
+        "start" : 1750734764142,
+        "stop" : 1750734764263,
+        "duration" : 121
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "d5b1db5d3ca865c2",
+        "name" : "Request",
+        "source" : "d5b1db5d3ca865c2.html",
+        "type" : "text/html",
+        "size" : 2119
+      }, {
+        "uid" : "1acf69927636f5e4",
+        "name" : "Response text 200",
+        "source" : "1acf69927636f5e4.txt",
+        "type" : "text/plain",
+        "size" : 2897
+      }, {
+        "uid" : "ba0393a030afd1f2",
+        "name" : "Response headers 200",
+        "source" : "ba0393a030afd1f2.json",
+        "type" : "application/json",
+        "size" : 667
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "POST /login",
+      "time" : {
+        "start" : 1750734764271,
+        "stop" : 1750734764629,
+        "duration" : 358
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "2e6a9c30efb80208",
+        "name" : "Request",
+        "source" : "2e6a9c30efb80208.html",
+        "type" : "text/html",
+        "size" : 2397
+      }, {
+        "uid" : "e59ef42235186df3",
+        "name" : "Response text 200",
+        "source" : "e59ef42235186df3.txt",
+        "type" : "text/plain",
+        "size" : 417
+      }, {
+        "uid" : "f064e0cd29388337",
+        "name" : "Response headers 200",
+        "source" : "f064e0cd29388337.json",
+        "type" : "application/json",
+        "size" : 287
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "POST /oauth2/token",
+      "time" : {
+        "start" : 1750734764637,
+        "stop" : 1750734764737,
+        "duration" : 100
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "a3b91ee1e53a5c67",
+        "name" : "Request",
+        "source" : "a3b91ee1e53a5c67.html",
+        "type" : "text/html",
+        "size" : 3376
+      }, {
+        "uid" : "8dc98bf75c422e39",
+        "name" : "Response json 200",
+        "source" : "8dc98bf75c422e39.json",
+        "type" : "application/json",
+        "size" : 1529
+      }, {
+        "uid" : "4d96223195ba25c8",
+        "name" : "Response headers 200",
+        "source" : "4d96223195ba25c8.json",
+        "type" : "application/json",
+        "size" : 504
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 3,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 3,
+    "attachmentsCount" : 9,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Worker Id",
+    "time" : {
+      "start" : 1750734764737,
+      "stop" : 1750734764737,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Tmp Path Factory",
+    "time" : {
+      "start" : 1750734764737,
+      "stop" : 1750734764737,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1750734763205,
+      "stop" : 1750734764106,
+      "duration" : 901
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1750734763206,
+        "stop" : 1750734764105,
+        "duration" : 899
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Spend Db",
+    "time" : {
+      "start" : 1750734764738,
+      "stop" : 1750734764803,
+      "duration" : 65
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1750734763200,
+      "stop" : 1750734763204,
+      "duration" : 4
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "broken",
+    "statusMessage" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+    "statusTrace" : "self = <sqlalchemy.engine.base.Connection object at 0x7f42f5163230>\ndialect = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\nstatement = <sqlalchemy.dialects.postgresql.base.PGCompiler object at 0x7f42f5045bd0>\nparameters = [{'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n\n    def _exec_single_context(\n        self,\n        dialect: Dialect,\n        context: ExecutionContext,\n        statement: Union[str, Compiled],\n        parameters: Optional[_AnyMultiExecuteParams],\n    ) -> CursorResult[Any]:\n        \"\"\"continue the _execute_context() method for a single DBAPI\n        cursor.execute() or cursor.executemany() call.\n    \n        \"\"\"\n        if dialect.bind_typing is BindTyping.SETINPUTSIZES:\n            generic_setinputsizes = context._prepare_set_input_sizes()\n    \n            if generic_setinputsizes:\n                try:\n                    dialect.do_set_input_sizes(\n                        context.cursor, generic_setinputsizes, context\n                    )\n                except BaseException as e:\n                    self._handle_dbapi_exception(\n                        e, str(statement), parameters, None, context\n                    )\n    \n        cursor, str_statement, parameters = (\n            context.cursor,\n            context.statement,\n            context.parameters,\n        )\n    \n        effective_parameters: Optional[_AnyExecuteParams]\n    \n        if not context.executemany:\n            effective_parameters = parameters[0]\n        else:\n            effective_parameters = parameters\n    \n        if self._has_events or self.engine._has_events:\n            for fn in self.dispatch.before_cursor_execute:\n                str_statement, effective_parameters = fn(\n                    self,\n                    cursor,\n                    str_statement,\n                    effective_parameters,\n                    context,\n                    context.executemany,\n                )\n    \n        if self._echo:\n            self._log_info(str_statement)\n    \n            stats = context._get_cache_stats()\n    \n            if not self.engine.hide_parameters:\n                self._log_info(\n                    \"[%s] %r\",\n                    stats,\n                    sql_util._repr_params(\n                        effective_parameters,\n                        batches=10,\n                        ismulti=context.executemany,\n                    ),\n                )\n            else:\n                self._log_info(\n                    \"[%s] [SQL parameters hidden due to hide_parameters=True]\",\n                    stats,\n                )\n    \n        evt_handled: bool = False\n        try:\n            if context.execute_style is ExecuteStyle.EXECUTEMANY:\n                effective_parameters = cast(\n                    \"_CoreMultiExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_executemany:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_executemany(\n                        cursor,\n                        str_statement,\n                        effective_parameters,\n                        context,\n                    )\n            elif not effective_parameters and context.no_parameters:\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute_no_params:\n                        if fn(cursor, str_statement, context):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n                    self.dialect.do_execute_no_params(\n                        cursor, str_statement, context\n                    )\n            else:\n                effective_parameters = cast(\n                    \"_CoreSingleExecuteParams\", effective_parameters\n                )\n                if self.dialect._has_events:\n                    for fn in self.dialect.dispatch.do_execute:\n                        if fn(\n                            cursor,\n                            str_statement,\n                            effective_parameters,\n                            context,\n                        ):\n                            evt_handled = True\n                            break\n                if not evt_handled:\n>                   self.dialect.do_execute(\n                        cursor, str_statement, effective_parameters, context\n                    )\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncursor = <cursor object at 0x7f42f4a9c9a0; closed: -1>\nstatement = 'DELETE FROM category WHERE category.id = %(id)s'\nparameters = {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       psycopg2.errors.ForeignKeyViolation: update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nE       DETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: ForeignKeyViolation\n\nThe above exception was the direct cause of the following exception:\n\ntmp_path_factory = TempPathFactory(_given_basetemp=PosixPath('/tmp/pytest-of-runner/pytest-0/popen-gw1'), _trace=<pluggy._tracing.TagTrac...c2ed490>, _basetemp=PosixPath('/tmp/pytest-of-runner/pytest-0/popen-gw1'), _retention_count=3, _retention_policy='all')\nworker_id = 'gw1'\nspends_client = <python_test.data_helper.api_helper.SpendsHttpClient object at 0x7f42f52c5d30>\nspend_db = <python_test.databases.spend_db.SpendDb object at 0x7f42f52c5160>\n\n    @pytest.fixture(scope=\"module\", autouse=True)\n    def module_fixture(tmp_path_factory, worker_id, spends_client: SpendsHttpClient, spend_db: SpendDb):\n        def _prepare_state():\n            all_spends_ids = spends_client.get_ids_all_spending()\n            for spend_id in all_spends_ids:\n                spends_client.delete_spending_by_id(spend_id)\n            categories_ids = spends_client.get_ids_all_categories()\n            spend_db.delete_categories_by_ids(categories_ids)\n    \n        if worker_id == \"master\":\n            _prepare_state()\n    \n        root_tmp_dir = tmp_path_factory.getbasetemp().parent\n    \n        fn = root_tmp_dir / \"prepare\"\n        with FileLock(str(fn) + \".lock\"):\n            if fn.is_file():\n                pass\n            else:\n>               _prepare_state()\n\ntest/test_api.py:39: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \ntest/test_api.py:27: in _prepare_state\n    spend_db.delete_categories_by_ids(categories_ids)\ndatabases/spend_db.py:57: in delete_categories_by_ids\n    self.delete_category(category_id)\ndatabases/spend_db.py:52: in delete_category\n    session.commit()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:2032: in commit\n    trans.commit(_to_root=True)\n<string>:2: in commit\n    ???\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py:139: in _go\n    ret_value = fn(self, *arg, **kw)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:1313: in commit\n    self._prepare_impl()\n<string>:2: in _prepare_impl\n    ???\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/state_changes.py:139: in _go\n    ret_value = fn(self, *arg, **kw)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:1288: in _prepare_impl\n    self.session.flush()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4353: in flush\n    self._flush(objects)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4488: in _flush\n    with util.safe_reraise():\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/util/langhelpers.py:146: in __exit__\n    raise exc_value.with_traceback(exc_tb)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/session.py:4449: in _flush\n    flush_context.execute()\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py:466: in execute\n    rec.execute(self)\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/unitofwork.py:679: in execute\n    util.preloaded.orm_persistence.delete_obj(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py:193: in delete_obj\n    _emit_delete_statements(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/orm/persistence.py:1465: in _emit_delete_statements\n    c = connection.execute(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1416: in execute\n    return meth(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/sql/elements.py:523: in _execute_on_connection\n    return connection._execute_clauseelement(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1638: in _execute_clauseelement\n    ret = self._execute_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1843: in _execute_context\n    return self._exec_single_context(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1983: in _exec_single_context\n    self._handle_dbapi_exception(\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:2352: in _handle_dbapi_exception\n    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/base.py:1964: in _exec_single_context\n    self.dialect.do_execute(\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\nself = <sqlalchemy.dialects.postgresql.psycopg2.PGDialect_psycopg2 object at 0x7f42f51617f0>\ncursor = <cursor object at 0x7f42f4a9c9a0; closed: -1>\nstatement = 'DELETE FROM category WHERE category.id = %(id)s'\nparameters = {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}\ncontext = <sqlalchemy.dialects.postgresql.psycopg2.PGExecutionContext_psycopg2 object at 0x7f42f50610f0>\n\n    def do_execute(self, cursor, statement, parameters, context=None):\n>       cursor.execute(statement, parameters)\nE       sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nE       DETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\nE       \nE       [SQL: DELETE FROM category WHERE category.id = %(id)s]\nE       [parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\nE       (Background on this error at: https://sqlalche.me/e/20/gkpj)\n\n/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/sqlalchemy/engine/default.py:945: IntegrityError",
+    "steps" : [ ],
+    "attachments" : [ {
+      "uid" : "451bcb85c55e4dc3",
+      "name" : "log",
+      "source" : "451bcb85c55e4dc3.txt",
+      "type" : "text/plain",
+      "size" : 84
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "API"
+  }, {
+    "name" : "story",
+    "value" : "Траты"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "host",
+    "value" : "fv-az1372-452"
+  }, {
+    "name" : "thread",
+    "value" : "6874-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_api"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "currency",
+    "value" : "'EUR'"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 3,
+        "skipped" : 0,
+        "passed" : 4,
+        "unknown" : 0,
+        "total" : 7
+      },
+      "items" : [ {
+        "uid" : "590e7f5216930b6a",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/36/#testresult/590e7f5216930b6a",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750676759332,
+          "stop" : 1750676759356,
+          "duration" : 24
+        }
+      }, {
+        "uid" : "fd3d79671b34cac8",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/35/#testresult/fd3d79671b34cac8",
+        "status" : "broken",
+        "statusDetails" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(68db2bcb-ca9e-4834-9e82-efbf2ef90571) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('68db2bcb-ca9e-4834-9e82-efbf2ef90571')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+        "time" : {
+          "start" : 1750672829715,
+          "stop" : 1750672829715,
+          "duration" : 0
+        }
+      }, {
+        "uid" : "eadd820f370a4952",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/34/#testresult/eadd820f370a4952",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750672134810,
+          "stop" : 1750672134835,
+          "duration" : 25
+        }
+      }, {
+        "uid" : "8e961aab139dd35c",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/33/#testresult/8e961aab139dd35c",
+        "status" : "broken",
+        "statusDetails" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(5526936f-6021-4fa5-acb0-afa31446b105) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('5526936f-6021-4fa5-acb0-afa31446b105')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+        "time" : {
+          "start" : 1750671171619,
+          "stop" : 1750671171619,
+          "duration" : 0
+        }
+      }, {
+        "uid" : "301ea8562141bb68",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/32/#testresult/301ea8562141bb68",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750670903561,
+          "stop" : 1750670903579,
+          "duration" : 18
+        }
+      }, {
+        "uid" : "eb3b7573ae41032b",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/31/#testresult/eb3b7573ae41032b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750670591941,
+          "stop" : 1750670591957,
+          "duration" : 16
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "89a58c267a5bd661.json",
+  "parameterValues" : [ "'EUR'" ]
+}

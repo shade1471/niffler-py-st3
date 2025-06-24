@@ -1,0 +1,211 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "selenium.common.exceptions.SessionNotCreatedException: Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir\nStacktrace:\n#0 0x5594047dbc9a <unknown>\n#1 0x5594042816e0 <unknown>\n#2 0x5594042bc0b2 <unknown>\n#3 0x5594042b724f <unknown>\n#4 0x5594043078b6 <unknown>\n#5 0x559404306f76 <unknown>\n#6 0x5594042f8c03 <unknown>\n#7 0x5594042c547b <unknown>\n#8 0x5594042c60e1 <unknown>\n#9 0x5594047a044b <unknown>\n#10 0x5594047a437f <unknown>\n#11 0x559404787f89 <unknown>\n#12 0x5594047a4f18 <unknown>\n#13 0x55940476c6df <unknown>\n#14 0x5594047c9308 <unknown>\n#15 0x5594047c94e6 <unknown>\n#16 0x5594047dab76 <unknown>\n#17 0x7f58afe9caa4 <unknown>\n#18 0x7f58aff29c3c <unknown>",
+      "children" : [ {
+        "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+        "uid" : "e77f1b70ddcb08ae",
+        "parentUid" : "b79d5883f85ad2328ca1380b4c9205e8",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734763199,
+          "stop" : 1750734763199,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "51" ]
+      } ],
+      "uid" : "b79d5883f85ad2328ca1380b4c9205e8"
+    }, {
+      "name" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(018c281b-c8c4-4868-a8c1-4e191a814037) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('018c281b-c8c4-4868-a8c1-4e191a814037')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+      "children" : [ {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "89a58c267a5bd661",
+        "parentUid" : "6e2746564fd1a441d042a10ce379968c",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734763199,
+          "stop" : 1750734763199,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'EUR'" ]
+      }, {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "11c416bc6e975125",
+        "parentUid" : "6e2746564fd1a441d042a10ce379968c",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734766287,
+          "stop" : 1750734766287,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'KZT'" ]
+      }, {
+        "name" : "Добавление новой категории через API",
+        "uid" : "17ccd85c08a65764",
+        "parentUid" : "6e2746564fd1a441d042a10ce379968c",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734766778,
+          "stop" : 1750734766778,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_create_category', 'archived': False}" ]
+      }, {
+        "name" : "Обновление существующей категории через API",
+        "uid" : "deb2a48c06837bc2",
+        "parentUid" : "6e2746564fd1a441d042a10ce379968c",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734767269,
+          "stop" : 1750734767269,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_update_category', 'archived': False}" ]
+      }, {
+        "name" : "Нет возможности добавить дубль существующей категории",
+        "uid" : "698cb48ca9f054f9",
+        "parentUid" : "6e2746564fd1a441d042a10ce379968c",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734767747,
+          "stop" : 1750734767747,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_duplicate_category', 'archived': False}" ]
+      } ],
+      "uid" : "6e2746564fd1a441d042a10ce379968c"
+    }, {
+      "name" : "sqlalchemy.exc.NoResultFound: No row was found when one was required",
+      "children" : [ {
+        "name" : "Отклонение запроса на дружбу",
+        "uid" : "65d4c9d4929ee64",
+        "parentUid" : "de53fd9e52f45ad1f1607b04946219a5",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734767027,
+          "stop" : 1750734767231,
+          "duration" : 204
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Отправка запроса на дружбу",
+        "uid" : "3cd0df8c31e70003",
+        "parentUid" : "de53fd9e52f45ad1f1607b04946219a5",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734770187,
+          "stop" : 1750734770378,
+          "duration" : 191
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "de53fd9e52f45ad1f1607b04946219a5"
+    }, {
+      "name" : "selenium.common.exceptions.SessionNotCreatedException: Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir\nStacktrace:\n#0 0x55a6c1a8ac9a <unknown>\n#1 0x55a6c15306e0 <unknown>\n#2 0x55a6c156b0b2 <unknown>\n#3 0x55a6c156624f <unknown>\n#4 0x55a6c15b68b6 <unknown>\n#5 0x55a6c15b5f76 <unknown>\n#6 0x55a6c15a7c03 <unknown>\n#7 0x55a6c157447b <unknown>\n#8 0x55a6c15750e1 <unknown>\n#9 0x55a6c1a4f44b <unknown>\n#10 0x55a6c1a5337f <unknown>\n#11 0x55a6c1a36f89 <unknown>\n#12 0x55a6c1a53f18 <unknown>\n#13 0x55a6c1a1b6df <unknown>\n#14 0x55a6c1a78308 <unknown>\n#15 0x55a6c1a784e6 <unknown>\n#16 0x55a6c1a89b76 <unknown>\n#17 0x7fc45909caa4 <unknown>\n#18 0x7fc459129c3c <unknown>",
+      "children" : [ {
+        "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+        "uid" : "953c3292cad08aa5",
+        "parentUid" : "740eecd6ddacb27066855aee8e6d72af",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734768083,
+          "stop" : 1750734768083,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "13" ]
+      }, {
+        "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+        "uid" : "e5989611a4d5313a",
+        "parentUid" : "740eecd6ddacb27066855aee8e6d72af",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734769845,
+          "stop" : 1750734769845,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2" ]
+      }, {
+        "name" : "Авторизация под не существующим пользователем",
+        "uid" : "64fd82aa4bcd0252",
+        "parentUid" : "740eecd6ddacb27066855aee8e6d72af",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734769905,
+          "stop" : 1750734769905,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "d299d8006c67163b",
+        "parentUid" : "740eecd6ddacb27066855aee8e6d72af",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734769996,
+          "stop" : 1750734769996,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'user'" ]
+      } ],
+      "uid" : "740eecd6ddacb27066855aee8e6d72af"
+    }, {
+      "name" : "selenium.common.exceptions.SessionNotCreatedException: Message: session not created: probably user data directory is already in use, please specify a unique value for --user-data-dir argument, or don't use --user-data-dir\nStacktrace:\n#0 0x55f86ad9cc9a <unknown>\n#1 0x55f86a8426e0 <unknown>\n#2 0x55f86a87d0b2 <unknown>\n#3 0x55f86a87824f <unknown>\n#4 0x55f86a8c88b6 <unknown>\n#5 0x55f86a8c7f76 <unknown>\n#6 0x55f86a8b9c03 <unknown>\n#7 0x55f86a88647b <unknown>\n#8 0x55f86a8870e1 <unknown>\n#9 0x55f86ad6144b <unknown>\n#10 0x55f86ad6537f <unknown>\n#11 0x55f86ad48f89 <unknown>\n#12 0x55f86ad65f18 <unknown>\n#13 0x55f86ad2d6df <unknown>\n#14 0x55f86ad8a308 <unknown>\n#15 0x55f86ad8a4e6 <unknown>\n#16 0x55f86ad9bb76 <unknown>\n#17 0x7f275449caa4 <unknown>\n#18 0x7f2754529c3c <unknown>",
+      "children" : [ {
+        "name" : "Наличие свойства required у полей имя пользователя и пароль",
+        "uid" : "34f7a8a4d2f8472",
+        "parentUid" : "70457bb26842e4cc5da7c5a25c1b38d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734768317,
+          "stop" : 1750734768317,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'password'" ]
+      }, {
+        "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+        "uid" : "ac26ab09091bb12",
+        "parentUid" : "70457bb26842e4cc5da7c5a25c1b38d6",
+        "status" : "broken",
+        "time" : {
+          "start" : 1750734769836,
+          "stop" : 1750734769836,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2" ]
+      } ],
+      "uid" : "70457bb26842e4cc5da7c5a25c1b38d6"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ],
+  "name" : "categories"
+}
