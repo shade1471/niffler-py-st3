@@ -4,6 +4,7 @@ import allure
 import pytest
 from faker import Faker
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 from python_test.model.LoginPage import LoginPage
 from python_test.model.config import Envs
@@ -20,7 +21,11 @@ class TestPositiveScenario:
 
     @pytest.fixture(scope="function")
     def browser(self) -> Generator[Niffler, Any, None]:
-        wd = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--headless")
+        options.add_argument("--incognito")
+        options.add_argument("--disable-dev-shm-usage")
+        wd = webdriver.Chrome(options=options)
         niffler = Niffler(wd)
         yield niffler
         wd.quit()
@@ -56,7 +61,12 @@ class TestNegativeScenario:
 
     @pytest.fixture(scope="class")
     def browser(self) -> Generator[Niffler, Any, None]:
-        wd = webdriver.Chrome()
+        options = Options()
+        options.add_argument("--lang=en")
+        options.add_argument("--headless")
+        options.add_argument("--incognito")
+        options.add_argument("--disable-dev-shm-usage")
+        wd = webdriver.Chrome(options=options)
         niffler = Niffler(wd)
         yield niffler
         wd.quit()
@@ -70,7 +80,8 @@ class TestNegativeScenario:
         browser.login_page.click_log_in()
 
         with allure.step('Проверить текст сообщения'):
-            assert browser.login_page.get_text_form_error() == 'Неверные учетные данные пользователя'
+            assert browser.login_page.get_text_form_error() in ['Неверные учетные данные пользователя',
+                                                                'Bad credentials']
 
     @allure.feature(Feature.log_in)
     @allure.title('Наличие свойства required у полей имя пользователя и пароль')
@@ -89,7 +100,7 @@ class TestNegativeScenario:
 
         with allure.step('Проверить текст о незаполненности поля'):
             assert browser.login_page.is_element_have_property(element[element_with_message], 'validationMessage',
-                                                               'Заполните это поле.')
+                                                               ['Заполните это поле.', 'Please fill out this field.'])
 
     @allure.feature(Feature.sign_up)
     @allure.title('Граничные значения у поля "Пароль" на странице регистрации')

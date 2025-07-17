@@ -1,3 +1,4 @@
+import time
 from datetime import datetime, timezone
 from http import HTTPStatus
 
@@ -37,6 +38,11 @@ def module_fixture(tmp_path_factory, worker_id, spends_client: SpendsHttpClient,
             pass
         else:
             _prepare_state()
+
+
+@pytest.fixture(scope='function', autouse=True)
+def wait_before_run_test():
+    time.sleep(1)  # Ожидание для отработки фикстуры модуля при параллельном запуске
 
 
 def get_spend_model(envs: Envs, category_name: str = '') -> dict:

@@ -1,0 +1,95 @@
+name: Niffler tests on python
+
+on:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+
+jobs:
+  python_tests:
+    runs-on: ubuntu-latest
+    env:
+      FRONTEND_URL: http://frontend.niffler.dc
+      GATEWAY_URL: http://gateway.niffler.dc:8090
+      AUTH_URL: http://auth.niffler.dc:9000
+      AUTH_SECRET: niffler:client
+      SPEND_DB_URL: postgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-spend
+      USERDATA_DB_URL: postgresql+psycopg2://postgres:secret@gateway.niffler.dc:5432/niffler-userdata
+      TEST_USERNAME: qa_guru
+      TEST_PASSWORD: qa_guru
+      KAFKA_ADDRESS: localhost
+      SOAP_ADDRESS: http://localhost:8089/ws
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.GITHUB_SHA }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build backends
+        run: |
+          bash docker-compose-dev.sh
+
+      - name: Edit hosts file
+        run: |
+          echo -e "127.0.0.1\tlocalhost\n127.0.0.1\tfrontend.niffler.dc\n127.0.0.1\tauth.niffler.dc\n127.0.0.1\tgateway.niffler.dc\n127.0.0.1\tkafka" | sudo tee -a /etc/hosts
+
+      - name: Install dependencies
+        working-directory: ./python_test
+        run: pip install --upgrade -r requirements.txt
+
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Run tests
+        if: always()
+        working-directory: ./python_test
+        run: pytest --alluredir=./allure-results --clean-alluredir test/test_app.py test/test_kafka.py
+
+      - name: Run parallel tests
+        if: always()
+        working-directory: ./python_test
+        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py
+
+      - name: Load test report history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: python_test/allure-history
+
+      - name: Generate Allure Report
+        if: always()
+        uses: simple-elf/allure-report-action@v1
+        with:
+          allure_results: python_test/allure-results
+          allure_history: python_test/allure-history
+          allure_report: python_test/allure-report
+
+      - name: Upload Allure Report as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: python_test/allure-report
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: python_test/allure-history
