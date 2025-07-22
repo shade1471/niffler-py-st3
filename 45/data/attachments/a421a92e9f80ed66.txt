@@ -1,0 +1,72 @@
+INFO     root:api_helper.py:33 Пользователь Lisa Smith зарегистрирован
+INFO     root:api_helper.py:33 Пользователь Michelle Cardenas зарегистрирован
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "392"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:sendInvitationRequest>
+            <nif:username>Lisa Smith</nif:username>
+            <nif:friendToBeRequested>Michelle Cardenas</nif:friendToBeRequested>
+        </nif:sendInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "421",
+  "Date": "Tue, 22 Jul 2025 09:49:28 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>2f4d7781-a2a3-4319-9040-9dbbb67d968f</ns2:id><ns2:username>Michelle Cardenas</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>INVITE_SENT</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
+
+
+INFO     root:allure_helpers.py:82 
+
+REQUEST POST http://localhost:8089/ws
+
+REQUEST HEADERS {
+  "User-Agent": "python-requests/2.32.3",
+  "Accept-Encoding": "gzip, deflate",
+  "Accept": "*/*",
+  "Connection": "keep-alive",
+  "Content-Type": "text/xml;charset=UTF-8",
+  "Content-Length": "404"
+}
+
+REQUEST BODY <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:nif="niffler-userdata">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <nif:declineInvitationRequest>
+            <nif:username>Michelle Cardenas</nif:username>
+            <nif:invitationToBeDeclined>Lisa Smith</nif:invitationToBeDeclined>
+        </nif:declineInvitationRequest>
+    </soapenv:Body>
+</soapenv:Envelope>
+
+RESPONSE HEADERS {
+  "Accept": "text/xml, text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2",
+  "SOAPAction": "\"\"",
+  "Content-Type": "text/xml;charset=utf-8",
+  "Content-Length": "407",
+  "Date": "Tue, 22 Jul 2025 09:49:28 GMT",
+  "Keep-Alive": "timeout=60",
+  "Connection": "keep-alive"
+}
+
+RESPONSE BODY b'<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><SOAP-ENV:Body><ns2:userResponse xmlns:ns2="niffler-userdata"><ns2:user><ns2:id>dee5e8e1-93c3-4c53-9e44-6976c346264c</ns2:id><ns2:username>Lisa Smith</ns2:username><ns2:currency>RUB</ns2:currency><ns2:friendshipStatus>VOID</ns2:friendshipStatus></ns2:user></ns2:userResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>'
