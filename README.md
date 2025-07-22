@@ -211,4 +211,4 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py
 
 По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
 
-![images/img.png](img.png)
+![Allure отчет](images/img.png)
