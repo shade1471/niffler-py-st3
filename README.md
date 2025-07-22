@@ -139,10 +139,10 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
 <p align="center">
   <code><img src="images/python.png" width="40" height="40"  alt="A-d-am" title="Python"></code>
   <code><img src="images/pytest.png" width="40" height="40"  alt="A-d-am" title="PyTest"></code>
-  <code><img src="images/github.png" width="40" height="40"  alt="A-d-am" title="Selene"></code>
+  <code><img src="images/github.png" width="40" height="40"  alt="A-d-am" title="Github"></code>
   <code><img src="images/pycharm.png" width="40" height="40"  alt="A-d-am" title="PyCharm"></code>
-  <code><img src="images/selenium.png" width="40" height="40"  alt="A-d-am" title="Jenkins"></code>
-  <code><img src="images/docker.png" width="40" height="40"  alt="A-d-am" title="Jenkins"></code>
+  <code><img src="images/selenium.png" width="40" height="40"  alt="A-d-am" title="Selenium"></code>
+  <code><img src="images/docker.png" width="40" height="40"  alt="A-d-am" title="Docker"></code>
 </p>
 
 ## Покрываемый функционал проекта Niffler
@@ -211,4 +211,4 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py
 
 По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
 
-![img.png](img.png)
+![images/img.png](img.png)
