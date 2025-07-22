@@ -1,4 +1,13 @@
-## **Технологии, использованные в Niffler 2.0**
+# Дипломный проект QA.GURU
+
+## Автотесты на Python по проекту Niffler
+<img src="/niffler-ng-client/src/assets/images/niffler-with-a-coin.png" width="250">
+
+
+<details>
+<summary>Схема проекта Niffler 2.0 и используемые им технологии</summary>
+
+<img src="niffler-diagram.png" width="600">
 
 - [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
 - [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
@@ -25,224 +34,32 @@
 - [Java 21](https://adoptium.net/en-GB/temurin/releases/)
 - [Gradle 8.6](https://docs.gradle.org/8.6/release-notes.html)
 - [GHA](https://docs.github.com/en/actions)
-- И многие другие
+</details>
 
-Рекомендуемые материалы к просмотру (прочтению):
+### Необходимые предусловия для локального запуска проекта Niffler
 
-- [Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
-- [Full Stack OAuth 2 - With Spring Security / React / Angular Part 1](https://youtu.be/SfNIjS_2H4M)
-- [Full Stack OAuth 2 - With Spring Security / React / Angular Part 2](https://youtu.be/3bGer6-6mdY)
-- [Spring Data? Да, та! by Евгений Борисов](https://youtu.be/nwM7A4TwU3M)
-- [Spring – Глубоко и не очень by Евгений Борисов](https://youtu.be/nGfeSo52_8A)
-- [Spring-потрошитель, часть 1 by Евгений Борисов](https://youtu.be/BmBr5diz8WA)
-- [Spring-потрошитель, часть 2 by Евгений Борисов](https://youtu.be/cou_qomYLNU)
-- [Spring-построитель by Евгений Борисов](https://youtu.be/rd6wxPzXQvo)
-- [Перенимаем опыт Google в построении микросервисов с gRPC by Александр Борисов](https://youtu.be/zPbaKUIcFx0)
-- [Designing a friendships database structure: Should I use a multivalued column?](https://dba.stackexchange.com/questions/135941/designing-a-friendships-database-structure-should-i-use-a-multivalued-column)
-- [Гонсалвес Э.: Изучаем Java EE 7, глава "Глава 4. Java.Persistence.API"](https://www.litres.ru/book/entoni-gonsalves/izuchaem-java-ee-7-8480934/otzivi/)
-- [(Hopefully) the final article about equals and hashCode for JPA entities with DB-generated IDs](https://jpa-buddy.com/blog/hopefully-the-final-article-about-equals-and-hashcode-for-jpa-entities-with-db-generated-ids/)
--
+<details>
+  <summary>Установить ПО на локальный хост</summary>
+    
+#### Если у вас ОС Windows
 
-**Схема проекта Niffler 2.0**
-
-<img src="niffler-diagram.png" width="600">
-
-# Минимальные предусловия для работы с проектом Niffler
-
-#### 0. Если у вас ОС Windows
-
-Во-первых, и в-главных, необходимо использовать [bash terminal](https://www.geeksforgeeks.org/working-on-git-bash/), а
+Необходимо использовать [bash terminal](https://www.geeksforgeeks.org/working-on-git-bash/), а
 не powershell.
-[Полезное и короткое видео о git bash](https://www.youtube.com/watch?v=zM9Mb-otqww)
 Обязательно добавьте bash терминал в [качестве терминала в вашей IDE (IDEA, PyCharm)](https://stackoverflow.com/questions/20573213/embed-git-bash-in-pycharm-as-external-tool-and-work-with-it-in-pycharm-window-w)
-Во-вторых, если у вас что-то не работает - пишите в TG чат группы - будем вместе дополнять README, т.к. изначально
-проект разработан под nix
 
-#### 1. Установить docker (Если не установлен)
+#### 1. Установить docker
 
-Мы будем использовать docker для БД (Postgres), кроме того, будем запускать микросервисы в едином docker network при
-помощи docker-compose
-
-[Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
-
-[Установка на Mac](https://docs.docker.com/desktop/install/mac-install/) (Для ARM и Intel разные пакеты)
-
-[Установка на Linux](https://docs.docker.com/desktop/install/linux-install/)
-
-После установки и запуска docker daemon необходимо убедиться в работе команд docker, например `docker -v`:
-
-```posh
-User-MacBook-Pro ~ % docker -v
-Docker version 20.10.14, build a224086
-```
-
-#### 2. Спуллить контейнер postgres:15.1, zookeeper и kafka версии 7.3.2
-
-```posh
-docker pull postgres:15.1
-docker pull confluentinc/cp-zookeeper:7.3.2
-docker pull confluentinc/cp-kafka:7.3.2
-```
-
-После `pull` вы увидите спуленный image командой `docker images`
-
-```posh
-mitriis-MacBook-Pro ~ % docker images            
-REPOSITORY                 TAG              IMAGE ID       CREATED         SIZE
-postgres                   15.1             9f3ec01f884d   10 days ago     379MB
-confluentinc/cp-kafka      7.3.2            db97697f6e28   12 months ago   457MB
-confluentinc/cp-zookeeper  7.3.2            6fe5551964f5   7 years ago     451MB
-
-```
-
-#### 3. Создать volume для сохранения данных из БД в docker на вашем компьютере
-
-```posh
-docker volume create pgdata
-```
-
-#### 4. Запустить БД, zookeeper и kafka 3-мя последовательными командами:
-
-Запустив скрипт (Для Windows необходимо использовать bash terminal: gitbash, cygwin или wsl)
-
-```posh
-User-MacBook-Pro  niffler % bash localenv.sh
-```
-
-Или выполнив последовательно команды, для *nix:
-
-```posh
-docker run --name niffler-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -e CREATE_DATABASES=niffler-auth,niffler-currency,niffler-spend,niffler-userdata -e TZ=GMT+3 -e PGTZ=GMT+3 -v pgdata:/var/lib/postgresql/data -v ./postgres/script:/docker-entrypoint-initdb.d -d postgres:15.1 --max_prepared_transactions=100
-
-docker run --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
-
-docker run --name=kafka -e KAFKA_BROKER_ID=1 \
--e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect zookeeper --format='{{ .NetworkSettings.IPAddress }}'):2181 \
--e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
--e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
--e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 \
--e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 \
--p 9092:9092 -d confluentinc/cp-kafka:7.3.2
-```
-
-Для Windows (Необходимо использовать bash terminal: gitbash, cygwin или wsl):
-
-```posh
-docker run --name niffler-all -p 5432:5432 -e POSTGRES_PASSWORD=secret -e CREATE_DATABASES=niffler-auth,niffler-currency,niffler-spend,niffler-userdata -e TZ=GMT+3 -e PGTZ=GMT+3 -v pgdata:/var/lib/postgresql/data -v ./postgres/script:/docker-entrypoint-initdb.d -d postgres:15.1 --max_prepared_transactions=100
-
-docker run --name=zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
-
-docker run --name=kafka -e KAFKA_BROKER_ID=1 -e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect zookeeper --format="{{ .NetworkSettings.IPAddress }}"):2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 -e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 -p 9092:9092 -d confluentinc/cp-kafka:7.3.2
-```
-
-[Про IP zookeeper](https://github.com/confluentinc/cp-docker-images/issues/801#issuecomment-692085103)
-
-Если вы используете Windows и контейнер с БД не стартует с ошибкой в логе:
-
-```
-server started
-/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init-database.sh
-/usr/local/bin/docker-entrypoint.sh: /docker-entrypoint-initdb.d/init-database.sh: /bin/bash^M: bad interpreter: No such file or directory
-```
-
-То необходимо выполнить следующие команды в каталоге /postgres/script :
-
-```
-sed -i -e 's/\r$//' init-database.sh
-chmod +x init-database.sh
-```
-
-#### 5. Установить Java версии 21. Это необходимо, т.к. проект использует синтаксис Java 21
+#### 2. Установить Java версии 21. Это необходимо, т.к. проект использует синтаксис Java 21
 
 Версию установленной Java необходимо проверить командой `java -version`
 
-```posh
-User-MacBook-Pro ~ % java -version
-openjdk version "21.0.1" 2023-10-17 LTS
-OpenJDK Runtime Environment Temurin-21.0.1+12 (build 21.0.1+12-LTS)
-OpenJDK 64-Bit Server VM Temurin-21.0.1+12 (build 21.0.1+12-LTS, mixed mode)
-```
-
-Если у вас несколько версий Java одновременно - то хотя бы одна из них должна быть 21
-Если java не установлена вовсе, то рекомендую установить OpenJDK (например,
-из https://adoptium.net/en-GB/temurin/releases/)
-
-#### 6. Установить пакетый менеджер для сборки front-end npm
-
-[Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+#### 3. Установить пакетный менеджер для сборки front-end npm
 Рекомендованная версия Node.js - 22.6.0
 
-# Запуск Niffler локальное в IDE:
+</details>
 
-#### 1. Выбрать какой фронтенд предполагается запускать - REST или GraphQL, и перейти в соответсвующий каталог
-
-для REST:
-
-```posh
-User-MacBook-Pro niffler % cd niffler-ng-client
-```
-
-или для GraphQL
-
-```posh
-User-MacBook-Pro niffler % cd niffler-ng-gql-client
-```
-
-#### 2. Запустить фронтенд в режиме preview (сначала обновить зависимости)
-
-```posh
-User-MacBook-Pro niffler-ng-client % npm i
-User-MacBook-Pro niffler-ng-client % npm run build:dev
-```
-
-Если требуется dev режим (вы собираетесь править frontend и на лету видеть изменения), запускаем командой `npm run dev`
-
-#### 3. Прописать run конфигурацию для всех сервисов niffler-* - Active profiles local
-
-Для этого зайти в меню Run -> Edit Configurations -> выбрать main класс -> указать Active profiles: local
-[Инструкция](https://stackoverflow.com/questions/39738901/how-do-i-activate-a-spring-boot-profile-when-running-from-intellij).
-
-#### 4 Запустить сервис Niffler-auth c помощью gradle или командой Run в IDE:
-
-- Запустить сервис auth
-
-```posh
-User-MacBook-Pro niffler % cd niffler-auth
-User-MacBook-Pro niffler-auth % gradle bootRun --args='--spring.profiles.active=local'
-```
-
-Или просто перейдя к main-классу приложения NifflerAuthApplication выбрать run в IDEA (предварительно удостовериться что
-выполнен предыдущий пункт)
-
-Если сервис не стартует с ошибкой:
-```posh
-FATAL: database "niffler-auth" does not exist
-```
-то необходимо проверить, было ли сообщение об автоматическом создании баз данныхз в логе контейнера с Postgres (niffler-all):
-```posh
-docker logs -f niffler-all
-... 
-Multiple database creation requested: niffler-auth,niffler-currency,niffler-spend,niffler-userdata"
-...
-```
-Если сообщения нет, то необходимо создать базы данных вручную (при этом, мы создаем только пустые БД, без таблиц):
-- Установить одну из программ для визуальной работы с Postgres. Например, PgAdmin, DBeaver или Datagrip.
-- Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) из PgAdmin и создать пустые БД микросервисов
-```sql
-   create database "niffler-userdata" with owner postgres;
-   create database "niffler-spend" with owner postgres;
-   create database "niffler-currency" with owner postgres;
-   create database "niffler-auth" with owner postgres;
-```
-
-#### 5  Запустить в любой последовательности другие сервисы: niffler-currency, niffler-spend, niffler-gateway, niffler-userdata
-
-Фронтенд Niffler при запуске локально будет работать для вас по адресу http://127.0.0.1:3000/,
-OpenAPI (Swagger) сервиса niffler-gateway доступен по адресу: http://127.0.0.1:8090/swagger-ui/index.html
-GraphiQL интерфейс сервиса niffler-gateway доступен по адресу: http://127.0.0.1:8090/graphiql
-WSDL сервиса niffler-userdata доступен по адресу: http://127.0.0.1:8089/ws/userdata.wsdl
-
-# Запуск Niffler в докере:
+<details>
+  <summary>Запуск Niffler в докере</summary>
 
 #### 1. Создать бесплатную учетную запись на https://hub.docker.com/ (если отсутствует)
 
@@ -275,17 +92,7 @@ User-MacBook-Pro niffler % vi /etc/hosts
 127.0.0.1       gateway.niffler.dc
 ```
 
-#### 5. Перейти в корневой каталог проекта
 
-```posh
-User-MacBook-Pro niffler % cd niffler
-```
-
-#### 6. Запустить все сервисы
-
-```posh
-User-MacBook-Pro  niffler % bash docker-compose-dev.sh
-```
 
 Текущая версия `docker-compose-dev.sh` **удалит все запущенные Docker контейнеры в системе**, поэтому если у вас есть
 созданные
@@ -326,74 +133,81 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
 Это известная проблема, что Postgres в docker может стартануть при зянятом порту 5432, надо убедиться что у вас не
 поднят никакой другой Postgres на этом порту.
 
-Если вы используете Windows и контейнер с БД не стартует с ошибкой в логе:
+</details>
 
+###  Используемые технологии
+<p align="center">
+  <code><img src="images/python.png" width="40" height="40"  alt="A-d-am" title="Python"></code>
+  <code><img src="images/pytest.png" width="40" height="40"  alt="A-d-am" title="PyTest"></code>
+  <code><img src="images/github.png" width="40" height="40"  alt="A-d-am" title="Selene"></code>
+  <code><img src="images/pycharm.png" width="40" height="40"  alt="A-d-am" title="PyCharm"></code>
+  <code><img src="images/selenium.png" width="40" height="40"  alt="A-d-am" title="Jenkins"></code>
+  <code><img src="images/docker.png" width="40" height="40"  alt="A-d-am" title="Jenkins"></code>
+</p>
+
+## Покрываемый функционал проекта Niffler
+* UI тесты
+    * ✅ Проверка функционала трат (9 тест кейсов)
+    * ✅ Проверка функционала категорий (6 тест кейсов)
+    * ✅ Проверка функционала поиска (10 тест кейсов)
+    * ✅ Авторизации и регистрации пользователя (9 тест кейсов)
+
+
+* API тесты
+  * ✅ Проверка функционала трат (10 тест кейсов)
+  * ✅ Проверка функционала категорий (8 тест кейсов)
+  * ✅ Проверка функционала поиска (10 тест кейсов)
+  * ✅ Авторизации и регистрации пользователя (9 тест кейсов)
+
+
+* SOAP тесты
+  * ✅ Проверка функционала друзей (8 тест кейсов)
+
+
+* KAFKA тесты
+  * ✅ Проверка функционала сервиса регистрации (2 тест кейса)
+
+
+* gRPC тесты
+  * ✅ Проверка функционала сервиса валюты ( - тест кейса)
+
+## Как запустить
+Перед выполнением необходимо:
+* в .env определить параметры конфигурации (пример в .env.sample):
+    - FRONTEND_URL
+    - GATEWAY_URL
+    - AUTH_URL
+    - AUTH_SECRET
+    - SPEND_DB_URL
+    - USERDATA_DB_URL
+    - TEST_USERNAME
+    - TEST_PASSWORD
+    - KAFKA_ADDRESS
+    - SOAP_ADDRESS
+
+### Локально, в последовательном выполнении
 ```
-server started
-/usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init-database.sh
-/usr/local/bin/docker-entrypoint.sh: /docker-entrypoint-initdb.d/init-database.sh: /bin/bash^M: bad interpreter: No such file or directory
-```
-
-То необходимо выполнить следующие команды в каталоге /postgres :
-
-```
-sed -i -e 's/\r$//' init-database.sh
-chmod +x init-database.sh
-```
-
-# Создание своего docker repository для форка Niffler и сборка своих докер контейнеров
-
-#### 1. Войти в свою УЗ на https://hub.docker.com/ и последовательно создать публичные репозитории
-
-- niffler-ng-client
-- niffler-userdata
-- niffler-spend
-- niffler-gateway
-- niffler-currency
-- niffler-auth
-
-Допустим, что ваш username на https://hub.docker.com - *foobazz*
-
-#### 2. заменить в файле docker.properties (в корне проекта) IMAGE_PREFIX=qaguru на IMAGE_PREFIX=foobazz
-
-- где foobazz - ваш юзернэйм на https://hub.docker.com/
-
-#### 3. заменить в файле build.gradle (в корне проекта) dockerHubName = "qaguru" на dockerHubName = "foobazz"
-
-- где foobazz - ваш юзернэйм на https://hub.docker.com/
-
-#### 4. Перейти в корневой каталог проекта
-
-```posh
-User-MacBook-Pro niffler % cd niffler
-```
-
-#### 5. Собрать все имеджи, запушить и запустить niffler одной командой:
-
-для REST:
-
-```posh
-User-MacBook-Pro  niffler % bash docker-compose-dev.sh push
-```
-
-# Запуск e-2-e тестов в Docker network изолированно Niffler в докере:
-
-#### 1. Перейти в корневой каталог проекта
-
-```posh
-User-MacBook-Pro niffler % cd niffler
-```
-
-#### 2. Запустить все сервисы и тесты:
-
-```posh
-User-MacBook-Pro  niffler % bash docker-compose-e2e.sh
+pytest --alluredir=[your_path_for_report] --clean-alluredir .
 ```
 
-#### 3. Selenoid UI доступен по адресу: http://localhost:9090/
 
-#### 5. Allure-ui доступен по адресу: http://localhost:5252/
+#### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска
 
-#### 4. Allure report доступен по адресу: http://localhost:5050/allure-docker-service/projects/niffler-ng/reports/latest/index.html
+- API тесты
+- Авторизации и регистрации пользователя (UI)
+- Kafka
+```
+pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py test/test_auth.py test/test_soap.py
 
-<img src="/niffler-ng-client/src/assets/images/niffler-with-a-coin.png" width="250">
+```
+  
+, где [your_path_for_report] - путь до папки с отчетом о прогоне
+
+
+
+### В проекте реализован CI/CD Github Actions 
+ Workflow запускается для событий Pull Request (создания, добавление коммита в ветку PR, и переоткрытия PR)
+
+По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
+
+![img.png](img.png)
