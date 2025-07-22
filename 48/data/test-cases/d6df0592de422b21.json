@@ -1,0 +1,297 @@
+{
+  "uid" : "d6df0592de422b21",
+  "name" : "Сервис niffler-userdata должен забирать сообщение из топика Kafka",
+  "fullName" : "test.test_kafka.TestKafka#test_niffler_userdata_should_consume_message_from_kafka",
+  "historyId" : "d62dc29379749a47216c4569e7204210",
+  "time" : {
+    "start" : 1753178011925,
+    "stop" : 1753178012760,
+    "duration" : 835
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] Userdata Db",
+    "time" : {
+      "start" : 1753178011924,
+      "stop" : 1753178011925,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1753177969182,
+      "stop" : 1753177969182,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1753177969125,
+      "stop" : 1753177969182,
+      "duration" : 57
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] Kafka",
+    "time" : {
+      "start" : 1753178011738,
+      "stop" : 1753178011740,
+      "duration" : 2
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1753177969182,
+      "stop" : 1753177969827,
+      "duration" : 645
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1753177969182,
+        "stop" : 1753177969826,
+        "duration" : 644
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Отправить сообщение в Kafka",
+      "time" : {
+        "start" : 1753178011925,
+        "stop" : 1753178012743,
+        "duration" : 818
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Убедиться, что в таблице userdata есть запись о пользователе из сообщения",
+      "time" : {
+        "start" : 1753178012743,
+        "stop" : 1753178012760,
+        "duration" : 17
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "5e64642dc71e7c70",
+        "name" : "SELECT niffler-userdata",
+        "source" : "5e64642dc71e7c70.txt",
+        "type" : "text/plain",
+        "size" : 181
+      }, {
+        "uid" : "3e1b5f4c5d22b81d",
+        "name" : "SELECT niffler-userdata",
+        "source" : "3e1b5f4c5d22b81d.txt",
+        "type" : "text/plain",
+        "size" : 181
+      } ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "4c5aa4045a58742b",
+      "name" : "log",
+      "source" : "4c5aa4045a58742b.txt",
+      "type" : "text/plain",
+      "size" : 106
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 2,
+    "attachmentsCount" : 3,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ {
+    "name" : "kafka::0",
+    "time" : {
+      "start" : 1753178012761,
+      "stop" : 1753178015762,
+      "duration" : 3001
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "Kafka"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "host",
+    "value" : "pkrvmq0rgcvqdmg"
+  }, {
+    "name" : "thread",
+    "value" : "6866-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_kafka"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 1,
+        "skipped" : 0,
+        "passed" : 7,
+        "unknown" : 0,
+        "total" : 8
+      },
+      "items" : [ {
+        "uid" : "eeb19f9ba20c72aa",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/47/#testresult/eeb19f9ba20c72aa",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753177964530,
+          "stop" : 1753177965382,
+          "duration" : 852
+        }
+      }, {
+        "uid" : "3c8be94a1316f2af",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/46/#testresult/3c8be94a1316f2af",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753177865117,
+          "stop" : 1753177865964,
+          "duration" : 847
+        }
+      }, {
+        "uid" : "68fd15b35b31653b",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/45/#testresult/68fd15b35b31653b",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753177759547,
+          "stop" : 1753177760392,
+          "duration" : 845
+        }
+      }, {
+        "uid" : "425848fc1f50a7d3",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/44/#testresult/425848fc1f50a7d3",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750753988585,
+          "stop" : 1750753989433,
+          "duration" : 848
+        }
+      }, {
+        "uid" : "d84aeb6340e21e90",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/43/#testresult/d84aeb6340e21e90",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750753059651,
+          "stop" : 1750753060489,
+          "duration" : 838
+        }
+      }, {
+        "uid" : "a7c99c8daf878e02",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/43/#testresult/a7c99c8daf878e02",
+        "status" : "broken",
+        "statusDetails" : "sqlalchemy.exc.ProgrammingError: (psycopg2.errors.UndefinedTable) relation \"user\" does not exist\nLINE 2: FROM \"user\" \n             ^\n\n[SQL: SELECT \"user\".id, \"user\".username, \"user\".currency, \"user\".firstname, \"user\".surname, \"user\".photo, \"user\".photo_small, \"user\".full_name \nFROM \"user\" \nWHERE \"user\".username = %(username_1)s]\n[parameters: {'username_1': 'daycassandra'}]\n(Background on this error at: https://sqlalche.me/e/20/f405)",
+        "time" : {
+          "start" : 1750752656465,
+          "stop" : 1750752657233,
+          "duration" : 768
+        }
+      }, {
+        "uid" : "b3f15fad54fd5b39",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/42/#testresult/b3f15fad54fd5b39",
+        "status" : "passed",
+        "time" : {
+          "start" : 1750735595780,
+          "stop" : 1750735596624,
+          "duration" : 844
+        }
+      } ]
+    },
+    "tags" : [ ]
+  },
+  "source" : "d6df0592de422b21.json",
+  "parameterValues" : [ ]
+}
