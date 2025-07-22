@@ -185,11 +185,12 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
     - KAFKA_ADDRESS
     - SOAP_ADDRESS
 
-### Локально, в последовательном выполнении
+### Локально
+
+#### В последовательном выполнении
 ```
 pytest --alluredir=[your_path_for_report] --clean-alluredir .
 ```
-
 
 #### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска
 
@@ -205,7 +206,7 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py
 
 
 
-### В проекте реализован CI/CD Github Actions 
+### Удаленно, через реализованый CI/CD Github Actions 
  Workflow запускается для событий Pull Request (создания, добавление коммита в ветку PR, и переоткрытия PR)
 
 По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
