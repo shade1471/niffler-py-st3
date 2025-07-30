@@ -190,8 +190,15 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
     - SOAP_ADDRESS
     - GRPC_HOST
 
-#### В последовательном выполнении
 ```
+Перейти в каталог python_test:
+cd python_test
+```
+
+
+#### Запуск с последовательным выполнением
+```
+В консоли выполнить команду:
 pytest --alluredir=[your_path_for_report] --clean-alluredir ./test
 ```
 
@@ -202,6 +209,7 @@ pytest --alluredir=[your_path_for_report] --clean-alluredir ./test
 - SOAP
 - GRPC
 ```
+В консоли выполнить команду:
 pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] .\test -m parallel
 
 ```
