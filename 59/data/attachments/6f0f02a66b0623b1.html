@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>PATCH to http://gateway.niffler.dc:8090/api/categories/update</code></pre>
+</div>
+
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>b'{"id": "ba4e0606-c466-4fbb-9c5c-9e67ad000914", "name": "test_update_name_category", "username": "qa_guru", "archived": true}'</code></pre>
+    </div>
+
+
+
+
+    <h4>Headers</h4>
+    <div>
+    
+        <div>
+            <pre><code><b>User-Agent</b>: python-requests/2.32.3</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept-Encoding</b>: gzip, deflate</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Connection</b>: keep-alive</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Authorization</b>: Bearer eyJraWQiOiI1ZThiMDg5NS05Nzg3LTQxZjktODE3MS1jNjc2YzVhNGYyZDAiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUzODkzMjY0LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUzODk2ODY0LCJpYXQiOjE3NTM4OTMyNjQsImp0aSI6IjgyZTljMjRlLTJkYWUtNGE3NS05NDU3LTJhOGQ5MmE5OGNmZSJ9.mYXj5-S0PeFaP95tpkOfVhMS4iH4m7LVnrKgJv8tdZRP0OPdk24SLo6ymz6D94IsuSzaYRHJhXsE3-XMbfc2QkjVAsrPw9NyI-4mnJbXgLMjlxUZbX6h0Qaa3kdFCzyIOmiixqyV5Nbx3_h-2RzlQ3FDhVDFrVUdIGUCVWc7fZf0htK2vjlaCpHVXr2PZxLtlWacr66P5mtvxJLzF4KbBdysO2qF_FO_3C8HOmcm_Nc_kzvoR2SCpC1_dYfhVAD8jBSviYlf7U9m5qcqlFBTNwAauGdc1ESvxQaTdgY2DlvCWJtldrFvBRt2ejdtWvLIcrbJqvwTAD1MAQQ7J5npxg</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Type</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Length</b>: 124</code></pre>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -X PATCH -H 'Accept: application/json' -H 'Accept-Encoding: gzip, deflate' -H 'Authorization: Bearer eyJraWQiOiI1ZThiMDg5NS05Nzg3LTQxZjktODE3MS1jNjc2YzVhNGYyZDAiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUzODkzMjY0LCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUzODk2ODY0LCJpYXQiOjE3NTM4OTMyNjQsImp0aSI6IjgyZTljMjRlLTJkYWUtNGE3NS05NDU3LTJhOGQ5MmE5OGNmZSJ9.mYXj5-S0PeFaP95tpkOfVhMS4iH4m7LVnrKgJv8tdZRP0OPdk24SLo6ymz6D94IsuSzaYRHJhXsE3-XMbfc2QkjVAsrPw9NyI-4mnJbXgLMjlxUZbX6h0Qaa3kdFCzyIOmiixqyV5Nbx3_h-2RzlQ3FDhVDFrVUdIGUCVWc7fZf0htK2vjlaCpHVXr2PZxLtlWacr66P5mtvxJLzF4KbBdysO2qF_FO_3C8HOmcm_Nc_kzvoR2SCpC1_dYfhVAD8jBSviYlf7U9m5qcqlFBTNwAauGdc1ESvxQaTdgY2DlvCWJtldrFvBRt2ejdtWvLIcrbJqvwTAD1MAQQ7J5npxg' -H 'Connection: keep-alive' -H 'Content-Length: 124' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.32.3' -d '{"id": "ba4e0606-c466-4fbb-9c5c-9e67ad000914", "name": "test_update_name_category", "username": "qa_guru", "archived": true}' http://gateway.niffler.dc:8090/api/categories/update</code></pre>
+    </div>
+
+</body>
+</html>

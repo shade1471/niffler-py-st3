@@ -1,0 +1,340 @@
+{
+  "uid" : "dca1c5c3f4e3e565",
+  "name" : "Удаление друга",
+  "fullName" : "test.test_soap.TestSoapNiffler#test_remove_friend",
+  "historyId" : "28b0cc787e19b8a2e5d116874aa3afad",
+  "time" : {
+    "start" : 1753893266563,
+    "stop" : 1753893266830,
+    "duration" : 267
+  },
+  "status" : "failed",
+  "statusMessage" : "AssertionError: assert 0 == 1\n +  where 0 = len([])",
+  "statusTrace" : "self = <test.test_soap.TestSoapNiffler object at 0x7fba02d8f750>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7fba02c88d70>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws', grpc_service_host='localhost:8092')\n\n    @allure.title('Удаление друга')\n    def test_remove_friend(self, soap_session, envs):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n    \n        with allure.step(f'Отправить запрос на дружбу от {user_1} к {user_2}'):\n            soap_session.request(data=send_invitation_xml(user_1, user_2))\n    \n        with allure.step(f'Принять запрос на дружбу пользователем {user_2} от {user_1}'):\n            soap_session.request(data=accept_invitation_xml(user_2, friend=user_1))\n    \n        with allure.step(f'Убедиться в наличии друга у пользователя {user_1}'):\n            response = soap_session.request(data=friends(user_1))\n            friends_list = get_friends_list(response.text)\n>           assert len(friends_list) == 1\nE           assert 0 == 1\nE            +  where 0 = len([])\n\ntest/test_soap.py:173: AssertionError",
+  "flaky" : false,
+  "newFailed" : true,
+  "beforeStages" : [ {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1753893264093,
+      "stop" : 1753893264095,
+      "duration" : 2
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1753893264095,
+      "stop" : 1753893264240,
+      "duration" : 145
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1753893264096,
+        "stop" : 1753893264239,
+        "duration" : 143
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1753893264095,
+      "stop" : 1753893264095,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[M] Soap Session",
+    "time" : {
+      "start" : 1753893264347,
+      "stop" : 1753893264347,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "failed",
+    "statusMessage" : "AssertionError: assert 0 == 1\n +  where 0 = len([])",
+    "statusTrace" : "self = <test.test_soap.TestSoapNiffler object at 0x7fba02d8f750>\nsoap_session = <python_test.utils.sessions.SoapSession object at 0x7fba02c88d70>\nenvs = Envs(frontend_url='http://frontend.niffler.dc', gateway_url='http://gateway.niffler.dc:8090', auth_url='http://auth.ni...gateway.niffler.dc:5432/niffler-userdata', soap_address='http://localhost:8089/ws', grpc_service_host='localhost:8092')\n\n    @allure.title('Удаление друга')\n    def test_remove_friend(self, soap_session, envs):\n        user_1, user_2 = fake.name(), fake.name()\n        with allure.step(f'Создать пользователей {user_1} и {user_2} в системе'):\n            UserApiHelper(envs).create_user(user_1, fake.password(special_chars=False))\n            UserApiHelper(envs).create_user(user_2, fake.password(special_chars=False))\n    \n        with allure.step(f'Отправить запрос на дружбу от {user_1} к {user_2}'):\n            soap_session.request(data=send_invitation_xml(user_1, user_2))\n    \n        with allure.step(f'Принять запрос на дружбу пользователем {user_2} от {user_1}'):\n            soap_session.request(data=accept_invitation_xml(user_2, friend=user_1))\n    \n        with allure.step(f'Убедиться в наличии друга у пользователя {user_1}'):\n            response = soap_session.request(data=friends(user_1))\n            friends_list = get_friends_list(response.text)\n>           assert len(friends_list) == 1\nE           assert 0 == 1\nE            +  where 0 = len([])\n\ntest/test_soap.py:173: AssertionError",
+    "steps" : [ {
+      "name" : "Создать пользователей Jenna Cummings и Joshua White в системе",
+      "time" : {
+        "start" : 1753893266563,
+        "stop" : 1753893266788,
+        "duration" : 225
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "Создать пользователя 'Jenna Cummings'",
+        "time" : {
+          "start" : 1753893266564,
+          "stop" : 1753893266685,
+          "duration" : 121
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Jenna Cummings'"
+        }, {
+          "name" : "user_password",
+          "value" : "'97Hc1ya8jn'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      }, {
+        "name" : "Создать пользователя 'Joshua White'",
+        "time" : {
+          "start" : 1753893266685,
+          "stop" : 1753893266787,
+          "duration" : 102
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ ],
+        "parameters" : [ {
+          "name" : "user_name",
+          "value" : "'Joshua White'"
+        }, {
+          "name" : "user_password",
+          "value" : "'WUz2X1dz6G'"
+        } ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 0,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 2,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Отправить запрос на дружбу от Jenna Cummings к Joshua White",
+      "time" : {
+        "start" : 1753893266788,
+        "stop" : 1753893266808,
+        "duration" : 20
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Принять запрос на дружбу пользователем Joshua White от Jenna Cummings",
+      "time" : {
+        "start" : 1753893266808,
+        "stop" : 1753893266819,
+        "duration" : 11
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    }, {
+      "name" : "Убедиться в наличии друга у пользователя Jenna Cummings",
+      "time" : {
+        "start" : 1753893266819,
+        "stop" : 1753893266830,
+        "duration" : 11
+      },
+      "status" : "failed",
+      "statusMessage" : "AssertionError: assert 0 == 1\n +  where 0 = len([])\n",
+      "statusTrace" : "  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/test/test_soap.py\", line 173, in test_remove_friend\n    assert len(friends_list) == 1\n",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : true,
+      "hasContent" : true
+    } ],
+    "attachments" : [ {
+      "uid" : "5369828a555ff830",
+      "name" : "log",
+      "source" : "5369828a555ff830.txt",
+      "type" : "text/plain",
+      "size" : 3983
+    } ],
+    "parameters" : [ ],
+    "stepsCount" : 6,
+    "attachmentsCount" : 1,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "SOAP"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "tag",
+    "value" : "parallel"
+  }, {
+    "name" : "host",
+    "value" : "pkrvmjbmru5nbw0"
+  }, {
+    "name" : "thread",
+    "value" : "7717-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_soap"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Product defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "history" : {
+      "statistic" : {
+        "failed" : 1,
+        "broken" : 1,
+        "skipped" : 0,
+        "passed" : 6,
+        "unknown" : 0,
+        "total" : 8
+      },
+      "items" : [ {
+        "uid" : "522d05021637ecde",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/58/#testresult/522d05021637ecde",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753893200592,
+          "stop" : 1753893200867,
+          "duration" : 275
+        }
+      }, {
+        "uid" : "ef2679b96d6a26fc",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/57/#testresult/ef2679b96d6a26fc",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753892399827,
+          "stop" : 1753892400152,
+          "duration" : 325
+        }
+      }, {
+        "uid" : "61233e17c05267fc",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/56/#testresult/61233e17c05267fc",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890357941,
+          "stop" : 1753890358209,
+          "duration" : 268
+        }
+      }, {
+        "uid" : "f25062aa2351eeff",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/55/#testresult/f25062aa2351eeff",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753888561832,
+          "stop" : 1753888562146,
+          "duration" : 314
+        }
+      }, {
+        "uid" : "9aeda04e6226ceb8",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/54/#testresult/9aeda04e6226ceb8",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753888219616,
+          "stop" : 1753888220243,
+          "duration" : 627
+        }
+      }, {
+        "uid" : "f92778bb49ee612",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/53/#testresult/f92778bb49ee612",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753887605021,
+          "stop" : 1753887606020,
+          "duration" : 999
+        }
+      }, {
+        "uid" : "c5b53322d311d9fb",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/52/#testresult/c5b53322d311d9fb",
+        "status" : "broken",
+        "statusDetails" : "pydantic_core._pydantic_core.ValidationError: 1 validation error for Envs\ngrpc_service_host\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type",
+        "time" : {
+          "start" : 1753885746265,
+          "stop" : 1753885746265,
+          "duration" : 0
+        }
+      } ]
+    },
+    "tags" : [ "parallel" ]
+  },
+  "source" : "dca1c5c3f4e3e565.json",
+  "parameterValues" : [ ]
+}
