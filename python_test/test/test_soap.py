@@ -25,7 +25,7 @@ def auth_helper(envs):
     result = auth_client.create_user(fake.name(), fake.password(special_chars=False))
     return result
 
-
+@pytest.mark.parallel
 @allure.epic(Epic.niffler)
 @allure.feature(Feature.soap)
 class TestSoapNiffler:

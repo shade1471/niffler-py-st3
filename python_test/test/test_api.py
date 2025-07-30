@@ -21,11 +21,11 @@ from python_test.report_helper import Epic, Feature, Story
 @pytest.fixture(scope="module", autouse=True)
 def module_fixture(tmp_path_factory, worker_id, spends_client: SpendsHttpClient, spend_db: SpendDb):
     def _prepare_state():
+        categories_ids = spends_client.get_ids_all_categories()
+        spend_db.delete_categories_by_ids(categories_ids)
         all_spends_ids = spends_client.get_ids_all_spending()
         for spend_id in all_spends_ids:
             spends_client.delete_spending_by_id(spend_id)
-        categories_ids = spends_client.get_ids_all_categories()
-        spend_db.delete_categories_by_ids(categories_ids)
 
     if worker_id == "master":
         _prepare_state()
@@ -53,7 +53,7 @@ def get_spend_model(envs: Envs, category_name: str = '') -> dict:
                  'username': envs.test_username}
     return new_spend
 
-
+@pytest.mark.parallel
 @allure.epic(Epic.niffler)
 @allure.feature(Feature.api)
 class TestApi:

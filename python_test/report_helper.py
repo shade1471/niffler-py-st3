@@ -11,6 +11,7 @@ class Feature:
     api = 'API'
     kafka = 'Kafka'
     soap = 'SOAP'
+    grpc = 'gRPC Currencies'
 
 
 class Story:

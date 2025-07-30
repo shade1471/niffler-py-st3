@@ -2,19 +2,24 @@ import json
 import logging
 
 import allure
+import pytest
 from faker import Faker
 
 from python_test.data_helper.api_helper import UserApiHelper
+from python_test.data_helper.kafka_client import KafkaClient
+from python_test.databases.usertdata_db import UserdataDb
+from python_test.model.config import Envs
 from python_test.model.db.user import UserName
 from python_test.report_helper import Epic, Feature
 
 
+@pytest.mark.sequential
 @allure.epic(Epic.niffler)
 @allure.feature(Feature.kafka)
 class TestKafka:
 
     @allure.title('Убедиться в наличии сообщения в Kafka после успешной регистрации нового пользователя')
-    def test_message_should_be_produced_to_kafka_after_successful_registration(self, kafka, envs):
+    def test_message_should_be_produced_to_kafka_after_successful_registration(self, kafka: KafkaClient, envs: Envs):
         username = Faker().user_name()
         password = Faker().password(special_chars=False)
 
@@ -36,7 +41,7 @@ class TestKafka:
             assert event_decode['username'] == username
 
     @allure.title('Сервис niffler-userdata должен забирать сообщение из топика Kafka')
-    def test_niffler_userdata_should_consume_message_from_kafka(self, kafka, userdata_db):
+    def test_niffler_userdata_should_consume_message_from_kafka(self, kafka: KafkaClient, userdata_db: UserdataDb):
         with allure.step('Отправить сообщение в Kafka'):
             user_name_for_msg = Faker().user_name()
             logging.info(f'Отправить сообщение по пользователю: {user_name_for_msg}')

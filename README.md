@@ -143,6 +143,7 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
   <code><img src="images/pycharm.png" width="40" height="40"  alt="A-d-am" title="PyCharm"></code>
   <code><img src="images/selenium.png" width="40" height="40"  alt="A-d-am" title="Selenium"></code>
   <code><img src="images/docker.png" width="40" height="40"  alt="A-d-am" title="Docker"></code>
+  <code><img src="images/grpc.png" width="40" height="40"  alt="A-d-am" title="gRPC"></code>
 </p>
 
 ## Покрываемый функционал проекта Niffler
@@ -169,11 +170,14 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
 
 
 * gRPC тесты
-  * ✅ Проверка функционала сервиса валюты ( - тест кейса)
+  * ✅ Проверка функционала сервиса валюты (11 тест кейсов)
 
 ## Как запустить
+
+## Локально, на хосте
+
 Перед выполнением необходимо:
-* в .env определить параметры конфигурации (пример в .env.sample):
+* Создать файл .env в директории python_test и определить в нем параметры конфигурации (пример в .env.sample):
     - FRONTEND_URL
     - GATEWAY_URL
     - AUTH_URL
@@ -184,21 +188,29 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
     - TEST_PASSWORD
     - KAFKA_ADDRESS
     - SOAP_ADDRESS
+    - GRPC_HOST
 
-### Локально
-
-#### В последовательном выполнении
 ```
-pytest --alluredir=[your_path_for_report] --clean-alluredir .
+Перейти в каталог python_test:
+cd python_test
 ```
 
-#### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска
+
+#### Запуск с последовательным выполнением
+```
+В консоли выполнить команду:
+pytest --alluredir=[your_path_for_report] --clean-alluredir ./test
+```
+
+#### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска:
 
 - API тесты
 - Авторизации и регистрации пользователя (UI)
-- Kafka
+- SOAP
+- GRPC
 ```
-pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py test/test_auth.py test/test_soap.py
+В консоли выполнить команду:
+pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] .\test -m parallel
 
 ```
   
@@ -206,9 +218,20 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] test/test_api.py
 
 
 
-### Удаленно, через реализованый CI/CD Github Actions 
+## Удаленный запуск, через реализованный CI/CD Github Actions 
  Workflow запускается для событий Pull Request (создания, добавление коммита в ветку PR, и переоткрытия PR)
 
-По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
+По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages текущего репозитория](https://shade1471.github.io/niffler-py-st3/)
 
+#### Allure отчет в Github Pages:
 ![Allure отчет](images/img.png)
+
+#### Структура тестового набора:
+![Структура тестового набора](images/img_2.png)
+
+---
+
+## Контакты для обратной связи:
+
+- Email: a.gribanov@staffcop.ru
+- Telegram: https://t.me/gribanov87
