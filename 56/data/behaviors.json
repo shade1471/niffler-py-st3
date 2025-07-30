@@ -1,0 +1,1098 @@
+{
+  "uid" : "b1a8273437954620fa374b796ffaacdd",
+  "children" : [ {
+    "name" : "Приложение Niffler",
+    "children" : [ {
+      "name" : "Траты",
+      "children" : [ {
+        "name" : "Позитивные сценарии",
+        "children" : [ {
+          "name" : "Добавление новой траты через GUI Niffler",
+          "uid" : "1ca8aabcadd2a4c4",
+          "parentUid" : "93211d4fd9049fdd78b193da222aa975",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890317436,
+            "stop" : 1753890319013,
+            "duration" : 1577
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Удаление траты через GUI Niffler",
+          "uid" : "e8d596cd482ed88f",
+          "parentUid" : "93211d4fd9049fdd78b193da222aa975",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890328665,
+            "stop" : 1753890330555,
+            "duration" : 1890
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'study', 'amount': 10000}" ]
+        } ],
+        "uid" : "93211d4fd9049fdd78b193da222aa975"
+      }, {
+        "name" : "Негативные сценарии",
+        "children" : [ {
+          "name" : "Подсказки об обязательности полей суммы и категории при добавлении траты",
+          "uid" : "46ef945613f49a67",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890319015,
+            "stop" : 1753890319777,
+            "duration" : 762
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Создание траты без обязательного поля категории",
+          "uid" : "3bb93afeb5e73460",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890319778,
+            "stop" : 1753890320589,
+            "duration" : 811
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Создание траты без обязательного поля суммы",
+          "uid" : "a73d8ecbc9fea2e3",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890320591,
+            "stop" : 1753890321407,
+            "duration" : 816
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Создание траты с суммой меньше граничного значения для типа валюты",
+          "uid" : "561249287e49cf70",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890321408,
+            "stop" : 1753890323196,
+            "duration" : 1788
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'RUB'" ]
+        }, {
+          "name" : "Создание траты с суммой меньше граничного значения для типа валюты",
+          "uid" : "80ff06424c93d8c1",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890323198,
+            "stop" : 1753890325031,
+            "duration" : 1833
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'USD'" ]
+        }, {
+          "name" : "Создание траты с суммой меньше граничного значения для типа валюты",
+          "uid" : "8a09f2026daa9f36",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890325033,
+            "stop" : 1753890326832,
+            "duration" : 1799
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'EUR'" ]
+        }, {
+          "name" : "Создание траты с суммой меньше граничного значения для типа валюты",
+          "uid" : "57afbc9564098fee",
+          "parentUid" : "407733274c5d0bb711105b01ca56f84e",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890326834,
+            "stop" : 1753890328644,
+            "duration" : 1810
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'KZT'" ]
+        } ],
+        "uid" : "407733274c5d0bb711105b01ca56f84e"
+      }, {
+        "name" : "Работа через API",
+        "children" : [ {
+          "name" : "Добавление траты через API, проверка корректности данных в БД",
+          "uid" : "817e487cc0e42f2a",
+          "parentUid" : "f8496cf301546e75c4688000d6b1452d",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890330677,
+            "stop" : 1753890330696,
+            "duration" : 19
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'test_db', 'amount': 10000, 'currency': 'KZT', 'desc': 'Проверка данных из БД', 'date': datetime.datetime(2024, 12, 31, 0, 0)}" ]
+        }, {
+          "name" : "Обновление траты через API, проверка корректности данных в БД",
+          "uid" : "8faa8f6426471f29",
+          "parentUid" : "f8496cf301546e75c4688000d6b1452d",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890330792,
+            "stop" : 1753890330824,
+            "duration" : 32
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'study', 'amount': 600, 'currency': 'USD', 'desc': 'Coursera online courses', 'date': datetime.datetime(2024, 10, 10, 0, 0)}" ]
+        } ],
+        "uid" : "f8496cf301546e75c4688000d6b1452d"
+      } ],
+      "uid" : "832c0d47399c93839d5b787d450e0561"
+    }, {
+      "name" : "Поиск",
+      "children" : [ {
+        "name" : "Критерии поиска",
+        "children" : [ {
+          "name" : "Поиск трат по имени категории",
+          "uid" : "88eedc583b4b641b",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890331238,
+            "stop" : 1753890332123,
+            "duration" : 885
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'category'", "6" ]
+        }, {
+          "name" : "Поиск трат по имени категории",
+          "uid" : "24943cce36a5cf81",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890332125,
+            "stop" : 1753890332957,
+            "duration" : 832
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'category1'", "1" ]
+        }, {
+          "name" : "Поиск трат по имени категории",
+          "uid" : "8bbdf16abf7e9bcc",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890332959,
+            "stop" : 1753890333828,
+            "duration" : 869
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'category2'", "2" ]
+        }, {
+          "name" : "Поиск трат по имени категории",
+          "uid" : "77fc3121ddb7faec",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890333831,
+            "stop" : 1753890334668,
+            "duration" : 837
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'category3'", "3" ]
+        }, {
+          "name" : "Поиск трат по дате",
+          "uid" : "8669ecb56970524c",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890334671,
+            "stop" : 1753890335536,
+            "duration" : 865
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'last_month'", "7" ]
+        }, {
+          "name" : "Поиск трат по дате",
+          "uid" : "96d3b7284f08edf4",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890335538,
+            "stop" : 1753890336423,
+            "duration" : 885
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'today'", "6" ]
+        }, {
+          "name" : "Поиск трат по типу валюты",
+          "uid" : "a038799e9dd866d6",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890336425,
+            "stop" : 1753890337219,
+            "duration" : 794
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'EUR'", "1" ]
+        }, {
+          "name" : "Поиск трат по типу валюты",
+          "uid" : "11c0da0bcaaf208b",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890337222,
+            "stop" : 1753890338011,
+            "duration" : 789
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'USD'", "2" ]
+        }, {
+          "name" : "Поиск трат по типу валюты",
+          "uid" : "d7f16749a6d2b45b",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890338013,
+            "stop" : 1753890338777,
+            "duration" : 764
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'KZT'", "3" ]
+        }, {
+          "name" : "Поиск трат по типу валюты",
+          "uid" : "dbaea1e93f3240e5",
+          "parentUid" : "8ca1958afeb0a49b8910bf0422cb1974",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890338780,
+            "stop" : 1753890339575,
+            "duration" : 795
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'RUB'", "3" ]
+        } ],
+        "uid" : "8ca1958afeb0a49b8910bf0422cb1974"
+      } ],
+      "uid" : "60c1ce03e6a15775ce0709283422de6a"
+    }, {
+      "name" : "Категории трат",
+      "children" : [ {
+        "name" : "Ограничения по категориям",
+        "children" : [ {
+          "name" : "Максимальное количество не архивных категорий для пользователя",
+          "uid" : "1a4fe3d3012e756f",
+          "parentUid" : "d5b2fae1faeb3374faaf1ec9add2ac9c",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890339877,
+            "stop" : 1753890340613,
+            "duration" : 736
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "7", "False" ]
+        }, {
+          "name" : "Максимальное количество не архивных категорий для пользователя",
+          "uid" : "fe333b20699f7597",
+          "parentUid" : "d5b2fae1faeb3374faaf1ec9add2ac9c",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890340644,
+            "stop" : 1753890341344,
+            "duration" : 700
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "8", "True" ]
+        }, {
+          "name" : "Запрет на дубликаты категорий",
+          "uid" : "61bcf9757bab1ee4",
+          "parentUid" : "d5b2fae1faeb3374faaf1ec9add2ac9c",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890341390,
+            "stop" : 1753890342601,
+            "duration" : 1211
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'duplicate', 'archived': False}" ]
+        }, {
+          "name" : "Запрет на дубликаты категорий при существования архивной",
+          "uid" : "efcac80054bf79e4",
+          "parentUid" : "d5b2fae1faeb3374faaf1ec9add2ac9c",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890342646,
+            "stop" : 1753890345069,
+            "duration" : 2423
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'duplicate_archive', 'archived': False}" ]
+        }, {
+          "name" : "Архивные категории не отображаются при добавлении траты",
+          "uid" : "edc477d200337a80",
+          "parentUid" : "d5b2fae1faeb3374faaf1ec9add2ac9c",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890345115,
+            "stop" : 1753890348165,
+            "duration" : 3050
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'archive', 'archived': False}" ]
+        } ],
+        "uid" : "d5b2fae1faeb3374faaf1ec9add2ac9c"
+      }, {
+        "name" : "Позитивные сценарии",
+        "children" : [ {
+          "name" : "Отображение не архивной категории пользователя при добавлении траты",
+          "uid" : "f2ec12ab9f342991",
+          "parentUid" : "5366f4e27678dedd5959c35d69878ac9",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890348217,
+            "stop" : 1753890348947,
+            "duration" : 730
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'new_category', 'archived': False}" ]
+        } ],
+        "uid" : "5366f4e27678dedd5959c35d69878ac9"
+      }, {
+        "name" : "Работа через API",
+        "children" : [ {
+          "name" : "Добавление категории через API, проверка корректности данных в БД",
+          "uid" : "999e7b10c660a784",
+          "parentUid" : "91669bcc9ee49bbdce3956fcdb8f7ad0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890348992,
+            "stop" : 1753890348994,
+            "duration" : 2
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_db', 'archived': False}" ]
+        }, {
+          "name" : "Обновление категории через API, проверка корректности данных в БД",
+          "uid" : "73389920f0c4441d",
+          "parentUid" : "91669bcc9ee49bbdce3956fcdb8f7ad0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890349041,
+            "stop" : 1753890349059,
+            "duration" : 18
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'category_db_after_update', 'archived': False}" ]
+        } ],
+        "uid" : "91669bcc9ee49bbdce3956fcdb8f7ad0"
+      } ],
+      "uid" : "2d8be1bdca7df56d31b7a364f5409e4d"
+    }, {
+      "name" : "Kafka",
+      "children" : [ {
+        "name" : "Убедиться в наличии сообщения в Kafka после успешной регистрации нового пользователя",
+        "uid" : "54301618e8463331",
+        "parentUid" : "b505ef694377d5698c858993c5538b19",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890349164,
+          "stop" : 1753890349333,
+          "duration" : 169
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Сервис niffler-userdata должен забирать сообщение из топика Kafka",
+        "uid" : "c1f717af6ddc0155",
+        "parentUid" : "b505ef694377d5698c858993c5538b19",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890349336,
+          "stop" : 1753890350182,
+          "duration" : 846
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "b505ef694377d5698c858993c5538b19"
+    }, {
+      "name" : "gRPC Currencies",
+      "children" : [ {
+        "name" : "Отправка запроса на конвертацию без значения типа требуемой валюты",
+        "uid" : "8e9b3b708b2f27df",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355872,
+          "stop" : 1753890355917,
+          "duration" : 45
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Отправка запроса на конвертацию без значения типа конвертируемой валюты",
+        "uid" : "358ed34bcfcb24e8",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355920,
+          "stop" : 1753890355935,
+          "duration" : 15
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Отправка запроса на конвертацию без значения суммы",
+        "uid" : "22932cb01f3dd4c0",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355938,
+          "stop" : 1753890355948,
+          "duration" : 10
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Получение всех поддерживаемых типов валют",
+        "uid" : "6aed4af5568f2f3f",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355950,
+          "stop" : 1753890355956,
+          "duration" : 6
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "daab1def50238163",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359364,
+          "stop" : 1753890359372,
+          "duration" : 8
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "1", "7200", "100.0", "3" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "252459a8a0ae8caf",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359375,
+          "stop" : 1753890359378,
+          "duration" : 3
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "3", "1.39", "100.0", "1" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "44d1ba71679cea01",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359380,
+          "stop" : 1753890359383,
+          "duration" : 3
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "1", "6666.67", "100.0", "2" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "92b0d27868fca4cc",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359386,
+          "stop" : 1753890359389,
+          "duration" : 3
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2", "1.5", "100.0", "1" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "4e3c7e9a0dad8ce9",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359392,
+          "stop" : 1753890359395,
+          "duration" : 3
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2", "100.0", "100.0", "2" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "dfcc0f77a917cf7c",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359397,
+          "stop" : 1753890359400,
+          "duration" : 3
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2", "0.21", "100.0", "4" ]
+      }, {
+        "name" : "Конвертация валют",
+        "uid" : "b1e79fc03ab8e203",
+        "parentUid" : "df79c1c1d4bd091ffbb476224b064a8c",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890359404,
+          "stop" : 1753890359406,
+          "duration" : 2
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "4", "47619.05", "100.0", "2" ]
+      } ],
+      "uid" : "df79c1c1d4bd091ffbb476224b064a8c"
+    }, {
+      "name" : "SOAP",
+      "children" : [ {
+        "name" : "Получение информации о существующем пользователе по его username",
+        "uid" : "7c075c8f3fed12ec",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355972,
+          "stop" : 1753890355996,
+          "duration" : 24
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Запрос информации о незарегистрированном пользователе в системе по username",
+        "uid" : "4228d0f7154966f6",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355998,
+          "stop" : 1753890356016,
+          "duration" : 18
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Обновление полного имени и типа валюты у пользователя",
+        "uid" : "78e3729310fffecb",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890356260,
+          "stop" : 1753890356489,
+          "duration" : 229
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Отправка запроса на дружбу",
+        "uid" : "3230c85c58de240b",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890356495,
+          "stop" : 1753890356803,
+          "duration" : 308
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Принятие запроса на дружбу",
+        "uid" : "c15e86ffb22eac5c",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890356806,
+          "stop" : 1753890357071,
+          "duration" : 265
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Отклонение запроса на дружбу",
+        "uid" : "64857aa2cd6e9b38",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890357074,
+          "stop" : 1753890357360,
+          "duration" : 286
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Получение списка друзей",
+        "uid" : "c96209f4e2eccc7b",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890357363,
+          "stop" : 1753890357937,
+          "duration" : 574
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      }, {
+        "name" : "Удаление друга",
+        "uid" : "61233e17c05267fc",
+        "parentUid" : "91253d416dbd86987f8d7e47211e5d4d",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890357941,
+          "stop" : 1753890358209,
+          "duration" : 268
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ ]
+      } ],
+      "uid" : "91253d416dbd86987f8d7e47211e5d4d"
+    }, {
+      "name" : "Авторизация пользователя",
+      "children" : [ {
+        "name" : "Негативные сценарии",
+        "children" : [ {
+          "name" : "Наличие свойства required у полей имя пользователя и пароль",
+          "uid" : "c8c89b1aedd05c8d",
+          "parentUid" : "c552629ed1b1ffb29202ff078219d408",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890356466,
+            "stop" : 1753890356957,
+            "duration" : 491
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'password'" ]
+        }, {
+          "name" : "Авторизация под не существующим пользователем",
+          "uid" : "8ca5f259648a2b52",
+          "parentUid" : "c552629ed1b1ffb29202ff078219d408",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890363200,
+            "stop" : 1753890364027,
+            "duration" : 827
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Наличие свойства required у полей имя пользователя и пароль",
+          "uid" : "f227454d6d4765bc",
+          "parentUid" : "c552629ed1b1ffb29202ff078219d408",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890363618,
+            "stop" : 1753890364092,
+            "duration" : 474
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'user'" ]
+        } ],
+        "uid" : "c552629ed1b1ffb29202ff078219d408"
+      }, {
+        "name" : "Позитивные сценарии",
+        "children" : [ {
+          "name" : "Авторизация под существующим пользователем",
+          "uid" : "173a601f7d622ba",
+          "parentUid" : "b645e1e2534a13b0e95a4397c0522666",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890359724,
+            "stop" : 1753890361905,
+            "duration" : 2181
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        } ],
+        "uid" : "b645e1e2534a13b0e95a4397c0522666"
+      } ],
+      "uid" : "27cdb5ec52f070888f68cbaa5e9b6e2b"
+    }, {
+      "name" : "Регистрация пользователя",
+      "children" : [ {
+        "name" : "Негативные сценарии",
+        "children" : [ {
+          "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+          "uid" : "d7fc5e5e963cf0fa",
+          "parentUid" : "1b5f2ad144501000e19be1bfce7e4af0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890356960,
+            "stop" : 1753890357484,
+            "duration" : 524
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "2" ]
+        }, {
+          "name" : "Граничные значения у поля \"Пароль\" на странице регистрации",
+          "uid" : "8dbc841460a9906a",
+          "parentUid" : "1b5f2ad144501000e19be1bfce7e4af0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890357488,
+            "stop" : 1753890358514,
+            "duration" : 1026
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "13" ]
+        }, {
+          "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+          "uid" : "950afef3dcc3c156",
+          "parentUid" : "1b5f2ad144501000e19be1bfce7e4af0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890358516,
+            "stop" : 1753890358921,
+            "duration" : 405
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "2" ]
+        }, {
+          "name" : "Граничные значения у поля \"Имя пользователя\" на странице регистрации",
+          "uid" : "ed901d7b73e7114a",
+          "parentUid" : "1b5f2ad144501000e19be1bfce7e4af0",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890358924,
+            "stop" : 1753890359276,
+            "duration" : 352
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "51" ]
+        } ],
+        "uid" : "1b5f2ad144501000e19be1bfce7e4af0"
+      }, {
+        "name" : "Позитивные сценарии",
+        "children" : [ {
+          "name" : "Регистрация пользователя с валидными данными",
+          "uid" : "a0e02301a1c793ac",
+          "parentUid" : "a2d8dacf52f17b019350e8569bdb6b3d",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890362282,
+            "stop" : 1753890362757,
+            "duration" : 475
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        } ],
+        "uid" : "a2d8dacf52f17b019350e8569bdb6b3d"
+      } ],
+      "uid" : "b4d64ce4b09d1327b19dd3e15343a0b3"
+    }, {
+      "name" : "API",
+      "children" : [ {
+        "name" : "Траты",
+        "children" : [ {
+          "name" : "Создание новой траты",
+          "uid" : "44a6f5be181ddab4",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890357442,
+            "stop" : 1753890357478,
+            "duration" : 36
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'auto', 'amount': 100000, 'currency': 'RUB', 'desc': 'repair engine'}" ]
+        }, {
+          "name" : "Получение существующей траты по id",
+          "uid" : "74d263fc7be253c1",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890358681,
+            "stop" : 1753890358699,
+            "duration" : 18
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'test_get', 'amount': 100, 'currency': 'EUR', 'desc': 'Coursera online courses'}" ]
+        }, {
+          "name" : "Граничные значения для значения суммы",
+          "uid" : "a98f16819e9f868c",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890359444,
+            "stop" : 1753890359459,
+            "duration" : 15
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'RUB'" ]
+        }, {
+          "name" : "Обязательность наличия суммы траты",
+          "uid" : "8b3b9265461551a3",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890359872,
+            "stop" : 1753890359895,
+            "duration" : 23
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_amount_required', 'archived': False}" ]
+        }, {
+          "name" : "Граничные значения для значения суммы",
+          "uid" : "272269150bb2ce97",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890360462,
+            "stop" : 1753890360474,
+            "duration" : 12
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'USD'" ]
+        }, {
+          "name" : "Обязательность наличия типа валюты",
+          "uid" : "19b4baea192b38cd",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890360968,
+            "stop" : 1753890360978,
+            "duration" : 10
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_currency_required', 'archived': False}" ]
+        }, {
+          "name" : "Граничные значения для значения суммы",
+          "uid" : "1103b305e8a59cf5",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890361477,
+            "stop" : 1753890361488,
+            "duration" : 11
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'EUR'" ]
+        }, {
+          "name" : "Обязательность наличия категории в трате",
+          "uid" : "400adaa0d01f58cb",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890361995,
+            "stop" : 1753890362006,
+            "duration" : 11
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ ]
+        }, {
+          "name" : "Граничные значения для значения суммы",
+          "uid" : "87360222eb64be9a",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890362491,
+            "stop" : 1753890362505,
+            "duration" : 14
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "'KZT'" ]
+        }, {
+          "name" : "Возможность добавления траты без описания",
+          "uid" : "2ae80142e5d2f4bd",
+          "parentUid" : "50dc559fc922e15e9912e3ddde9d9ae7",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890363045,
+            "stop" : 1753890363045,
+            "duration" : 0
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category': 'Food', 'amount': 30, 'currency': 'USD'}" ]
+        } ],
+        "uid" : "50dc559fc922e15e9912e3ddde9d9ae7"
+      }, {
+        "name" : "Категории",
+        "children" : [ {
+          "name" : "Обновление существующей категории через API",
+          "uid" : "c2f4157695dc7964",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890357635,
+            "stop" : 1753890357682,
+            "duration" : 47
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_update_category', 'archived': False}" ]
+        }, {
+          "name" : "Нет возможности добавить дубль существующей категории",
+          "uid" : "34d47b61c2681d",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890358806,
+            "stop" : 1753890358855,
+            "duration" : 49
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_duplicate_category', 'archived': False}" ]
+        }, {
+          "name" : "Нет возможности добавить дубль существующей архивной категории",
+          "uid" : "720725a92795d268",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890359917,
+            "stop" : 1753890359977,
+            "duration" : 60
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_duplicate_archive_category', 'archived': False}" ]
+        }, {
+          "name" : "Граничные значения по количеству символов в имени категории, negative",
+          "uid" : "22b3ee304d2da87e",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890360996,
+            "stop" : 1753890361006,
+            "duration" : 10
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "1" ]
+        }, {
+          "name" : "Граничные значения по количеству символов в имени категории, negative",
+          "uid" : "3bc3e7ebc510859d",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890362010,
+            "stop" : 1753890362025,
+            "duration" : 15
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "51" ]
+        }, {
+          "name" : "Граничные значения для по количеству символов в имени категории, positive",
+          "uid" : "9e5d31e353d103b2",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890363030,
+            "stop" : 1753890363063,
+            "duration" : 33
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "2" ]
+        }, {
+          "name" : "Добавление новой категории через API",
+          "uid" : "4b362425f8d7cf8d",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890363546,
+            "stop" : 1753890363601,
+            "duration" : 55
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "{'category_name': 'test_create_category', 'archived': False}" ]
+        }, {
+          "name" : "Граничные значения для по количеству символов в имени категории, positive",
+          "uid" : "792e4da60ada26a0",
+          "parentUid" : "99e24a7ff843ea3d0973013e8a65b22b",
+          "status" : "passed",
+          "time" : {
+            "start" : 1753890364180,
+            "stop" : 1753890364196,
+            "duration" : 16
+          },
+          "flaky" : false,
+          "newFailed" : false,
+          "parameters" : [ "50" ]
+        } ],
+        "uid" : "99e24a7ff843ea3d0973013e8a65b22b"
+      } ],
+      "uid" : "cfc22b8c9266c348c9b03909889293d6"
+    } ],
+    "uid" : "efddc8e0332920de75b8bc76f5e93864"
+  } ],
+  "name" : "behaviors"
+}
