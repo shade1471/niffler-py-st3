@@ -1,6 +1,9 @@
 import os
 import sys
 from pathlib import Path
+
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
 from typing import Any, Generator
 
 import grpc
@@ -10,9 +13,6 @@ from selenium.webdriver.chrome.options import Options
 from internal.grpc.interceptors.allure import AllureInterceptor
 from internal.grpc.interceptors.logging import LoggingInterceptor
 from internal.pb.niffler_currency_pb2_pbreflect import NifflerCurrencyServiceClient
-
-project_root = Path(__file__).parent.parent
-sys.path.append(str(project_root))
 
 import pytest
 from allure_commons.reporter import AllureReporter
