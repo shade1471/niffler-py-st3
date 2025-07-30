@@ -143,6 +143,7 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
   <code><img src="images/pycharm.png" width="40" height="40"  alt="A-d-am" title="PyCharm"></code>
   <code><img src="images/selenium.png" width="40" height="40"  alt="A-d-am" title="Selenium"></code>
   <code><img src="images/docker.png" width="40" height="40"  alt="A-d-am" title="Docker"></code>
+  <code><img src="images/grpc.png" width="40" height="40"  alt="A-d-am" title="gRPC"></code>
 </p>
 
 ## Покрываемый функционал проекта Niffler
@@ -194,7 +195,7 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
 pytest --alluredir=[your_path_for_report] --clean-alluredir ./test
 ```
 
-#### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска
+#### Некоторые тестовые модули возможно выполнить с поддержкой параллельного запуска:
 
 - API тесты
 - Авторизации и регистрации пользователя (UI)
@@ -212,6 +213,10 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] .\test -m parall
 ### Удаленный запуск, через реализованный CI/CD Github Actions 
  Workflow запускается для событий Pull Request (создания, добавление коммита в ветку PR, и переоткрытия PR)
 
-По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages репозитория](https://shade1471.github.io/niffler-py-st3/)
+По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages текущего репозитория](https://shade1471.github.io/niffler-py-st3/)
 
+#### Allure отчет в Github Pages:
 ![Allure отчет](images/img.png)
+
+#### Структура тестового набора:
+![Структура тестового набора](images/img_2.png)
