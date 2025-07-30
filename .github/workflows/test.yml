@@ -55,13 +55,13 @@ jobs:
 
       - name: Run sequential tests
         if: always()
-#        working-directory: ./python_test
-        run: pytest --alluredir=./allure-results -m sequential
+        working-directory: ./python_test
+        run: pytest --alluredir=./allure-results test/test_app.py test/test_kafka.py
 
       - name: Run parallel tests
         if: always()
-#        working-directory: ./python_test
-        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results -m parallel
+        working-directory: ./python_test
+        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py test/test_grpc_currencies.py
 
       - name: Load test report history
         uses: actions/checkout@v3
