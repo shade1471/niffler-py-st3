@@ -7,9 +7,9 @@ import grpc
 from grpc import insecure_channel
 from selenium.webdriver.chrome.options import Options
 
-from python_test.internal.grpc.interceptors.allure import AllureInterceptor
-from python_test.internal.grpc.interceptors.logging import LoggingInterceptor
-from python_test.internal.pb.niffler_currency_pb2_pbreflect import NifflerCurrencyServiceClient
+from internal.grpc.interceptors.allure import AllureInterceptor
+from internal.grpc.interceptors.logging import LoggingInterceptor
+from internal.pb.niffler_currency_pb2_pbreflect import NifflerCurrencyServiceClient
 
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))

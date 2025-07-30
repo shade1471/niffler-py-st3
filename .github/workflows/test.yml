@@ -56,7 +56,8 @@ jobs:
       - name: Run sequential tests
         if: always()
         working-directory: ./python_test
-        run: pytest --alluredir=./allure-results test/test_app.py test/test_kafka.py
+#        run: pytest --alluredir=./allure-results test/test_app.py test/test_kafka.py
+        run: pytest --alluredir=./allure-results /test -m sequential
 
       - name: Run parallel tests
         if: always()
