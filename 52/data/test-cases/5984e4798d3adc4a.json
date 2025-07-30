@@ -1,0 +1,100 @@
+{
+  "uid" : "5984e4798d3adc4a",
+  "name" : "Граничные значения для значения суммы",
+  "fullName" : "test.test_api.TestSpend#test_amount_boundary_value_for_different_currency",
+  "historyId" : "6069d10c7fd57600599599067a64d650",
+  "time" : {
+    "start" : 1753885746472,
+    "stop" : 1753885746472,
+    "duration" : 0
+  },
+  "status" : "broken",
+  "statusMessage" : "pydantic_core._pydantic_core.ValidationError: 1 validation error for Envs\ngrpc_service_host\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type",
+  "statusTrace" : "@pytest.fixture(scope=\"session\", autouse=True)\n    def envs() -> Envs:\n        load_dotenv()\n>       return Envs(\n            frontend_url=os.getenv(\"FRONTEND_URL\"),\n            gateway_url=os.getenv(\"GATEWAY_URL\"),\n            auth_url=os.getenv('AUTH_URL'),\n            auth_secret=os.getenv(\"AUTH_SECRET\"),\n            spend_db_url=os.getenv(\"SPEND_DB_URL\"),\n            test_username=os.getenv(\"TEST_USERNAME\"),\n            test_password=os.getenv(\"TEST_PASSWORD\"),\n            kafka_address=os.getenv(\"KAFKA_ADDRESS\"),\n            userdata_db_url=os.getenv('USERDATA_DB_URL'),\n            soap_address=os.getenv(\"SOAP_ADDRESS\"),\n            grpc_service_host=os.getenv('GRPC_HOST'),\n        )\nE       pydantic_core._pydantic_core.ValidationError: 1 validation error for Envs\nE       grpc_service_host\nE         Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\nE           For further information visit https://errors.pydantic.dev/2.11/v/string_type\n\nconftest.py:67: ValidationError",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1753885746269,
+      "stop" : 1753885746269,
+      "duration" : 0
+    },
+    "status" : "broken",
+    "statusMessage" : "pydantic_core._pydantic_core.ValidationError: 1 validation error for Envs\ngrpc_service_host\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type\n",
+    "statusTrace" : "  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 38, in run_old_style_hookwrapper\n    res = yield\n          ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 139, in _multicall\n    teardown.throw(exception)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/setuponly.py\", line 36, in pytest_fixture_setup\n    return (yield)\n            ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 139, in _multicall\n    teardown.throw(exception)\n    ~~~~~~~~~~~~~~^^^^^^^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 53, in run_old_style_hookwrapper\n    return result.get_result()\n           ~~~~~~~~~~~~~~~~~^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_result.py\", line 103, in get_result\n    raise exc.with_traceback(tb)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 38, in run_old_style_hookwrapper\n    res = yield\n          ^^^^^\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pluggy/_callers.py\", line 121, in _multicall\n    res = hook_impl.function(*args)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/fixtures.py\", line 1140, in pytest_fixture_setup\n    result = call_fixture_func(fixturefunc, request, kwargs)\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/_pytest/fixtures.py\", line 898, in call_fixture_func\n    fixture_result = fixturefunc(**kwargs)\n  File \"/home/runner/work/niffler-py-st3/niffler-py-st3/python_test/conftest.py\", line 67, in envs\n    return Envs(\n        frontend_url=os.getenv(\"FRONTEND_URL\"),\n    ...<9 lines>...\n        grpc_service_host=os.getenv('GRPC_HOST'),\n    )\n  File \"/opt/hostedtoolcache/Python/3.13.5/x64/lib/python3.13/site-packages/pydantic/main.py\", line 253, in __init__\n    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)\n",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : true,
+    "hasContent" : true,
+    "stepsCount" : 0
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1753885746266,
+      "stop" : 1753885746267,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false,
+    "stepsCount" : 0
+  } ],
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "API"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "story",
+    "value" : "Траты"
+  }, {
+    "name" : "tag",
+    "value" : "parallel"
+  }, {
+    "name" : "host",
+    "value" : "pkrvmjbmru5nbw0"
+  }, {
+    "name" : "thread",
+    "value" : "7033-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_api"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "currency",
+    "value" : "'USD'"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ {
+      "name" : "Test defects",
+      "matchedStatuses" : [ ],
+      "flaky" : false
+    } ],
+    "tags" : [ "parallel" ]
+  },
+  "source" : "5984e4798d3adc4a.json",
+  "parameterValues" : [ "'USD'" ]
+}
