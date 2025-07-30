@@ -170,11 +170,11 @@ Build to Docker daemon failed, perhaps you should make sure your credentials for
 
 
 * gRPC тесты
-  * ✅ Проверка функционала сервиса валюты (11 - тест кейсов)
+  * ✅ Проверка функционала сервиса валюты (11 тест кейсов)
 
 ## Как запустить
 
-### Локально, на хосте
+## Локально, на хосте
 
 Перед выполнением необходимо:
 * Создать файл .env в директории python_test и определить в нем параметры конфигурации (пример в .env.sample):
@@ -210,7 +210,7 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] .\test -m parall
 
 
 
-### Удаленный запуск, через реализованный CI/CD Github Actions 
+## Удаленный запуск, через реализованный CI/CD Github Actions 
  Workflow запускается для событий Pull Request (создания, добавление коммита в ветку PR, и переоткрытия PR)
 
 По результату автоматическоего прогона формируются allure отчеты с историей, с хранением в [Github Pages текущего репозитория](https://shade1471.github.io/niffler-py-st3/)
