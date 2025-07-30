@@ -220,3 +220,10 @@ pytest -n 4 --dist=worksteal --alluredir=[your_path_for_report] .\test -m parall
 
 #### Структура тестового набора:
 ![Структура тестового набора](images/img_2.png)
+
+---
+
+## Контакты для обратной связи:
+
+- Email: a.gribanov@staffcop.ru
+- Telegram: https://t.me/gribanov87
