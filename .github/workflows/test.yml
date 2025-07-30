@@ -56,12 +56,12 @@ jobs:
       - name: Run tests
         if: always()
         working-directory: ./python_test
-        run: pytest --alluredir=./allure-results --clean-alluredir test/test_app.py test/test_kafka.py
+        run: pytest --alluredir=./allure-results -m sequential
 
       - name: Run parallel tests
         if: always()
         working-directory: ./python_test
-        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results test/test_api.py test/test_auth.py test/test_soap.py
+        run: pytest -n 4 --dist=worksteal --alluredir=./allure-results -m parallel
 
       - name: Load test report history
         uses: actions/checkout@v3

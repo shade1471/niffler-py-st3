@@ -53,7 +53,7 @@ def get_spend_model(envs: Envs, category_name: str = '') -> dict:
                  'username': envs.test_username}
     return new_spend
 
-
+@pytest.mark.parallel
 @allure.epic(Epic.niffler)
 @allure.feature(Feature.api)
 class TestApi:

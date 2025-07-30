@@ -12,3 +12,4 @@ class Envs(BaseModel):
     kafka_address: str
     userdata_db_url: str
     soap_address: str
+    grpc_service_host: str

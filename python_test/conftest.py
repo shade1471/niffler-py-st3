@@ -3,7 +3,13 @@ import sys
 from pathlib import Path
 from typing import Any, Generator
 
+import grpc
+from grpc import insecure_channel
 from selenium.webdriver.chrome.options import Options
+
+from python_test.internal.grpc.interceptors.allure import AllureInterceptor
+from python_test.internal.grpc.interceptors.logging import LoggingInterceptor
+from python_test.internal.pb.niffler_currency_pb2_pbreflect import NifflerCurrencyServiceClient
 
 project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
@@ -25,6 +31,11 @@ from python_test.model.db.spend import SpendAdd
 from python_test.model.niffler import Niffler
 
 pytest_plugins = ["fixtures.auth_fixtures", "fixtures.client_fixtures"]
+
+INTERCEPTORS = [
+    LoggingInterceptor(),
+    AllureInterceptor(),
+]
 
 
 def allure_logger(config) -> AllureReporter:
@@ -64,6 +75,7 @@ def envs() -> Envs:
         kafka_address=os.getenv("KAFKA_ADDRESS"),
         userdata_db_url=os.getenv('USERDATA_DB_URL'),
         soap_address=os.getenv("SOAP_ADDRESS"),
+        grpc_service_host=os.getenv('GRPC_HOST'),
     )
 
 
@@ -117,3 +129,11 @@ def kafka(envs):
     """Взаимодействие с Kafka"""
     with KafkaClient(envs) as k:
         yield k
+
+
+@pytest.fixture(scope='session')
+def grpc_client(envs: Envs, request: pytest.FixtureRequest) -> NifflerCurrencyServiceClient:
+    host = envs.grpc_service_host
+    channel = insecure_channel(host)
+    intercepted_channel = grpc.intercept_channel(channel, *INTERCEPTORS)
+    return NifflerCurrencyServiceClient(intercepted_channel)

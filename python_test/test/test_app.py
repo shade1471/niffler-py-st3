@@ -12,7 +12,7 @@ from python_test.model.db.spend import SpendAdd
 from python_test.model.niffler import Niffler
 from python_test.report_helper import Epic, Feature, Story
 
-pytestmark = [pytest.mark.allure_label(Epic.niffler, label_type="epic")]
+pytestmark = [pytest.mark.allure_label(Epic.niffler, label_type="epic"), pytest.mark.sequential]
 
 
 @allure.feature(Feature.spending)
