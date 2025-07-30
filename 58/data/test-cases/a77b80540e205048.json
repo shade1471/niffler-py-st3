@@ -1,0 +1,270 @@
+{
+  "uid" : "a77b80540e205048",
+  "name" : "Получение всех поддерживаемых типов валют",
+  "fullName" : "test.test_grpc_currencies.TestGrpcCurrencies#test_get_all_currencies",
+  "historyId" : "42a1c20fc975b333f8666327a401ef7d",
+  "time" : {
+    "start" : 1753893198316,
+    "stop" : 1753893198327,
+    "duration" : 11
+  },
+  "status" : "passed",
+  "flaky" : false,
+  "newFailed" : false,
+  "beforeStages" : [ {
+    "name" : "[S] Grpc Client",
+    "time" : {
+      "start" : 1753893198228,
+      "stop" : 1753893198240,
+      "duration" : 12
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S] App User",
+    "time" : {
+      "start" : 1753893198048,
+      "stop" : 1753893198228,
+      "duration" : 180
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Создать пользователя 'qa_guru'",
+      "time" : {
+        "start" : 1753893198049,
+        "stop" : 1753893198228,
+        "duration" : 179
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ {
+        "name" : "user_name",
+        "value" : "'qa_guru'"
+      }, {
+        "name" : "user_password",
+        "value" : "'qa_guru'"
+      } ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 1,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  }, {
+    "name" : "[S] Envs",
+    "time" : {
+      "start" : 1753893198048,
+      "stop" : 1753893198048,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  }, {
+    "name" : "[S]  Session Faker",
+    "time" : {
+      "start" : 1753893198047,
+      "stop" : 1753893198048,
+      "duration" : 1
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false,
+    "hasContent" : false
+  } ],
+  "testStage" : {
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "Запросить все типы валют",
+      "time" : {
+        "start" : 1753893198316,
+        "stop" : 1753893198327,
+        "duration" : 11
+      },
+      "status" : "passed",
+      "steps" : [ {
+        "name" : "/guru.qa.grpc.niffler.NifflerCurrencyService/GetAllCurrencies",
+        "time" : {
+          "start" : 1753893198317,
+          "stop" : 1753893198327,
+          "duration" : 10
+        },
+        "status" : "passed",
+        "steps" : [ ],
+        "attachments" : [ {
+          "uid" : "a045608ba8c53f42",
+          "name" : "request",
+          "source" : "a045608ba8c53f42.json",
+          "type" : "application/json",
+          "size" : 2
+        }, {
+          "uid" : "bfae7dd312646d14",
+          "name" : "response",
+          "source" : "bfae7dd312646d14.json",
+          "type" : "application/json",
+          "size" : 289
+        } ],
+        "parameters" : [ ],
+        "stepsCount" : 0,
+        "attachmentsCount" : 2,
+        "shouldDisplayMessage" : false,
+        "hasContent" : true
+      } ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 1,
+      "attachmentsCount" : 2,
+      "shouldDisplayMessage" : false,
+      "hasContent" : true
+    }, {
+      "name" : "Убедиться, что общее количество типов валют равно 4",
+      "time" : {
+        "start" : 1753893198327,
+        "stop" : 1753893198327,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false,
+      "hasContent" : false
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "stepsCount" : 3,
+    "attachmentsCount" : 2,
+    "shouldDisplayMessage" : false,
+    "hasContent" : true
+  },
+  "afterStages" : [ ],
+  "labels" : [ {
+    "name" : "feature",
+    "value" : "gRPC Currencies"
+  }, {
+    "name" : "epic",
+    "value" : "Приложение Niffler"
+  }, {
+    "name" : "tag",
+    "value" : "parallel"
+  }, {
+    "name" : "host",
+    "value" : "pkrvmjbmru5nbw0"
+  }, {
+    "name" : "thread",
+    "value" : "8285-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test.test_grpc_currencies"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "history" : {
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 1,
+        "skipped" : 0,
+        "passed" : 6,
+        "unknown" : 0,
+        "total" : 7
+      },
+      "items" : [ {
+        "uid" : "4db2f6fa6b98d0d5",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/57/#testresult/4db2f6fa6b98d0d5",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753892397709,
+          "stop" : 1753892397717,
+          "duration" : 8
+        }
+      }, {
+        "uid" : "6aed4af5568f2f3f",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/56/#testresult/6aed4af5568f2f3f",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753890355950,
+          "stop" : 1753890355956,
+          "duration" : 6
+        }
+      }, {
+        "uid" : "230e23b2c1162038",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/55/#testresult/230e23b2c1162038",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753888559617,
+          "stop" : 1753888559628,
+          "duration" : 11
+        }
+      }, {
+        "uid" : "9241e01d6f208f52",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/54/#testresult/9241e01d6f208f52",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753888220397,
+          "stop" : 1753888220403,
+          "duration" : 6
+        }
+      }, {
+        "uid" : "3e92f56ce3fb10a1",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/53/#testresult/3e92f56ce3fb10a1",
+        "status" : "passed",
+        "time" : {
+          "start" : 1753887606414,
+          "stop" : 1753887606424,
+          "duration" : 10
+        }
+      }, {
+        "uid" : "b9eb7858fbab8ba3",
+        "reportUrl" : "https://shade1471.github.io/niffler-py-st3/52/#testresult/b9eb7858fbab8ba3",
+        "status" : "broken",
+        "statusDetails" : "pydantic_core._pydantic_core.ValidationError: 1 validation error for Envs\ngrpc_service_host\n  Input should be a valid string [type=string_type, input_value=None, input_type=NoneType]\n    For further information visit https://errors.pydantic.dev/2.11/v/string_type",
+        "time" : {
+          "start" : 1753885746483,
+          "stop" : 1753885746483,
+          "duration" : 0
+        }
+      } ]
+    },
+    "tags" : [ "parallel" ]
+  },
+  "source" : "a77b80540e205048.json",
+  "parameterValues" : [ ]
+}
