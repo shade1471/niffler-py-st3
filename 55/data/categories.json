@@ -1,0 +1,104 @@
+{
+  "uid" : "4b4757e66a1912dae1a509f688f20b0f",
+  "children" : [ {
+    "name" : "Test defects",
+    "children" : [ {
+      "name" : "sqlalchemy.exc.IntegrityError: (psycopg2.errors.ForeignKeyViolation) update or delete on table \"category\" violates foreign key constraint \"fk_spend_category\" on table \"spend\"\nDETAIL:  Key (id)=(bc77fda9-3fff-4374-a793-0ec5d32e4d84) is still referenced from table \"spend\".\n\n[SQL: DELETE FROM category WHERE category.id = %(id)s]\n[parameters: {'id': UUID('bc77fda9-3fff-4374-a793-0ec5d32e4d84')}]\n(Background on this error at: https://sqlalche.me/e/20/gkpj)",
+      "children" : [ {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "63ef3809850cf99",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888562148,
+          "stop" : 1753888562148,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'RUB'" ]
+      }, {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "a95426d5419c3d46",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888563084,
+          "stop" : 1753888563084,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'USD'" ]
+      }, {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "e478229ec6119224",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888563664,
+          "stop" : 1753888563664,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'EUR'" ]
+      }, {
+        "name" : "Граничные значения для значения суммы",
+        "uid" : "57a963bc1bed53ec",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888564125,
+          "stop" : 1753888564125,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "'KZT'" ]
+      }, {
+        "name" : "Добавление новой категории через API",
+        "uid" : "d96ce515e0924fc8",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888564459,
+          "stop" : 1753888564459,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "{'category_name': 'test_create_category', 'archived': False}" ]
+      }, {
+        "name" : "Граничные значения для по количеству символов в имени категории, positive",
+        "uid" : "2ab86889473937ad",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888564918,
+          "stop" : 1753888564918,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "2" ]
+      }, {
+        "name" : "Граничные значения для по количеству символов в имени категории, positive",
+        "uid" : "7238db18f24f6b77",
+        "parentUid" : "5a28fc167dbea17861b54dea15fb2a5e",
+        "status" : "broken",
+        "time" : {
+          "start" : 1753888565280,
+          "stop" : 1753888565280,
+          "duration" : 0
+        },
+        "flaky" : false,
+        "newFailed" : false,
+        "parameters" : [ "50" ]
+      } ],
+      "uid" : "5a28fc167dbea17861b54dea15fb2a5e"
+    } ],
+    "uid" : "bdbf199525818fae7a8651db9eafe741"
+  } ],
+  "name" : "categories"
+}

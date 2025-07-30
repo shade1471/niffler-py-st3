@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset = UTF-8">
+    <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
+
+    <link href="https://yastatic.net/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="https://yastatic.net/bootstrap/3.3.6/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+    <link type="text/css" href="https://yandex.st/highlightjs/8.0/styles/github.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/highlight.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/bash.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/json.min.js"></script>
+    <script type="text/javascript" src="https://yandex.st/highlightjs/8.0/languages/xml.min.js"></script>
+    <script type="text/javascript">hljs.initHighlightingOnLoad();</script>
+
+    <style>
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <pre><code>POST to http://gateway.niffler.dc:8090/api/spends/add</code></pre>
+</div>
+
+
+    <h4>Body</h4>
+    <div>
+        <pre><code>b'{"id": null, "spendDate": "2025-07-30T15:15:34.579Z", "category": {"name": "category3", "username": "qa_guru", "archived": false, "id": null}, "currency": "KZT", "amount": 4000.0, "description": "", "username": "qa_guru"}'</code></pre>
+    </div>
+
+
+
+
+    <h4>Headers</h4>
+    <div>
+    
+        <div>
+            <pre><code><b>User-Agent</b>: python-requests/2.32.3</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept-Encoding</b>: gzip, deflate</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Accept</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Connection</b>: keep-alive</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Authorization</b>: Bearer eyJraWQiOiIzY2I0YjU1Mi1jYjBhLTRlMDgtYmE5YS1mNDQzZWRmMzgwYzciLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUzODg4NTEyLCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUzODkyMTEyLCJpYXQiOjE3NTM4ODg1MTIsImp0aSI6ImEzZjc5MTZiLTMzMzktNDNhMC04NzU1LTgwZGE5YTU1OWU5ZCJ9.uW1YW2BOampr4nyxxmIVwq35HB3bYMYmkVjAO8WyQkiF5lql8-IWGyv6l-exo6RH8CUYwdxb2Cj8gexUNPFJ8arWXkql0nwRUPWY4-1KCqr7HQwGXsp--I3RrX0nKe3wcjiOnlycsy-BQKiGtEl4tNDJYUC2hG6CPdGellxQ8FAK0mqVw-i0uKsWCih9z7O9j35xmj5-6IbQB-T3DK44yEZr5evAHk5kY1eOFigwrWxbDgr1M9aftzwvxXPloeNjUucF9wyElEa209IUdmRXpOSdTRFBUMfh_VwnImH_ckU9q8sLqJoQtc5k05aGJU9OuhZyUX7vaMNjRS2HqJFmgw</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Type</b>: application/json</code></pre>
+        </div>
+    
+        <div>
+            <pre><code><b>Content-Length</b>: 221</code></pre>
+        </div>
+    
+    </div>
+
+
+
+
+
+
+    <h4>Curl</h4>
+    <div>
+        <pre><code>curl -X POST -H 'Accept: application/json' -H 'Accept-Encoding: gzip, deflate' -H 'Authorization: Bearer eyJraWQiOiIzY2I0YjU1Mi1jYjBhLTRlMDgtYmE5YS1mNDQzZWRmMzgwYzciLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJxYV9ndXJ1IiwiYXVkIjoiY2xpZW50IiwibmJmIjoxNzUzODg4NTEyLCJzY29wZSI6WyJvcGVuaWQiXSwiaXNzIjoiaHR0cDovL2F1dGgubmlmZmxlci5kYzo5MDAwIiwiZXhwIjoxNzUzODkyMTEyLCJpYXQiOjE3NTM4ODg1MTIsImp0aSI6ImEzZjc5MTZiLTMzMzktNDNhMC04NzU1LTgwZGE5YTU1OWU5ZCJ9.uW1YW2BOampr4nyxxmIVwq35HB3bYMYmkVjAO8WyQkiF5lql8-IWGyv6l-exo6RH8CUYwdxb2Cj8gexUNPFJ8arWXkql0nwRUPWY4-1KCqr7HQwGXsp--I3RrX0nKe3wcjiOnlycsy-BQKiGtEl4tNDJYUC2hG6CPdGellxQ8FAK0mqVw-i0uKsWCih9z7O9j35xmj5-6IbQB-T3DK44yEZr5evAHk5kY1eOFigwrWxbDgr1M9aftzwvxXPloeNjUucF9wyElEa209IUdmRXpOSdTRFBUMfh_VwnImH_ckU9q8sLqJoQtc5k05aGJU9OuhZyUX7vaMNjRS2HqJFmgw' -H 'Connection: keep-alive' -H 'Content-Length: 221' -H 'Content-Type: application/json' -H 'User-Agent: python-requests/2.32.3' -d '{"id": null, "spendDate": "2025-07-30T15:15:34.579Z", "category": {"name": "category3", "username": "qa_guru", "archived": false, "id": null}, "currency": "KZT", "amount": 4000.0, "description": "", "username": "qa_guru"}' http://gateway.niffler.dc:8090/api/spends/add</code></pre>
+    </div>
+
+</body>
+</html>
