@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from http import HTTPStatus
 from typing import Literal
 
@@ -63,7 +63,7 @@ class SpendsHttpClient:
         if currency not in ('RUB', 'KZT', 'EUR', 'USD'):
             raise ValueError('Не правильный тип валюты')
         if not date:
-            date = datetime.now(timezone.utc)
+            date = datetime.now(timezone.utc) - timedelta(hours=24)
         formatted_time = date.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
         category_spend = Category(name=category, username=self.user_name, archived=False)
         spend = SpendAdd(

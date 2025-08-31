@@ -94,7 +94,7 @@ class TestSpending:
     @allure.story(Story.positive_cases)
     @allure.title('Удаление траты через GUI Niffler')
     @TestData.spend({'category': 'study', 'amount': 10_000})
-    def test_delete_spending_gui(self, niffler: Niffler, data, spend: SpendAdd):
+    def test_delete_spending_gui(self, data, niffler: Niffler, spend: SpendAdd):
         niffler.main_page.go_to_niffler()
         count_before = niffler.main_page.get_count_spending_on_main_page()
         niffler.main_page.delete_spending_by_id(spend.id)
@@ -158,7 +158,9 @@ class TestSpending:
 class TestSearch:
 
     @pytest.fixture(scope='class')
-    def data(self, spends_client: SpendsHttpClient):
+    def data(self, spends_client: SpendsHttpClient, spend_db: SpendDb):
+        categories_ids = spends_client.get_ids_all_categories()
+        spend_db.delete_categories_by_ids(categories_ids)
         spends_client.delete_all_spending()
         spends_client.add_spend('category1', 10000, currency='KZT')
         spends_client.add_spend('category2', 1000, currency='EUR')
@@ -180,7 +182,7 @@ class TestSearch:
     ])
     @allure.story(Story.search_criteria)
     @allure.title('Поиск трат по имени категории')
-    def test_search_by_category(self, niffler: Niffler, data, category: str, expected_length: int):
+    def test_search_by_category(self, data, niffler: Niffler, category: str, expected_length: int):
         niffler.main_page.go_to_niffler()
         count_before = niffler.main_page.get_count_spending_on_main_page()
         niffler.main_page.search_spending(category=category, period='all')
@@ -191,7 +193,7 @@ class TestSearch:
 
     @pytest.mark.parametrize('date_period, expected_length', [
         ('last_month', 7),
-        ('today', 6),
+        ('last_week', 6),
     ])
     @allure.story(Story.search_criteria)
     @allure.title('Поиск трат по дате')
@@ -213,7 +215,7 @@ class TestSearch:
     ])
     @allure.story(Story.search_criteria)
     @allure.title('Поиск трат по типу валюты')
-    def test_search_by_currency(self, niffler: Niffler, data, currency: str, expected_length: int):
+    def test_search_by_currency(self, data, niffler: Niffler, currency: str, expected_length: int):
         niffler.main_page.go_to_niffler()
         count_before = niffler.main_page.get_count_spending_on_main_page()
 
